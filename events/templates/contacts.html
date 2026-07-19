@@ -1,0 +1,87 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Contacts' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <div class="thead-row">
+    <div>
+      <h1 class="tt">{% trans 'Contacts' %}</h1>
+      <p class="tsub">{% trans 'Applicants and waitlist subscribers — kept for future outreach (e.g. new-event announcements).' %}</p>
+    </div>
+    <a class="cta-small" href="{% url 'contacts_export' %}?{{ querystring }}">{% trans 'Export CSV' %}</a>
+  </div>
+
+  <form class="filters" method="get">
+    <div class="ffield">
+      <label for="f-event">{% trans 'Event' %}</label>
+      <select name="event" id="f-event">
+        {% if not events %}<option value="">{% trans 'No events' %}</option>{% endif %}
+        <option value="all" {% if event_param == 'all' %}selected{% endif %}>{% trans 'All events' %}</option>
+        {% for ev in events %}
+        <option value="{{ ev.id }}" {% if event_param == ev.id|stringformat:'s' %}selected{% endif %}>
+          {{ ev.title }} — {{ ev.date|date:"d M Y" }}{% if not ev.is_active %} ({% trans 'past' %}){% endif %}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="ffield">
+      <label for="f-type">{% trans 'Type' %}</label>
+      <select name="type" id="f-type">
+        <option value="all" {% if type_param == 'all' %}selected{% endif %}>{% trans 'All' %}</option>
+        <option value="startup" {% if type_param == 'startup' %}selected{% endif %}>{% trans 'Startups' %}</option>
+        <option value="guest" {% if type_param == 'guest' %}selected{% endif %}>{% trans 'Guests' %}</option>
+        <option value="subscriber" {% if type_param == 'subscriber' %}selected{% endif %}>{% trans 'Subscribers' %}</option>
+      </select>
+    </div>
+    <div class="ffield">
+      <label for="f-status">{% trans 'Status' %}</label>
+      <select name="status" id="f-status">
+        <option value="all" {% if status_param == 'all' %}selected{% endif %}>{% trans 'All' %}</option>
+        <option value="pending" {% if status_param == 'pending' %}selected{% endif %}>{% trans 'Pending' %}</option>
+        <option value="approved" {% if status_param == 'approved' %}selected{% endif %}>{% trans 'Approved' %}</option>
+        <option value="rejected" {% if status_param == 'rejected' %}selected{% endif %}>{% trans 'Rejected' %}</option>
+      </select>
+    </div>
+    <button type="submit">{% trans 'Show' %}</button>
+  </form>
+
+  <div class="stats">
+    <div class="stat"><b>{{ total_count }}</b><span>{% trans 'Contacts' %}</span></div>
+  </div>
+
+  {% if contacts %}
+  <div class="ctable-wrap">
+    <table class="ctable">
+      <thead>
+        <tr>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Email' %}</th>
+          <th>{% trans 'Phone' %}</th>
+          <th>Telegram</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in contacts %}
+        <tr>
+          <td class="cname">{{ row.name|default:"—" }}</td>
+          <td><a href="mailto:{{ row.email }}">{{ row.email }}</a></td>
+          <td>{% if row.phone %}<a href="tel:{{ row.phone }}">{{ row.phone }}</a>{% endif %}</td>
+          <td>{{ row.telegram }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty">{% trans 'No contacts match the selected filters.' %}</div>
+  {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.querySelectorAll('.filters select').forEach(function (el) {
+    el.addEventListener('change', function () { el.form.submit(); });
+  });
+</script>
+{% endblock %}

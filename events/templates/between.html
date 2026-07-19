@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans 'PizzaPitch — pitch nights in Tashkent' %}{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    <h1>{% blocktrans %}Pitch nights<br><em>over pizza.</em>{% endblocktrans %}</h1>
+    <p class="lede">{% trans "PizzaPitch is a recurring evening in Tashkent where founders show their product to a live audience, and guests meet the people building and investing." %}</p>
+
+    <div class="stat-row">
+      <div class="stat"><b>10</b><span>{% trans 'pitches per night' %}</span></div>
+      <div class="stat"><b>5</b><span>{% trans 'minutes on stage' %}</span></div>
+      <div class="stat"><b>{% trans 'Lots' %}</b><span>{% trans 'slices of pizza' %}</span></div>
+    </div>
+
+    <div class="notify">
+      <h3>{% trans 'Get notified about the next night' %}</h3>
+      <p class="s">{% trans "Leave your email — we'll write when registration opens. No spam, just dates." %}</p>
+      <form id="notifyForm" data-endpoint="{% url 'subscribe' %}" novalidate>
+        {% csrf_token %}
+        <div class="notify-row">
+          <input name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@mail.com" aria-label="Email">
+          <button type="submit" class="cta">{% trans 'Notify me' %}</button>
+        </div>
+        <p class="msg2" id="notifyMsg"></p>
+      </form>
+    </div>
+  </header>
+
+  <section class="block">
+    <h2>{% trans 'How it works' %}</h2>
+    <div class="fmt">
+      <span class="ic">&#128640;</span>
+      <div><p class="t">{% trans 'Ten startups' %}</p><p class="d">{% trans 'Selected from applications. Five minutes to pitch, three for audience questions.' %}</p></div>
+    </div>
+    <div class="fmt">
+      <span class="ic">&#127829;</span>
+      <div><p class="t">{% trans 'Guests & networking' %}</p><p class="d">{% trans 'Investors, founders, mentors, and anyone curious. We hang out over pizza.' %}</p></div>
+    </div>
+    <div class="fmt">
+      <span class="ic">&#9989;</span>
+      <div><p class="t">{% trans 'Participation by approval' %}</p><p class="d">{% trans 'Every application is reviewed manually. Free for guests, paid for startups.' %}</p></div>
+    </div>
+  </section>
+
+  <section class="block faq">
+    <h2>{% trans 'FAQ' %}</h2>
+    <details><summary>{% trans "When's the next event?" %}</summary><p>{% trans "We announce dates in advance. Leave your email above — we'll write as soon as registration opens." %}</p></details>
+    <details><summary>{% trans 'How do I get in with my startup?' %}</summary><p>{% trans 'When registration is open, you apply through the site. We review manually and reply by email within 24–48 hours.' %}</p></details>
+    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% trans 'Free for guests. For startups, participation is paid — this covers your spot in the pitch session. The application is free; payment is requested only after approval.' %}</p></details>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+{{ notify_i18n|json_script:"notify-i18n" }}
+<script src="{% static 'js/notify.js' %}"></script>
+{% endblock %}

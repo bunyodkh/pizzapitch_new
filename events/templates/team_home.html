@@ -1,0 +1,27 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Team' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <h1 class="tt">{% trans 'Team dashboard' %}</h1>
+  <p class="tsub">{% trans 'Choose what you want to manage.' %}</p>
+
+  <div class="hub">
+    <a class="hub-card" href="{% url 'event_list' %}">
+      <span class="hub-ic" aria-hidden="true">🗓️</span>
+      <span class="hub-t">{% trans 'Manage events' %}</span>
+      <span class="hub-d">{% trans 'Create, edit and delete events.' %}</span>
+    </a>
+    <a class="hub-card" href="{% url 'participants' %}">
+      <span class="hub-ic" aria-hidden="true">👥</span>
+      <span class="hub-t">{% trans 'Applications' %}</span>
+      <span class="hub-d">{% trans 'Review and approve applications.' %}</span>
+    </a>
+    <a class="hub-card" href="{% url 'contacts' %}">
+      <span class="hub-ic" aria-hidden="true">📇</span>
+      <span class="hub-t">{% trans 'Contacts' %}</span>
+      <span class="hub-d">{% trans 'Manage applicant details for future outreach.' %}</span>
+    </a>
+  </div>
+{% endblock %}

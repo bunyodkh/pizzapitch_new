@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Page not found' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    <p class="eyebrow">{% trans 'Error 404' %}</p>
+    <h1>{% trans 'Page not found' %}</h1>
+    <p class="lede">{% trans "This page doesn't exist — the link may be outdated or mistyped." %}</p>
+    <a class="cta" href="{% url 'index' %}" style="text-decoration:none">{% trans 'Back to home' %}</a>
+  </header>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    {% if event.hero_photo %}
+    <figure class="hero-photo">
+      <img id="heroPhoto" src="{{ event.hero_photo.url }}"
+           alt="{% trans 'Pitch night atmosphere' %}" loading="eager">
+      <div class="ph-fallback">{% trans 'Space for your photo' %}<br><span>{% trans 'add a photo in the admin' %}</span></div>
+      <figcaption class="tag"><span class="d"></span>{{ event.city|default:event.place }} · {% trans 'demo night' %}</figcaption>
+    </figure>
+    {% endif %}
+    <p class="eyebrow">{% trans 'Pitches · pizza · connections' %}</p>
+    <h1>{% blocktrans %}Ten startups.<br>Five minutes to pitch.<br><em>Pizza for everyone.</em>{% endblocktrans %}</h1>
+    <p class="lede">{% if event.description %}{{ event.description }}{% else %}{% blocktrans %}A live pitch night over pizza: founders show their product, guests ask questions, and meet the people building and investing.{% endblocktrans %}{% endif %}</p>
+
+    <div class="stub" aria-label="{% trans 'Event details' %}">
+      <div class="stub-row">
+        <div class="stub-cell">
+          <p class="stub-k">{% trans 'When' %}</p>
+          <p class="stub-v">{{ event.date|date:"D, d M" }} · {{ event.time|time:"H:i" }}</p>
+        </div>
+        <div class="stub-cell">
+          <p class="stub-k">{% trans 'Where' %}</p>
+          <p class="stub-v">{{ event.place }}{% if event.city %}, {{ event.city }}{% endif %}</p>
+        </div>
+      </div>
+      <div class="stub-tear"></div>
+      <div class="stub-foot">
+        <span>{% if event.capacity %}{% blocktrans with n=event.capacity %}{{ n }} spots{% endblocktrans %}{% else %}{% trans 'Spots limited' %}{% endif %} · {% trans 'by approval' %}</span>
+        <span>{% trans 'guests — free' %}</span>
+      </div>
+    </div>
+
+    <button class="cta" id="openBtn">{% trans 'Apply' %} <span aria-hidden="true">→</span></button>
+    <p class="cta-note">{% trans '2 minutes · confirmation by email in 24–48h' %}</p>
+  </header>
+
+  <section class="block">
+    <h2>{% trans 'How the evening runs' %}</h2>
+    <div class="flow">
+      <div class="flow-item"><span class="flow-time">19:00</span><div><p class="flow-t">{% trans 'Doors & drinks' %}</p><p class="flow-d">{% trans 'Arrive, grab a drink, meet people without rushing.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">19:30</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 5-minute pitch + 3 minutes of Q&A.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">20:30</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors — mingling over pizza till the end.' %}</p></div></div>
+    </div>
+  </section>
+
+  <section class="block faq">
+    <h2>{% trans 'FAQ' %}</h2>
+    <details><summary>{% trans 'Why an application instead of plain registration?' %}</summary><p>{% trans 'Spots are limited, and we balance founders and guests. Every application is reviewed manually and confirmed by email.' %}</p></details>
+    <details><summary>{% trans "I'm not a startup — can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest" — this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
+    <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your website or deck. Selected teams get the pitch format details.' %}</p></details>
+    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests — free. For startups participation is paid ({{ price }} {{ currency }}) — this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}</p></details>
+  </section>
+{% endblock %}
+
+{% block overlays %}
+  {% include "includes/apply_overlay.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ i18n_strings|json_script:"i18n-strings" }}
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Applications' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <h1 class="tt">{% trans 'Applications' %}</h1>
+  <p class="tsub">{% trans 'Applications for the current and past events — review and approve.' %}</p>
+
+  <form class="filters" method="get">
+    <div class="ffield">
+      <label for="f-event">{% trans 'Event' %}</label>
+      <select name="event" id="f-event">
+        {% if not events %}<option value="">{% trans 'No events' %}</option>{% endif %}
+        <option value="all" {% if event_param == 'all' %}selected{% endif %}>{% trans 'All events' %}</option>
+        {% for ev in events %}
+        <option value="{{ ev.id }}" {% if event_param == ev.id|stringformat:'s' %}selected{% endif %}>
+          {{ ev.title }} — {{ ev.date|date:"d M Y" }}{% if not ev.is_active %} ({% trans 'past' %}){% endif %}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="ffield">
+      <label for="f-type">{% trans 'Type' %}</label>
+      <select name="type" id="f-type">
+        <option value="all" {% if type_param == 'all' %}selected{% endif %}>{% trans 'All' %}</option>
+        <option value="startup" {% if type_param == 'startup' %}selected{% endif %}>{% trans 'Startups' %}</option>
+        <option value="guest" {% if type_param == 'guest' %}selected{% endif %}>{% trans 'Guests' %}</option>
+      </select>
+    </div>
+    <input type="hidden" name="status" value="{{ status_param }}">
+    <button type="submit">{% trans 'Show' %}</button>
+  </form>
+
+  <div class="stats">
+    {% for tile in status_tiles %}
+    <a class="stat stat-filter {% if status_param == tile.key %}active{% endif %}"
+       href="{% url 'participants' %}?{{ tile.qs }}">
+      <b>{{ tile.count }}</b><span>{{ tile.label }}</span>
+    </a>
+    {% endfor %}
+    {% if guest_count is not None %}
+    <div class="stat {% if guest_count >= guest_cap %}warn{% endif %}">
+      <b>{{ guest_count }}/{{ guest_cap }}</b><span>{% trans 'Guest seats taken' %}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if applications %}
+  <div class="plist">
+    {% for app in applications %}
+    <article class="pcard">
+      <div class="pcard-head">
+        <div>
+          <p class="pname">{{ app.name }}</p>
+          <p class="pmeta">{{ app.event.title }} · {% blocktrans with date=app.created_at|date:"d M Y, H:i" %}submitted {{ date }}{% endblocktrans %}</p>
+        </div>
+        <div class="badges">
+          <span class="badge type-{{ app.applicant_type }}">{{ app.get_applicant_type_display }}</span>
+          <span class="badge status-{{ app.status }}">{{ app.get_status_display }}</span>
+        </div>
+      </div>
+
+      <dl class="pgrid">
+        <div><dt>{% trans 'Email' %}</dt><dd><a href="mailto:{{ app.email }}">{{ app.email }}</a></dd></div>
+        {% if app.phone %}<div><dt>{% trans 'Phone' %}</dt><dd><a href="tel:{{ app.phone }}">{{ app.phone }}</a></dd></div>{% endif %}
+        {% if app.telegram %}<div><dt>Telegram</dt><dd>{{ app.telegram }}</dd></div>{% endif %}
+        {% if app.applicant_type == 'startup' %}
+          {% if app.project %}<div><dt>{% trans 'Project' %}</dt><dd>{{ app.project }}</dd></div>{% endif %}
+          {% if app.link %}
+          <div>
+            <dt>{% trans 'Link' %}</dt>
+            <dd><a href="{{ app.link }}" target="_blank" rel="noopener noreferrer">{{ app.link }}</a>
+              <p class="plink-note">{% trans 'The link must be public — if it does not open, ask the applicant for public access.' %}</p>
+            </dd>
+          </div>
+          {% endif %}
+        {% else %}
+          {% if app.company %}<div><dt>{% trans 'Company' %}</dt><dd>{{ app.company }}</dd></div>{% endif %}
+        {% endif %}
+      </dl>
+
+      {% if app.applicant_type == 'startup' and app.pitch %}
+      <div class="ptext"><strong>{% trans 'Pitch:' %}</strong> {{ app.pitch }}</div>
+      {% elif app.why %}
+      <div class="ptext"><strong>{% trans 'Why they want to come:' %}</strong> {{ app.why }}</div>
+      {% endif %}
+
+      {% include "includes/status_actions.html" with app=app querystring=querystring %}
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">{% trans 'No applications match the selected filters.' %}</div>
+  {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.querySelectorAll('.filters select').forEach(function (el) {
+    el.addEventListener('change', function () { el.form.submit(); });
+  });
+</script>
+{% endblock %}

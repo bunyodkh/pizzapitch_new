@@ -1,0 +1,33 @@
+{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}PizzaPitch{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="PizzaPitch" class="logo-img"></a>
+    <div class="top-right">
+      {% block top_right %}{% endblock %}
+      {% include "includes/lang_switch.html" %}
+    </div>
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <footer>{% block footer %}
+    <a class="footer-lock" href="{% url 'team_login' %}" aria-label="{% trans 'Team login' %}">🔒</a>
+    {% trans 'built for founders' %}
+  {% endblock %}</footer>
+</div>
+{% block overlays %}{% endblock %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>

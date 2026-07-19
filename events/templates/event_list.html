@@ -1,0 +1,40 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Events' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <div class="thead-row">
+    <div>
+      <h1 class="tt">{% trans 'Events' %}</h1>
+      <p class="tsub">{% trans 'Create and manage PizzaPitch events.' %}</p>
+    </div>
+    <a class="cta-small" href="{% url 'event_create' %}">+ {% trans 'New event' %}</a>
+  </div>
+
+  {% if events %}
+  <div class="elist">
+    {% for ev in events %}
+    <article class="ecard">
+      <div>
+        <p class="ename">
+          {{ ev.title }}
+          {% if not ev.is_active %}<span class="badge status-rejected">{% trans 'inactive' %}</span>{% endif %}
+        </p>
+        <p class="emeta">{{ ev.date|date:"d M Y" }} · {{ ev.time|time:"H:i" }} · {{ ev.place }}{% if ev.city %}, {{ ev.city }}{% endif %}</p>
+        <p class="emeta">{% blocktrans count counter=ev.applications.count %}{{ counter }} application{% plural %}{{ counter }} applications{% endblocktrans %}</p>
+      </div>
+      <div class="eactions">
+        <a class="abtn" href="{% url 'event_edit' ev.id %}">{% trans 'Edit' %}</a>
+        <form method="post" action="{% url 'event_delete' ev.id %}" onsubmit="return confirm('{% trans 'Delete this event? This cannot be undone.' %}');">
+          {% csrf_token %}
+          <button type="submit" class="abtn reject">{% trans 'Delete' %}</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">{% trans 'No events yet.' %}</div>
+  {% endif %}
+{% endblock %}

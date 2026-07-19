@@ -1,0 +1,82 @@
+{% load i18n %}
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="{% trans 'Apply' %}">
+  <div class="backdrop" id="backdrop"></div>
+  <div class="sheet">
+    <div class="sheet-head">
+      <button class="iconbtn" id="backBtn" aria-label="{% trans 'Back' %}">←</button>
+      <div class="steps" aria-hidden="true">
+        <span class="pip on" data-pip="1"></span>
+        <span class="pip" data-pip="2"></span>
+        <span class="pip" data-pip="3"></span>
+      </div>
+      <button class="iconbtn" id="closeBtn" aria-label="{% trans 'Close' %}">✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <!-- STEP 1 — choose type -->
+      <div class="panel show" data-panel="type">
+        <h3>{% trans 'Who are you at this event?' %}</h3>
+        <p class="sub">{% trans 'That way we only show the fields you need.' %}</p>
+        <button class="choice" data-type="startup">
+          <span class="emoji">🚀</span>
+          <span><p class="ct">{% trans "I'm a startup" %}</p><p class="cd">{% trans 'Take the stage and pitch your product.' %}</p></span>
+          <span class="pill-price paid">{% trans 'Paid' %}</span>
+        </button>
+        <button class="choice" data-type="guest">
+          <span class="emoji">🍕</span>
+          <span><p class="ct">{% trans "I'm a guest" %}</p><p class="cd">{% trans 'Watch the pitches, meet people, show support.' %}</p></span>
+          <span class="pill-price free">{% trans 'Free' %}</span>
+        </button>
+      </div>
+
+      <!-- STEP 2 — form -->
+      <div class="panel" data-panel="form">
+        <h3 id="formTitle">{% trans 'Application' %}</h3>
+        <p class="sub" id="formSub"></p>
+        <form id="applyForm" data-endpoint="{% url 'apply' %}" novalidate>
+          {% csrf_token %}
+          <!-- shared -->
+          <div class="field" data-req><label>{% trans 'Name' %}</label><input name="name" autocomplete="name" placeholder="{% trans 'What should we call you' %}"><p class="msg">{% trans 'Enter your name' %}</p></div>
+          <div class="field" data-req data-email><label>Email</label><input name="email" type="email" autocomplete="email" placeholder="you@mail.com"><p class="msg">{% trans 'A valid email is required' %}</p></div>
+
+          <!-- startup only -->
+          <div class="only-startup">
+            <div class="field" data-req><label>{% trans 'Project name' %}</label><input name="project" placeholder="{% trans 'Your startup' %}"><p class="msg">{% trans 'Enter a name' %}</p></div>
+            <div class="field" data-req><label>{% trans 'Phone' %}</label><input name="phone" type="tel" autocomplete="tel" placeholder="+998 90 123 45 67"><p class="msg">{% trans 'Enter your phone' %}</p></div>
+            <div class="field"><label>{% trans 'Website or pitch deck link' %} <span class="opt">— {% trans 'optional' %}</span></label><input name="link" type="url" placeholder="https://..."><p class="field-hint">{% blocktrans %}The link must be <strong>public</strong> — it should open for anyone without requesting access. We can't open private links (e.g. Google Docs set to "restricted").{% endblocktrans %}</p></div>
+            <div class="field" data-req><label>{% trans 'What you do — in one sentence' %}</label><textarea name="pitch" placeholder="{% trans 'We help ... do ...' %}"></textarea><p class="msg">{% trans 'A couple words about the product' %}</p></div>
+            <div class="fee">
+              <span class="fee-amt">{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Participation — {{ price }} {{ currency }}{% endblocktrans %}</span>
+              <span class="fee-d">{% trans "The application is free. If approved, we'll send a payment link — your spot in the pitch session is locked in after payment." %}</span>
+            </div>
+          </div>
+
+          <!-- guest only -->
+          <div class="only-guest">
+            <div class="field" data-req><label>{% trans 'Company / what you do' %}</label><input name="company" placeholder="{% trans 'Role and company' %}"><p class="msg">{% trans 'Please fill this in' %}</p></div>
+            <div class="field" data-req><label>{% trans 'Why do you want to come?' %}</label><textarea name="why" placeholder="{% trans 'What interests you about the evening' %}"></textarea><p class="msg">{% trans 'A couple words — this helps us' %}</p></div>
+          </div>
+
+          <!-- shared: Telegram required for everyone -->
+          <div class="field" data-req><label>Telegram</label><input name="tg" placeholder="@username"><p class="msg">{% trans 'Enter your Telegram' %}</p></div>
+
+          <div class="form-alert" id="formAlert">{% trans 'Check the fields marked in red.' %}</div>
+          <button type="submit" class="cta" style="margin-top:8px">{% trans 'Submit application' %}</button>
+          <p class="cta-note">{% trans "We'll reply by email in 24–48 hours." %}</p>
+        </form>
+      </div>
+
+      <!-- STEP 3 — done -->
+      <div class="panel" data-panel="done">
+        <div class="done">
+          <div class="check">✓</div>
+          <h3>{% trans 'Application received' %}</h3>
+          <p class="sub" id="doneSub">{% trans "Thanks! We'll take a look." %}</p>
+          <div class="whatnext" id="whatnext"></div>
+          <button class="cta" id="doneClose" style="margin-top:22px">{% trans 'Done' %}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

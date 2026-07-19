@@ -1,0 +1,41 @@
+{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}PizzaPitch · {% trans 'Team' %}{% endblock %}</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/team.css' %}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="tw">
+  <div class="tbar">
+    <a class="tlogo" href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="PizzaPitch" class="logo-img">{% block brand %}{% trans 'Team' %}{% endblock %}</a>
+    <div class="tuser">
+      {% if request.user.is_authenticated %}{{ request.user.get_username }} ·{% endif %}
+      <form method="post" action="{% url 'team_logout' %}" class="logout-form">
+        {% csrf_token %}
+        <button type="submit">{% trans 'Log out' %}</button>
+      </form>
+      {% include "includes/lang_switch.html" %}
+    </div>
+  </div>
+
+  {% if request.user.is_authenticated %}
+  <nav class="tnav">
+    <a class="tnav-link {% if active_tab == 'home' %}active{% endif %}" href="{% url 'team_home' %}">{% trans 'Team home' %}</a>
+    <a class="tnav-link {% if active_tab == 'events' %}active{% endif %}" href="{% url 'event_list' %}">{% trans 'Events' %}</a>
+    <a class="tnav-link {% if active_tab == 'applications' %}active{% endif %}" href="{% url 'participants' %}">{% trans 'Applications' %}</a>
+    <a class="tnav-link {% if active_tab == 'contacts' %}active{% endif %}" href="{% url 'contacts' %}">{% trans 'Contacts' %}</a>
+  </nav>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</div>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

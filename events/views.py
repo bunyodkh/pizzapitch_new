@@ -1,0 +1,401 @@
+import csv
+
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.views import LoginView, LogoutView
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.db.models import Count
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.dateformat import format as format_date
+from django.utils.translation import gettext as _
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
+
+from .forms import EventForm, TeamAuthenticationForm
+from .models import Application, Event, Subscriber
+from .telegram_notify import notify_new_application_telegram, notify_new_subscriber_telegram
+
+# Pseudo applicant-type value for the contacts page's "type" filter — picks
+# out waitlist Subscribers, which aren't Applications and have no real type.
+CONTACT_TYPE_SUBSCRIBER = 'subscriber'
+
+
+def current_event():
+    return Event.objects.filter(is_active=True).order_by('date', 'time').first()
+
+
+@require_GET
+def index(request):
+    event = current_event()
+    if event is None:
+        notify_i18n = {
+            'invalidEmail': _('Enter a valid email'),
+            'success': _("Done! We'll email you as soon as registration opens."),
+            'error': _('Could not submit. Please try again.'),
+        }
+        return render(request, 'between.html', {'notify_i18n': notify_i18n})
+
+    price = f'{event.startup_price:.0f}'
+    event_date = format_date(event.date, 'D, d M')
+
+    i18n_strings = {
+        'formTitleStartup': _('Startup application'),
+        'formTitleGuest': _('Guest application'),
+        'formSubStartup': _('A short note about your project — selected teams get the pitch format.'),
+        'formSubGuest': _('A couple fields — we will follow up with confirmation.'),
+        'doneSubTemplate': _('Thanks! Confirmation will be sent to {email}.'),
+        'doneStepsStartup': [
+            _('We review applications manually — usually 24–48 hours.'),
+            _('Approved — we email a payment link for participation ({price} {currency}).').format(
+                price=price, currency=event.currency,
+            ),
+            _('Paid — your pitch slot is locked in. Prepare your 5-minute pitch.'),
+        ],
+        'doneStepsGuest': [
+            _('We review applications manually — usually 24–48 hours.'),
+            _('We email you a confirmation with all the evening details.'),
+            _('Confirmed — add it to your calendar. See you on {date}.').format(date=event_date),
+        ],
+        'fillFieldsPrefix': _('Please fill in: '),
+        'genericError': _('Could not submit the application. Check your connection and try again.'),
+    }
+    return render(request, 'index.html', {'event': event, 'i18n_strings': i18n_strings})
+
+
+@require_POST
+def apply(request):
+    event = current_event()
+    if event is None:
+        return JsonResponse({'error': _('There is no open event to apply to.')}, status=404)
+
+    applicant_type = request.POST.get('type', '')
+    if applicant_type not in (Application.STARTUP, Application.GUEST):
+        return JsonResponse({'error': _('Invalid application type.')}, status=400)
+
+    name = request.POST.get('name', '').strip()
+    email = request.POST.get('email', '').strip()
+    telegram = request.POST.get('tg', '').strip()
+    if not name or not email or not telegram:
+        return JsonResponse({'error': _('Name, email and Telegram are required.')}, status=400)
+
+    if applicant_type == Application.STARTUP:
+        project = request.POST.get('project', '').strip()
+        pitch = request.POST.get('pitch', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        if not project or not pitch or not phone:
+            return JsonResponse({'error': _('Project, phone and pitch are required.')}, status=400)
+    else:
+        company = request.POST.get('company', '').strip()
+        why = request.POST.get('why', '').strip()
+        if not company or not why:
+            return JsonResponse({'error': _('Company and reason are required.')}, status=400)
+
+        guest_count = Application.objects.filter(
+            event=event, applicant_type=Application.GUEST,
+        ).exclude(status=Application.STATUS_REJECTED).count()
+        if guest_count >= Application.GUEST_CAP:
+            return JsonResponse({'error': _('Guest spots are full — no seats left.')}, status=409)
+
+    application = Application.objects.create(
+        event=event,
+        applicant_type=applicant_type,
+        name=name,
+        email=email,
+        phone=request.POST.get('phone', '').strip(),
+        telegram=telegram,
+        project=request.POST.get('project', '').strip(),
+        link=request.POST.get('link', '').strip(),
+        pitch=request.POST.get('pitch', '').strip(),
+        company=request.POST.get('company', '').strip(),
+        why=request.POST.get('why', '').strip(),
+    )
+    notify_new_application_telegram(application)
+    return JsonResponse({'id': application.id, 'status': application.status}, status=201)
+
+
+@require_POST
+def subscribe(request):
+    email = request.POST.get('email', '').strip()
+    if not email:
+        return JsonResponse({'error': _('Email is required.')}, status=400)
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({'error': _('Invalid email.')}, status=400)
+
+    subscriber, created = Subscriber.objects.get_or_create(email=email)
+    if created:
+        notify_new_subscriber_telegram(subscriber)
+    return JsonResponse({'status': 'subscribed'}, status=201 if created else 200)
+
+
+class TeamLoginView(LoginView):
+    template_name = 'team_login.html'
+    authentication_form = TeamAuthenticationForm
+    redirect_authenticated_user = True
+
+
+class TeamLogoutView(LogoutView):
+    next_page = 'team_login'
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def team_home(request):
+    return render(request, 'team_home.html', {'active_tab': 'home'})
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def event_list(request):
+    events = Event.objects.order_by('-date', '-time')
+    return render(request, 'event_list.html', {'events': events, 'active_tab': 'events'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def event_create(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('event_list')
+    else:
+        form = EventForm()
+    return render(request, 'event_form.html', {'form': form, 'event': None, 'active_tab': 'events'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def event_edit(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            if form.cleaned_data.get('remove_hero_photo') and not request.FILES.get('hero_photo') and obj.hero_photo:
+                obj.hero_photo.delete(save=False)
+            obj.save()
+            return redirect('event_list')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'event_form.html', {'form': form, 'event': event, 'active_tab': 'events'})
+
+
+@staff_member_required(login_url='team_login')
+@require_POST
+def event_delete(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    event.delete()
+    return redirect('event_list')
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def participants(request):
+    """Participant management dashboard for the PizzaPitch team."""
+    events = Event.objects.order_by('-date', '-time')
+    active = current_event()
+
+    event_param = request.GET.get('event', '')
+    type_param = request.GET.get('type', 'all')
+    status_param = request.GET.get('status', 'all')
+
+    if event_param == 'all':
+        selected_event = None
+    elif event_param:
+        selected_event = events.filter(pk=event_param).first()
+    else:
+        selected_event = active
+
+    effective_event_param = event_param or (str(active.id) if active else '')
+
+    # Base queryset: event + type filters only, used both for the status
+    # tiles (which must stay stable regardless of which status is selected)
+    # and as the starting point for the actually-displayed list.
+    base_applications = Application.objects.all()
+    if selected_event is not None:
+        base_applications = base_applications.filter(event=selected_event)
+    elif event_param != 'all':
+        # No active event and nothing explicitly selected — don't dump every event by accident.
+        base_applications = base_applications.none()
+
+    if type_param in (Application.STARTUP, Application.GUEST):
+        base_applications = base_applications.filter(applicant_type=type_param)
+
+    status_counts = {choice: 0 for choice, _ in Application.STATUS_CHOICES}
+    for row in base_applications.values('status').annotate(n=Count('id')):
+        status_counts[row['status']] = row['n']
+    total_count = sum(status_counts.values())
+
+    applications = base_applications.select_related('event')
+    if status_param in (Application.STATUS_PENDING, Application.STATUS_APPROVED, Application.STATUS_REJECTED):
+        applications = applications.filter(status=status_param)
+    applications = applications.order_by('-created_at')
+
+    guest_count = None
+    if selected_event is not None:
+        guest_count = Application.objects.filter(
+            event=selected_event, applicant_type=Application.GUEST,
+        ).exclude(status=Application.STATUS_REJECTED).count()
+
+    def qs_for_status(status_value):
+        params = request.GET.copy()
+        params['status'] = status_value
+        params.setdefault('event', effective_event_param)
+        params.setdefault('type', type_param)
+        return params.urlencode()
+
+    status_tiles = [
+        {'key': 'all', 'label': _('All'), 'count': total_count, 'qs': qs_for_status('all')},
+        {'key': Application.STATUS_PENDING, 'label': _('Pending'),
+         'count': status_counts[Application.STATUS_PENDING], 'qs': qs_for_status(Application.STATUS_PENDING)},
+        {'key': Application.STATUS_APPROVED, 'label': _('Approved'),
+         'count': status_counts[Application.STATUS_APPROVED], 'qs': qs_for_status(Application.STATUS_APPROVED)},
+        {'key': Application.STATUS_REJECTED, 'label': _('Rejected'),
+         'count': status_counts[Application.STATUS_REJECTED], 'qs': qs_for_status(Application.STATUS_REJECTED)},
+    ]
+
+    context = {
+        'events': events,
+        'selected_event': selected_event,
+        'event_param': effective_event_param,
+        'type_param': type_param,
+        'status_param': status_param,
+        'applications': applications,
+        'guest_count': guest_count,
+        'guest_cap': Application.GUEST_CAP,
+        'querystring': request.GET.urlencode(),
+        'total_count': total_count,
+        'status_tiles': status_tiles,
+        'active_tab': 'applications',
+    }
+    return render(request, 'participants.html', context)
+
+
+@staff_member_required(login_url='team_login')
+@require_POST
+def set_application_status(request, app_id):
+    application = get_object_or_404(Application, pk=app_id)
+    status = request.POST.get('status')
+    if status in dict(Application.STATUS_CHOICES):
+        application.status = status
+        application.save(update_fields=['status'])
+
+    url = reverse('participants')
+    qs = request.POST.get('querystring', '')
+    if qs:
+        url = f'{url}?{qs}'
+    return redirect(url)
+
+
+def _filtered_applications(request, events):
+    """Shared event/type/status filtering for the contacts list and its CSV export.
+
+    Unlike the applications review queue, this is a contact directory, not
+    an operational to-do list — with no event filter selected it should
+    show every applicant on file, not just the current event's (there may
+    be no current event at all between events, and past contacts still
+    matter for outreach).
+    """
+    event_param = request.GET.get('event', '')
+    type_param = request.GET.get('type', 'all')
+    status_param = request.GET.get('status', 'all')
+
+    selected_event = None
+    if event_param and event_param != 'all':
+        selected_event = events.filter(pk=event_param).first()
+    effective_event_param = event_param or 'all'
+
+    application_qs = Application.objects.all()
+    if selected_event is not None:
+        application_qs = application_qs.filter(event=selected_event)
+
+    if type_param in (Application.STARTUP, Application.GUEST):
+        application_qs = application_qs.filter(applicant_type=type_param)
+    elif type_param == CONTACT_TYPE_SUBSCRIBER:
+        # Subscribers aren't Applications at all — the "type" filter is
+        # standing in for "which kind of contact", not an Application field.
+        application_qs = application_qs.none()
+    if status_param in (Application.STATUS_PENDING, Application.STATUS_APPROVED, Application.STATUS_REJECTED):
+        application_qs = application_qs.filter(status=status_param)
+
+    application_qs = application_qs.select_related('event')
+    return selected_event, effective_event_param, type_param, status_param, application_qs
+
+
+def _contact_rows(request):
+    """Builds the combined contact directory: applicants plus waitlist
+    subscribers. Subscribers aren't tied to an event/status, so they're only
+    folded in when neither filter narrows the applicant list — otherwise
+    "guests for event X" would misleadingly include people who never applied
+    to anything. The type filter has a dedicated "Subscribers" option instead.
+    """
+    events = Event.objects.order_by('-date', '-time')
+    selected_event, effective_event_param, type_param, status_param, application_qs = _filtered_applications(
+        request, events,
+    )
+
+    rows = [
+        {
+            'name': app.name, 'email': app.email, 'phone': app.phone, 'telegram': app.telegram,
+            'type_display': app.get_applicant_type_display(), 'status_display': app.get_status_display(),
+            'event_title': app.event.title, 'source': _('Applicant'),
+        }
+        for app in application_qs
+    ]
+
+    include_subscribers = (
+        selected_event is None and status_param == 'all'
+        and type_param in ('all', CONTACT_TYPE_SUBSCRIBER)
+    )
+    if include_subscribers:
+        rows += [
+            {
+                'name': '', 'email': sub.email, 'phone': '', 'telegram': '',
+                'type_display': '', 'status_display': '', 'event_title': '', 'source': _('Subscriber'),
+            }
+            for sub in Subscriber.objects.all()
+        ]
+
+    rows.sort(key=lambda row: (row['name'] or row['email']).lower())
+    return events, selected_event, effective_event_param, type_param, status_param, rows
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def contacts(request):
+    """Contact directory — applicants and waitlist subscribers — for future outreach (e.g. event newsletters)."""
+    events, selected_event, effective_event_param, type_param, status_param, rows = _contact_rows(request)
+
+    context = {
+        'events': events,
+        'selected_event': selected_event,
+        'event_param': effective_event_param,
+        'type_param': type_param,
+        'status_param': status_param,
+        'contacts': rows,
+        'total_count': len(rows),
+        'querystring': request.GET.urlencode(),
+        'active_tab': 'contacts',
+    }
+    return render(request, 'contacts.html', context)
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def contacts_export(request):
+    """CSV export of the currently filtered contact list."""
+    *_unused, rows = _contact_rows(request)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Email', 'Phone', 'Telegram', 'Type', 'Status', 'Event', 'Source'])
+    for row in rows:
+        writer.writerow([
+            row['name'], row['email'], row['phone'], row['telegram'],
+            row['type_display'], row['status_display'], row['event_title'], row['source'],
+        ])
+    return response

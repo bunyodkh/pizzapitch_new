@@ -1,0 +1,21 @@
+{% load i18n %}
+<div class="pactions">
+  <form method="post" action="{% url 'set_application_status' app.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="querystring" value="{{ querystring }}">
+    <input type="hidden" name="status" value="approved">
+    <button type="submit" class="abtn approve {% if app.status == 'approved' %}current{% endif %}">{% trans 'Approve' %}</button>
+  </form>
+  <form method="post" action="{% url 'set_application_status' app.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="querystring" value="{{ querystring }}">
+    <input type="hidden" name="status" value="rejected">
+    <button type="submit" class="abtn reject {% if app.status == 'rejected' %}current{% endif %}">{% trans 'Reject' %}</button>
+  </form>
+  <form method="post" action="{% url 'set_application_status' app.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="querystring" value="{{ querystring }}">
+    <input type="hidden" name="status" value="pending">
+    <button type="submit" class="abtn pending {% if app.status == 'pending' %}current{% endif %}">{% trans 'Pending' %}</button>
+  </form>
+</div>

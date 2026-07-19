@@ -1,0 +1,20 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('apply/', views.apply, name='apply'),
+    path('subscribe/', views.subscribe, name='subscribe'),
+    path('team/login/', views.TeamLoginView.as_view(), name='team_login'),
+    path('team/logout/', views.TeamLogoutView.as_view(), name='team_logout'),
+    path('team/', views.team_home, name='team_home'),
+    path('team/events/', views.event_list, name='event_list'),
+    path('team/events/new/', views.event_create, name='event_create'),
+    path('team/events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
+    path('team/events/<int:event_id>/delete/', views.event_delete, name='event_delete'),
+    path('team/participants/', views.participants, name='participants'),
+    path('team/participants/<int:app_id>/status/', views.set_application_status, name='set_application_status'),
+    path('team/contacts/', views.contacts, name='contacts'),
+    path('team/contacts/export/', views.contacts_export, name='contacts_export'),
+]

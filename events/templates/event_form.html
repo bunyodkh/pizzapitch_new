@@ -1,0 +1,179 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% if event %}{% trans 'Edit event' %}{% else %}{% trans 'New event' %}{% endif %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <h1 class="tt">{% if event %}{% trans 'Edit event' %}{% else %}{% trans 'New event' %}{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="eform">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="lang-tabs">
+      <div class="lang-tabbar" role="tablist">
+        <button type="button" class="lang-tab active" data-lang-tab="en" role="tab" aria-selected="true">EN</button>
+        <button type="button" class="lang-tab" data-lang-tab="ru" role="tab" aria-selected="false">RU</button>
+      </div>
+
+      <div class="lang-panel" data-lang-panel="en">
+        <div class="ffield2{% if form.title_en.errors %} has-error{% endif %}">
+          <label for="{{ form.title_en.id_for_label }}">{{ form.title_en.label }}</label>
+          {{ form.title_en }}
+          {% if form.title_en.errors %}<p class="ferr">{{ form.title_en.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.tagline_en.errors %} has-error{% endif %}">
+          <label for="{{ form.tagline_en.id_for_label }}">{{ form.tagline_en.label }}</label>
+          {{ form.tagline_en }}
+          {% if form.tagline_en.errors %}<p class="ferr">{{ form.tagline_en.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.description_en.errors %} has-error{% endif %}">
+          <label for="{{ form.description_en.id_for_label }}">{{ form.description_en.label }}</label>
+          {{ form.description_en }}
+          {% if form.description_en.errors %}<p class="ferr">{{ form.description_en.errors.0 }}</p>{% endif %}
+        </div>
+      </div>
+
+      <div class="lang-panel" data-lang-panel="ru" hidden>
+        <div class="ffield2{% if form.title_ru.errors %} has-error{% endif %}">
+          <label for="{{ form.title_ru.id_for_label }}">{{ form.title_ru.label }}</label>
+          {{ form.title_ru }}
+          {% if form.title_ru.errors %}<p class="ferr">{{ form.title_ru.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.tagline_ru.errors %} has-error{% endif %}">
+          <label for="{{ form.tagline_ru.id_for_label }}">{{ form.tagline_ru.label }}</label>
+          {{ form.tagline_ru }}
+          {% if form.tagline_ru.errors %}<p class="ferr">{{ form.tagline_ru.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.description_ru.errors %} has-error{% endif %}">
+          <label for="{{ form.description_ru.id_for_label }}">{{ form.description_ru.label }}</label>
+          {{ form.description_ru }}
+          {% if form.description_ru.errors %}<p class="ferr">{{ form.description_ru.errors.0 }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="ffield2{% if form.date.errors %} has-error{% endif %}">
+      <label for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+      {{ form.date }}
+      {% if form.date.errors %}<p class="ferr">{{ form.date.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.time.errors %} has-error{% endif %}">
+      <label for="{{ form.time.id_for_label }}">{{ form.time.label }}</label>
+      {{ form.time }}
+      {% if form.time.errors %}<p class="ferr">{{ form.time.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.place.errors %} has-error{% endif %}">
+      <label for="{{ form.place.id_for_label }}">{{ form.place.label }}</label>
+      {{ form.place }}
+      {% if form.place.errors %}<p class="ferr">{{ form.place.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.city.errors %} has-error{% endif %}">
+      <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+      {{ form.city }}
+      {% if form.city.errors %}<p class="ferr">{{ form.city.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.hero_photo.errors %} has-error{% endif %}">
+      <label>{{ form.hero_photo.label }}</label>
+      <div class="fphoto">
+        <div class="fphoto-preview" id="fphoto-preview" {% if not event or not event.hero_photo %}hidden{% endif %}>
+          {% if event and event.hero_photo %}
+          <img src="{{ event.hero_photo.url }}" alt="" id="fphoto-img">
+          {% else %}
+          <img src="" alt="" id="fphoto-img">
+          {% endif %}
+          <button type="button" class="fphoto-x" id="fphoto-remove" aria-label="{% trans 'Remove photo' %}">×</button>
+        </div>
+        <label class="fphoto-upload" for="{{ form.hero_photo.id_for_label }}" id="fphoto-upload-label">
+          <span id="fphoto-upload-text">{% trans 'Upload photo' %}</span>
+        </label>
+        {{ form.hero_photo }}
+        {{ form.remove_hero_photo }}
+      </div>
+      {% if form.hero_photo.errors %}<p class="ferr">{{ form.hero_photo.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.startup_price.errors %} has-error{% endif %}">
+      <label for="{{ form.startup_price.id_for_label }}">{{ form.startup_price.label }}</label>
+      {{ form.startup_price }}
+      {% if form.startup_price.errors %}<p class="ferr">{{ form.startup_price.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.currency.errors %} has-error{% endif %}">
+      <label for="{{ form.currency.id_for_label }}">{{ form.currency.label }}</label>
+      {{ form.currency }}
+      {% if form.currency.errors %}<p class="ferr">{{ form.currency.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.capacity.errors %} has-error{% endif %}">
+      <label for="{{ form.capacity.id_for_label }}">{{ form.capacity.label }}</label>
+      {{ form.capacity }}
+      {% if form.capacity.errors %}<p class="ferr">{{ form.capacity.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.is_active.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.is_active.id_for_label }}">
+        {{ form.is_active }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.is_active.label }}</span>
+      </label>
+      {% if form.is_active.errors %}<p class="ferr">{{ form.is_active.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="eform-actions">
+      <button type="submit" class="cta">{% trans 'Save' %}</button>
+      <a class="abtn" href="{% url 'event_list' %}">{% trans 'Cancel' %}</a>
+    </div>
+  </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  document.querySelectorAll('.lang-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var lang = tab.getAttribute('data-lang-tab');
+      document.querySelectorAll('.lang-tab').forEach(function (t) {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+      document.querySelectorAll('.lang-panel').forEach(function (p) {
+        p.hidden = p.getAttribute('data-lang-panel') !== lang;
+      });
+    });
+  });
+
+  var fileInput = document.getElementById('{{ form.hero_photo.id_for_label }}');
+  var removeInput = document.getElementById('{{ form.remove_hero_photo.id_for_label }}');
+  var preview = document.getElementById('fphoto-preview');
+  var previewImg = document.getElementById('fphoto-img');
+  var uploadText = document.getElementById('fphoto-upload-text');
+  var uploadDefaultText = uploadText.textContent;
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      removeInput.value = '';
+      uploadText.textContent = file.name;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        preview.hidden = false;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  var removeBtn = document.getElementById('fphoto-remove');
+  if (removeBtn) {
+    removeBtn.addEventListener('click', function () {
+      preview.hidden = true;
+      previewImg.src = '';
+      fileInput.value = '';
+      removeInput.value = 'on';
+      uploadText.textContent = uploadDefaultText;
+    });
+  }
+})();
+</script>
+{% endblock %}

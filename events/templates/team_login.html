@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Team login' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    <p class="eyebrow">{% trans 'PizzaPitch team' %}</p>
+    <h1>{% trans 'Team login' %}</h1>
+    <p class="lede">{% trans 'Sign in to review and manage event applications.' %}</p>
+
+    <div class="notify">
+      {% if form.non_field_errors %}
+      <div class="form-alert show">{{ form.non_field_errors.0 }}</div>
+      {% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="field" data-req>
+          <label for="{{ form.username.id_for_label }}">{% trans 'Username' %}</label>
+          {{ form.username }}
+        </div>
+        <div class="field" data-req>
+          <label for="{{ form.password.id_for_label }}">{% trans 'Password' %}</label>
+          {{ form.password }}
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="cta">{% trans 'Sign in' %}</button>
+      </form>
+    </div>
+  </header>
+{% endblock %}
