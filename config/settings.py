@@ -214,22 +214,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Production hardening — behind a reverse proxy (nginx) terminating TLS.
 if not DEBUG:
-    # Nginx sets this header; tells Django the original request was HTTPS
-    # even though gunicorn only ever sees plain HTTP from the proxy.
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
-    # Off until HTTPS (certbot) is confirmed working on the domain — turning
-    # this on too early can lock you out via HSTS. Flip to True in .env once
-    # https:// loads cleanly, then redeploy.
-    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'
-    if SECURE_SSL_REDIRECT:
-        SECURE_HSTS_SECONDS = 3600  # start small; raise once you're confident HTTPS won't break
-        SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-        SECURE_HSTS_PRELOAD = True
-
+    
 # Always-on logging to stdout — captured by systemd/journald under gunicorn,
 # so `journalctl -u pizzapitch` shows errors instead of them vanishing
 # silently the way Django's default (email-the-admins) would with no mail
