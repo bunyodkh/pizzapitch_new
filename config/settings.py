@@ -15,6 +15,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from django.core.exceptions import ImproperlyConfigured
 from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,15 +27,26 @@ load_dotenv(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY', 'django-insecure-0_!e6^ao%oyo+)ijf#tl$9$9$hvu*aqb-328=&s85^xi2fw0_w',
-)
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+# Defaults to False (fail safe) — local dev sets DEBUG=True explicitly in .env.
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# SECURITY WARNING: keep the secret key used in production secret!
+# No insecure fallback once DEBUG is off — a deploy with a missing SECRET_KEY
+# must fail loudly at startup rather than silently run with a public default.
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'django-insecure-0_!e6^ao%oyo+)ijf#tl$9$9$hvu*aqb-328=&s85^xi2fw0_w'
+    else:
+        raise ImproperlyConfigured('SECRET_KEY environment variable must be set when DEBUG=False.')
+
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip()]
+
+# Required by Django's CSRF check for HTTPS requests — must include scheme,
+# e.g. "https://example.com". Empty by default since it doesn't apply to
+# local HTTP dev.
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()]
 
 
 # Application definition
@@ -192,7 +204,51 @@ TELEGRAM_GROUP_CHAT_ID = os.environ.get('TELEGRAM_GROUP_CHAT_ID', '')
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# collectstatic's output dir — nginx serves this directly in production; see deploy/nginx.conf.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # User-uploaded files (event hero photos, etc.)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Production hardening — behind a reverse proxy (nginx) terminating TLS.
+if not DEBUG:
+    # Nginx sets this header; tells Django the original request was HTTPS
+    # even though gunicorn only ever sees plain HTTP from the proxy.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Off until HTTPS (certbot) is confirmed working on the domain — turning
+    # this on too early can lock you out via HSTS. Flip to True in .env once
+    # https:// loads cleanly, then redeploy.
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False') == 'True'
+    if SECURE_SSL_REDIRECT:
+        SECURE_HSTS_SECONDS = 3600  # start small; raise once you're confident HTTPS won't break
+        SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+        SECURE_HSTS_PRELOAD = True
+
+# Always-on logging to stdout — captured by systemd/journald under gunicorn,
+# so `journalctl -u pizzapitch` shows errors instead of them vanishing
+# silently the way Django's default (email-the-admins) would with no mail
+# server configured.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}

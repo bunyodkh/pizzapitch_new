@@ -1,0 +1,30 @@
+# systemd unit for the Gunicorn process running PizzaPitch.
+#
+# Install:
+#   sudo cp deploy/pizzapitch.service /etc/systemd/system/pizzapitch.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now pizzapitch
+#
+# Adjust User/Group/WorkingDirectory/paths below to match your droplet
+# if you didn't follow DEPLOY.md's exact layout (user "pizzapitch",
+# app cloned to /home/pizzapitch/app).
+
+[Unit]
+Description=Gunicorn daemon for PizzaPitch (Django)
+After=network.target
+
+[Service]
+User=pizzapitch
+Group=www-data
+WorkingDirectory=/home/pizzapitch/app
+EnvironmentFile=/home/pizzapitch/app/.env
+RuntimeDirectory=pizzapitch
+ExecStart=/home/pizzapitch/app/venv/bin/gunicorn \
+    --workers 3 \
+    --bind unix:/run/pizzapitch/gunicorn.sock \
+    config.wsgi:application
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
