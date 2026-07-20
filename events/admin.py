@@ -21,7 +21,7 @@ class EventAdmin(TranslationAdmin, ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'date'
     fields = (
-        'title', 'slug', 'tagline', 'description',
+        'title', 'slug', 'tagline', 'description', 'hero_headline',
         'date', 'time', 'place', 'city',
         'hero_photo',
         'guest_price', 'startup_price', 'currency',

@@ -1,5 +1,6 @@
 import html
 import logging
+import time
 
 import requests
 from django.conf import settings
@@ -8,6 +9,8 @@ logger = logging.getLogger(__name__)
 
 TELEGRAM_API_URL = 'https://api.telegram.org/bot{token}/sendMessage'
 TELEGRAM_TIMEOUT = 10  # seconds
+TELEGRAM_MAX_ATTEMPTS = 3
+TELEGRAM_RETRY_BACKOFF = 1.5  # seconds; doubles each retry
 
 DIVIDER = '─' * 18
 
@@ -136,34 +139,52 @@ def _send_group_message(text, *, bot_token=None, group_chat_id=None):
             group_chat_id,
         )
 
-    try:
-        response = requests.post(
-            TELEGRAM_API_URL.format(token=bot_token),
-            json={
-                'chat_id': group_chat_id,
-                'text': text,
-                'parse_mode': 'HTML',
-                'disable_web_page_preview': True,
-            },
-            timeout=TELEGRAM_TIMEOUT,
-        )
-        response.raise_for_status()
-        payload = response.json()
-        if not payload.get('ok'):
-            logger.error('Telegram API rejected the notification: %s', payload)
-            return False
-
-        result_chat = payload.get('result', {}).get('chat', {})
-        if result_chat.get('type') not in ('group', 'supergroup'):
-            logger.warning(
-                'Telegram message was sent, but the target chat type is "%s", not a group — '
-                'check TELEGRAM_GROUP_CHAT_ID.',
-                result_chat.get('type'),
+    backoff = TELEGRAM_RETRY_BACKOFF
+    for attempt in range(1, TELEGRAM_MAX_ATTEMPTS + 1):
+        try:
+            response = requests.post(
+                TELEGRAM_API_URL.format(token=bot_token),
+                json={
+                    'chat_id': group_chat_id,
+                    'text': text,
+                    'parse_mode': 'HTML',
+                    'disable_web_page_preview': True,
+                },
+                timeout=TELEGRAM_TIMEOUT,
             )
-        return True
-    except requests.RequestException:
-        logger.exception('Failed to send Telegram notification (network/API error).')
-        return False
+            if response.status_code >= 400 and response.status_code not in (429, 500, 502, 503, 504):
+                # Permanent client error (bad token, bad chat id, malformed request, etc.) —
+                # retrying won't help, fail immediately instead of burning the backoff budget.
+                logger.error(
+                    'Telegram API rejected the notification (HTTP %d): %s',
+                    response.status_code, response.text,
+                )
+                return False
+            response.raise_for_status()
+            payload = response.json()
+            if not payload.get('ok'):
+                logger.error('Telegram API rejected the notification: %s', payload)
+                return False
+
+            result_chat = payload.get('result', {}).get('chat', {})
+            if result_chat.get('type') not in ('group', 'supergroup'):
+                logger.warning(
+                    'Telegram message was sent, but the target chat type is "%s", not a group — '
+                    'check TELEGRAM_GROUP_CHAT_ID.',
+                    result_chat.get('type'),
+                )
+            return True
+        except requests.RequestException:
+            if attempt < TELEGRAM_MAX_ATTEMPTS:
+                logger.warning(
+                    'Telegram notification attempt %d/%d failed (network/API error), retrying in %.1fs.',
+                    attempt, TELEGRAM_MAX_ATTEMPTS, backoff, exc_info=True,
+                )
+                time.sleep(backoff)
+                backoff *= 2
+            else:
+                logger.exception('Failed to send Telegram notification (network/API error).')
+                return False
 
 
 def notify_new_application_telegram(application, *, bot_token=None, group_chat_id=None):

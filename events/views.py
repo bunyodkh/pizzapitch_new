@@ -1,4 +1,5 @@
 import csv
+import threading
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import LoginView, LogoutView
@@ -50,7 +51,7 @@ def index(request):
             _('Approved — we email a payment link for participation ({price} {currency}).').format(
                 price=price, currency=event.currency,
             ),
-            _('Paid — your pitch slot is locked in. Prepare your 5-minute pitch.'),
+            _('Paid — your pitch slot is locked in. Prepare your 3-minute pitch.'),
         ],
         'doneStepsGuest': [
             _('We review applications manually — usually 24–48 hours.'),
@@ -110,7 +111,9 @@ def apply(request):
         company=request.POST.get('company', '').strip(),
         why=request.POST.get('why', '').strip(),
     )
-    notify_new_application_telegram(application)
+    # Fire-and-forget: Telegram delivery has its own retry/backoff and can take
+    # several seconds on network trouble, so it must not hold up this response.
+    threading.Thread(target=notify_new_application_telegram, args=(application,), daemon=True).start()
     return JsonResponse({'id': application.id, 'status': application.status}, status=201)
 
 
@@ -126,7 +129,7 @@ def subscribe(request):
 
     subscriber, created = Subscriber.objects.get_or_create(email=email)
     if created:
-        notify_new_subscriber_telegram(subscriber)
+        threading.Thread(target=notify_new_subscriber_telegram, args=(subscriber,), daemon=True).start()
     return JsonResponse({'status': 'subscribed'}, status=201 if created else 200)
 
 

@@ -212,9 +212,9 @@ msgid "Ten startups"
 msgstr "Десять стартапов"
 
 msgid ""
-"Selected from applications. Five minutes to pitch, three for audience "
+"Selected from applications. Three minutes to pitch, three for audience "
 "questions."
-msgstr "Отбираем по заявкам. Пять минут на питч, три на вопросы от зала."
+msgstr "Отбираем по заявкам. Три минуты на питч, три на вопросы от зала."
 
 msgid "Guests & networking"
 msgstr "Гости и нетворкинг"
@@ -514,8 +514,8 @@ msgstr "демо-вечер"
 msgid "Pitches · pizza · connections"
 msgstr "Питчи · пицца · знакомства"
 
-msgid "Ten startups.<br>Five minutes to pitch.<br><em>Pizza for everyone.</em>"
-msgstr "Десять стартапов.<br>Пять минут на питч.<br><em>Пицца для всех.</em>"
+msgid "Ten startups.<br>Three minutes to pitch.<br><em>Pizza for everyone.</em>"
+msgstr "Десять стартапов.<br>Три минуты на питч.<br><em>Пицца для всех.</em>"
 
 msgid ""
 "A live pitch night over pizza: founders show their product, guests ask "
@@ -561,8 +561,8 @@ msgstr "Приходим, берём напиток, знакомимся без
 msgid "Pitches"
 msgstr "Питчи"
 
-msgid "10 startups · 5-minute pitch + 3 minutes of Q&A."
-msgstr "10 стартапов · 5 минут питч + 3 минуты вопросы."
+msgid "10 startups · 3-minute pitch + 3 minutes of Q&A."
+msgstr "10 стартапов · 3 минуты питч + 3 минуты вопросы."
 
 msgid "Networking & pizza"
 msgstr "Нетворкинг и пицца"
@@ -712,8 +712,8 @@ msgid ""
 msgstr ""
 "Одобрили — присылаем на email ссылку на оплату участия ({price} {currency})."
 
-msgid "Paid — your pitch slot is locked in. Prepare your 5-minute pitch."
-msgstr "Оплатили — место в питч-сессии закреплено. Готовите 5-минутный питч."
+msgid "Paid — your pitch slot is locked in. Prepare your 3-minute pitch."
+msgstr "Оплатили — место в питч-сессии закреплено. Готовите 3-минутный питч."
 
 msgid "We email you a confirmation with all the evening details."
 msgstr "Пишем на email: подтверждение и все детали вечера."

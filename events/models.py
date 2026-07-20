@@ -8,6 +8,10 @@ class Event(models.Model):
     slug = models.SlugField(max_length=220, unique=True, blank=True)
     tagline = models.CharField(max_length=200, blank=True)
     description = models.TextField(blank=True)
+    hero_headline = models.TextField(
+        blank=True,
+        help_text='Big headline on the landing page. One line per row (each row is shown on its own line). Leave blank to use the default.',
+    )
 
     date = models.DateField()
     time = models.TimeField()

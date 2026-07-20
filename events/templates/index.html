@@ -14,7 +14,7 @@
     </figure>
     {% endif %}
     <p class="eyebrow">{% trans 'Pitches · pizza · connections' %}</p>
-    <h1>{% blocktrans %}Ten startups.<br>Five minutes to pitch.<br><em>Pizza for everyone.</em>{% endblocktrans %}</h1>
+    <h1>{% if event.hero_headline %}{{ event.hero_headline|linebreaksbr }}{% else %}{% blocktrans %}Ten startups.<br>Three minutes to pitch.<br><em>Pizza for everyone.</em>{% endblocktrans %}{% endif %}</h1>
     <p class="lede">{% if event.description %}{{ event.description }}{% else %}{% blocktrans %}A live pitch night over pizza: founders show their product, guests ask questions, and meet the people building and investing.{% endblocktrans %}{% endif %}</p>
 
     <div class="stub" aria-label="{% trans 'Event details' %}">
@@ -43,7 +43,7 @@
     <h2>{% trans 'How the evening runs' %}</h2>
     <div class="flow">
       <div class="flow-item"><span class="flow-time">19:00</span><div><p class="flow-t">{% trans 'Doors & drinks' %}</p><p class="flow-d">{% trans 'Arrive, grab a drink, meet people without rushing.' %}</p></div></div>
-      <div class="flow-item"><span class="flow-time">19:30</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 5-minute pitch + 3 minutes of Q&A.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">19:30</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 3-minute pitch + 3 minutes of Q&A.' %}</p></div></div>
       <div class="flow-item"><span class="flow-time">20:30</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors — mingling over pizza till the end.' %}</p></div></div>
     </div>
   </section>
