@@ -41,14 +41,17 @@ def index(request):
     price = f'{event.startup_price:.0f}'
     event_date = format_date(event.date, 'D, d M')
 
-    # "How the evening runs" times, relative to the event's own start time
-    # (doors at start, pitches 30 min in, networking 90 min in) so they stay
-    # correct if the start time ever changes instead of drifting like before.
+    # "How the evening runs" times, relative to the event's own start time,
+    # so they stay correct if the start time ever changes instead of drifting
+    # like before. Doors at start; pitches 30 min in; networking starts once
+    # the pitch block ends — 10 startups × (3 min pitch + 7 min Q&A) = 100 min.
+    PITCH_BLOCK_MINUTES = 10 * (3 + 7)
     start_dt = datetime.combine(event.date, event.time)
+    pitches_dt = start_dt + timedelta(minutes=30)
     schedule = {
         'doors': event.time.strftime('%H:%M'),
-        'pitches': (start_dt + timedelta(minutes=30)).strftime('%H:%M'),
-        'networking': (start_dt + timedelta(minutes=90)).strftime('%H:%M'),
+        'pitches': pitches_dt.strftime('%H:%M'),
+        'networking': (pitches_dt + timedelta(minutes=PITCH_BLOCK_MINUTES)).strftime('%H:%M'),
     }
 
     i18n_strings = {

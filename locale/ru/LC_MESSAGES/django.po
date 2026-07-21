@@ -212,9 +212,9 @@ msgid "Ten startups"
 msgstr "Десять стартапов"
 
 msgid ""
-"Selected from applications. Three minutes to pitch, three for audience "
+"Selected from applications. Three minutes to pitch, seven for audience "
 "questions."
-msgstr "Отбираем по заявкам. Три минуты на питч, три на вопросы от зала."
+msgstr "Отбираем по заявкам. Три минуты на питч, семь на вопросы от зала."
 
 msgid "Guests & networking"
 msgstr "Гости и нетворкинг"
@@ -561,8 +561,8 @@ msgstr "Приходим, берём напиток, знакомимся без
 msgid "Pitches"
 msgstr "Питчи"
 
-msgid "10 startups · 3-minute pitch + 3 minutes of Q&A."
-msgstr "10 стартапов · 3 минуты питч + 3 минуты вопросы."
+msgid "10 startups · 3 minutes for pitch + 7 minutes for Q&A."
+msgstr "10 стартапов · 3 минуты на питч + 7 минут на вопросы."
 
 msgid "Networking & pizza"
 msgstr "Нетворкинг и пицца"
