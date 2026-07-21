@@ -1,5 +1,6 @@
 import csv
 import threading
+from datetime import datetime, timedelta
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import LoginView, LogoutView
@@ -40,6 +41,16 @@ def index(request):
     price = f'{event.startup_price:.0f}'
     event_date = format_date(event.date, 'D, d M')
 
+    # "How the evening runs" times, relative to the event's own start time
+    # (doors at start, pitches 30 min in, networking 90 min in) so they stay
+    # correct if the start time ever changes instead of drifting like before.
+    start_dt = datetime.combine(event.date, event.time)
+    schedule = {
+        'doors': event.time.strftime('%H:%M'),
+        'pitches': (start_dt + timedelta(minutes=30)).strftime('%H:%M'),
+        'networking': (start_dt + timedelta(minutes=90)).strftime('%H:%M'),
+    }
+
     i18n_strings = {
         'formTitleStartup': _('Startup application'),
         'formTitleGuest': _('Guest application'),
@@ -61,7 +72,7 @@ def index(request):
         'fillFieldsPrefix': _('Please fill in: '),
         'genericError': _('Could not submit the application. Check your connection and try again.'),
     }
-    return render(request, 'index.html', {'event': event, 'i18n_strings': i18n_strings})
+    return render(request, 'index.html', {'event': event, 'schedule': schedule, 'i18n_strings': i18n_strings})
 
 
 @require_POST

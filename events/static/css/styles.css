@@ -59,6 +59,8 @@
   .stub-cell + .stub-cell{border-left:1px dashed var(--line)}
   .stub-k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 5px}
   .stub-v{font-size:15px;font-weight:700;color:var(--ink);margin:0;line-height:1.25}
+  .stub-v a{color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:var(--line);text-underline-offset:3px;transition:text-decoration-color .15s ease}
+  .stub-v a:hover{text-decoration-color:var(--tomato)}
   .stub-tear{height:0;border-top:1px dashed var(--line);position:relative}
   .stub-tear::before,.stub-tear::after{content:"";position:absolute;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:1px solid var(--line)}
   .stub-tear::before{left:-10px}

@@ -25,7 +25,7 @@
         </div>
         <div class="stub-cell">
           <p class="stub-k">{% trans 'Where' %}</p>
-          <p class="stub-v">{{ event.place }}{% if event.city %}, {{ event.city }}{% endif %}</p>
+          <p class="stub-v">{% if event.location_url %}<a href="{{ event.location_url }}" target="_blank" rel="noopener noreferrer">{{ event.place }}</a>{% else %}{{ event.place }}{% endif %}{% if event.city %}, {{ event.city }}{% endif %}</p>
         </div>
       </div>
       <div class="stub-tear"></div>
@@ -42,9 +42,9 @@
   <section class="block">
     <h2>{% trans 'How the evening runs' %}</h2>
     <div class="flow">
-      <div class="flow-item"><span class="flow-time">19:00</span><div><p class="flow-t">{% trans 'Doors & drinks' %}</p><p class="flow-d">{% trans 'Arrive, grab a drink, meet people without rushing.' %}</p></div></div>
-      <div class="flow-item"><span class="flow-time">19:30</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 3-minute pitch + 3 minutes of Q&A.' %}</p></div></div>
-      <div class="flow-item"><span class="flow-time">20:30</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors — mingling over pizza till the end.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">{{ schedule.doors }}</span><div><p class="flow-t">{% trans 'Doors & drinks' %}</p><p class="flow-d">{% trans 'Arrive, grab a drink, meet people without rushing.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">{{ schedule.pitches }}</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 3-minute pitch + 3 minutes of Q&A.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">{{ schedule.networking }}</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors — mingling over pizza till the end.' %}</p></div></div>
     </div>
   </section>
 

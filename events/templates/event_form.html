@@ -32,6 +32,16 @@
           {{ form.description_en }}
           {% if form.description_en.errors %}<p class="ferr">{{ form.description_en.errors.0 }}</p>{% endif %}
         </div>
+        <div class="ffield2{% if form.place_en.errors %} has-error{% endif %}">
+          <label for="{{ form.place_en.id_for_label }}">{{ form.place_en.label }}</label>
+          {{ form.place_en }}
+          {% if form.place_en.errors %}<p class="ferr">{{ form.place_en.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.city_en.errors %} has-error{% endif %}">
+          <label for="{{ form.city_en.id_for_label }}">{{ form.city_en.label }}</label>
+          {{ form.city_en }}
+          {% if form.city_en.errors %}<p class="ferr">{{ form.city_en.errors.0 }}</p>{% endif %}
+        </div>
       </div>
 
       <div class="lang-panel" data-lang-panel="ru" hidden>
@@ -50,6 +60,16 @@
           {{ form.description_ru }}
           {% if form.description_ru.errors %}<p class="ferr">{{ form.description_ru.errors.0 }}</p>{% endif %}
         </div>
+        <div class="ffield2{% if form.place_ru.errors %} has-error{% endif %}">
+          <label for="{{ form.place_ru.id_for_label }}">{{ form.place_ru.label }}</label>
+          {{ form.place_ru }}
+          {% if form.place_ru.errors %}<p class="ferr">{{ form.place_ru.errors.0 }}</p>{% endif %}
+        </div>
+        <div class="ffield2{% if form.city_ru.errors %} has-error{% endif %}">
+          <label for="{{ form.city_ru.id_for_label }}">{{ form.city_ru.label }}</label>
+          {{ form.city_ru }}
+          {% if form.city_ru.errors %}<p class="ferr">{{ form.city_ru.errors.0 }}</p>{% endif %}
+        </div>
       </div>
     </div>
 
@@ -63,15 +83,10 @@
       {{ form.time }}
       {% if form.time.errors %}<p class="ferr">{{ form.time.errors.0 }}</p>{% endif %}
     </div>
-    <div class="ffield2{% if form.place.errors %} has-error{% endif %}">
-      <label for="{{ form.place.id_for_label }}">{{ form.place.label }}</label>
-      {{ form.place }}
-      {% if form.place.errors %}<p class="ferr">{{ form.place.errors.0 }}</p>{% endif %}
-    </div>
-    <div class="ffield2{% if form.city.errors %} has-error{% endif %}">
-      <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
-      {{ form.city }}
-      {% if form.city.errors %}<p class="ferr">{{ form.city.errors.0 }}</p>{% endif %}
+    <div class="ffield2{% if form.location_url.errors %} has-error{% endif %}">
+      <label for="{{ form.location_url.id_for_label }}">{{ form.location_url.label }}</label>
+      {{ form.location_url }}
+      {% if form.location_url.errors %}<p class="ferr">{{ form.location_url.errors.0 }}</p>{% endif %}
     </div>
 
     <div class="ffield2{% if form.hero_photo.errors %} has-error{% endif %}">

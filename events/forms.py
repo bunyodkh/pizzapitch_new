@@ -27,7 +27,8 @@ class EventForm(forms.ModelForm):
             'title_en', 'title_ru',
             'tagline_en', 'tagline_ru',
             'description_en', 'description_ru',
-            'date', 'time', 'place', 'city',
+            'date', 'time',
+            'place_en', 'place_ru', 'city_en', 'city_ru', 'location_url',
             'hero_photo',
             'startup_price', 'currency',
             'capacity', 'is_active',
@@ -37,6 +38,7 @@ class EventForm(forms.ModelForm):
             'time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
             'description_en': forms.Textarea(attrs={'rows': 4}),
             'description_ru': forms.Textarea(attrs={'rows': 4}),
+            'location_url': forms.URLInput(attrs={'placeholder': 'https://maps.google.com/...'}),
             'hero_photo': forms.FileInput,
         }
         labels = {
@@ -46,6 +48,11 @@ class EventForm(forms.ModelForm):
             'tagline_ru': _('Tagline'),
             'description_en': _('Description'),
             'description_ru': _('Description'),
+            'place_en': _('Place'),
+            'place_ru': _('Place'),
+            'city_en': _('City'),
+            'city_ru': _('City'),
+            'location_url': _('Map link'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -53,5 +60,6 @@ class EventForm(forms.ModelForm):
         self.fields['date'].input_formats = ['%Y-%m-%d']
         self.fields['time'].input_formats = ['%H:%M']
         # Modeltranslation makes every language column nullable at the DB level;
-        # require the default-language title so an event can't save with no title at all.
+        # require the default-language title/place so an event can't save without them.
         self.fields['title_en'].required = True
+        self.fields['place_en'].required = True

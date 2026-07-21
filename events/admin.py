@@ -22,7 +22,7 @@ class EventAdmin(TranslationAdmin, ModelAdmin):
     date_hierarchy = 'date'
     fields = (
         'title', 'slug', 'tagline', 'description', 'hero_headline',
-        'date', 'time', 'place', 'city',
+        'date', 'time', 'place', 'city', 'location_url',
         'hero_photo',
         'guest_price', 'startup_price', 'currency',
         'capacity', 'is_active',

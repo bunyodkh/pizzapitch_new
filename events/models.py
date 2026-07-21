@@ -17,6 +17,10 @@ class Event(models.Model):
     time = models.TimeField()
     place = models.CharField(max_length=200)
     city = models.CharField(max_length=100, blank=True)
+    location_url = models.URLField(
+        blank=True,
+        help_text='Link to the venue on a map (Google Maps, Yandex Maps, etc.). When set, the place name on the site links here.',
+    )
 
     hero_photo = models.ImageField(upload_to='events/hero/', blank=True, null=True)
 
