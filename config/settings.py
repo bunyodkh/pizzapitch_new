@@ -207,6 +207,18 @@ STATIC_URL = 'static/'
 # collectstatic's output dir — nginx serves this directly in production; see deploy/nginx.conf.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Content-hashed filenames (e.g. styles.abcd1234.css) so browsers can cache static
+# files indefinitely without ever serving a stale copy after a deploy — the hash
+# changes whenever the file's contents change, forcing a fresh fetch.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
+    },
+}
+
 # User-uploaded files (event hero photos, etc.)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
