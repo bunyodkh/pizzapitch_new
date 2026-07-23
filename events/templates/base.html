@@ -47,6 +47,28 @@
     {% trans 'built for founders' %}
   {% endblock %}</footer>
 </div>
+
+<div class="cookie-banner" id="cookieBanner" hidden>
+  <p>{% blocktrans %}We use cookies for basic analytics.{% endblocktrans %}</p>
+  <button type="button" id="cookieBannerOk">{% trans 'Got it' %}</button>
+</div>
+<script>
+(function () {
+  var STORAGE_KEY = 'cookieNoticeDismissed';
+  var banner = document.getElementById('cookieBanner');
+  if (!banner || localStorage.getItem(STORAGE_KEY)) return;
+
+  banner.hidden = false;
+  requestAnimationFrame(function () { banner.classList.add('show'); });
+
+  document.getElementById('cookieBannerOk').addEventListener('click', function () {
+    banner.classList.remove('show');
+    localStorage.setItem(STORAGE_KEY, '1');
+    setTimeout(function () { banner.hidden = true; }, 250);
+  });
+})();
+</script>
+
 {% block overlays %}{% endblock %}
 {% block extra_js %}{% endblock %}
 </body>

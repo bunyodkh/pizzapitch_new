@@ -43,7 +43,7 @@
           <div class="only-startup">
             <div class="field" data-req><label>{% trans 'Project name' %}</label><input name="project" placeholder="{% trans 'Your startup' %}"><p class="msg">{% trans 'Enter a name' %}</p></div>
             <div class="field" data-req><label>{% trans 'Phone' %}</label><input name="phone" type="tel" autocomplete="tel" placeholder="+998 90 123 45 67"><p class="msg">{% trans 'Enter your phone' %}</p></div>
-            <div class="field"><label>{% trans 'Website or pitch deck link' %} <span class="opt">— {% trans 'optional' %}</span></label><input name="link" type="url" placeholder="https://..."><p class="field-hint">{% blocktrans %}The link must be <strong>public</strong> — it should open for anyone without requesting access. We can't open private links (e.g. Google Docs set to "restricted").{% endblocktrans %}</p></div>
+            <div class="field"><label>{% trans 'Website or pitch deck link' %}</label><input name="link" type="url" placeholder="https://..."><p class="field-hint">{% blocktrans %}The link must be <strong>public</strong> — it should open for anyone without requesting access. We can't open private links (e.g. Google Docs set to "restricted").{% endblocktrans %}</p></div>
             <div class="field" data-req><label>{% trans 'What you do — in one sentence' %}</label><textarea name="pitch" placeholder="{% trans 'We help ... do ...' %}"></textarea><p class="msg">{% trans 'A couple words about the product' %}</p></div>
             <div class="fee">
               <span class="fee-amt">{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Participation — {{ price }} {{ currency }}{% endblocktrans %}</span>

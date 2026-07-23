@@ -150,6 +150,12 @@ msgstr "Вход для команды"
 msgid "built for founders"
 msgstr "сделано для основателей"
 
+msgid "We use cookies for basic analytics."
+msgstr "Мы используем куки для базовой аналитики."
+
+msgid "Got it"
+msgstr "Понятно"
+
 msgid "Team"
 msgstr "Команда"
 

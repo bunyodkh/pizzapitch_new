@@ -210,3 +210,19 @@
   .fmt .t{font-weight:600;margin-bottom:2px}
   .fmt .d{color:var(--muted);font-size:14px}
 
+  .cookie-banner{
+    position:fixed;left:0;right:0;bottom:16px;z-index:40;
+    width:calc(100% - 40px);max-width:340px;margin:0 auto;
+    display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+    padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+    transform:translateY(140%);transition:transform .25s ease;
+  }
+  .cookie-banner.show{transform:translateY(0)}
+  .cookie-banner p{margin:0;color:var(--ink);font-size:13px;line-height:1.5}
+  .cookie-banner button{
+    flex:none;font-family:Inter,sans-serif;font-weight:600;font-size:13px;
+    background:var(--tomato);color:#fff;border:0;border-radius:12px;padding:9px 16px;cursor:pointer;
+    transition:background .15s ease;
+  }
+  .cookie-banner button:hover{background:var(--tomato-dark)}
+
