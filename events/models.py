@@ -31,6 +31,15 @@ class Event(models.Model):
     capacity = models.PositiveIntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=True, verbose_name=_('Current event'))
 
+    startup_registration_open = models.BooleanField(
+        default=True, verbose_name=_('Startup registration open'),
+        help_text=_('When off, startups cannot apply and the option is hidden from visitors.'),
+    )
+    guest_registration_open = models.BooleanField(
+        default=True, verbose_name=_('Guest registration open'),
+        help_text=_('When off, guests cannot apply and the option is hidden from visitors.'),
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

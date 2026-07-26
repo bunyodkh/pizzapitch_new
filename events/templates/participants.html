@@ -4,8 +4,16 @@
 {% block title %}{% trans 'Applications' %} — PizzaPitch{% endblock %}
 
 {% block content %}
-  <h1 class="tt">{% trans 'Applications' %}</h1>
-  <p class="tsub">{% trans 'Applications for the current and past events — review and approve.' %}</p>
+  <div class="thead-row">
+    <div>
+      <h1 class="tt">{% trans 'Applications' %}</h1>
+      <p class="tsub">{% trans 'Applications for the current and past events — review and approve.' %}</p>
+    </div>
+    <div class="thead-actions">
+      <a class="cta-small" href="{% url 'participants_export_excel' %}?{{ querystring }}">{% trans 'Export Excel' %}</a>
+      <a class="cta-small" href="{% url 'participants_export_csv' %}?{{ querystring }}">{% trans 'Export CSV' %}</a>
+    </div>
+  </div>
 
   <form class="filters" method="get">
     <div class="ffield">

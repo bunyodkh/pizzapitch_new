@@ -14,7 +14,10 @@ urlpatterns = [
     path('team/events/<int:event_id>/edit/', views.event_edit, name='event_edit'),
     path('team/events/<int:event_id>/delete/', views.event_delete, name='event_delete'),
     path('team/participants/', views.participants, name='participants'),
+    path('team/participants/export/', views.participants_export_csv, name='participants_export_csv'),
+    path('team/participants/export/excel/', views.participants_export_excel, name='participants_export_excel'),
     path('team/participants/<int:app_id>/status/', views.set_application_status, name='set_application_status'),
     path('team/contacts/', views.contacts, name='contacts'),
     path('team/contacts/export/', views.contacts_export, name='contacts_export'),
+    path('team/contacts/export/excel/', views.contacts_export_excel, name='contacts_export_excel'),
 ]

@@ -35,8 +35,12 @@
       </div>
     </div>
 
+    {% if event.startup_registration_open or event.guest_registration_open %}
     <button class="cta" id="openBtn">{% trans 'Apply' %} <span aria-hidden="true">→</span></button>
     <p class="cta-note">{% trans '2 minutes · confirmation by email in 24–48h' %}</p>
+    {% else %}
+    <p class="cta-note">{% trans 'Registration is currently closed for this event.' %}</p>
+    {% endif %}
   </header>
 
   <section class="block">

@@ -88,6 +88,11 @@ def apply(request):
     if applicant_type not in (Application.STARTUP, Application.GUEST):
         return JsonResponse({'error': _('Invalid application type.')}, status=400)
 
+    if applicant_type == Application.STARTUP and not event.startup_registration_open:
+        return JsonResponse({'error': _('Startup registration is currently closed.')}, status=403)
+    if applicant_type == Application.GUEST and not event.guest_registration_open:
+        return JsonResponse({'error': _('Guest registration is currently closed.')}, status=403)
+
     name = request.POST.get('name', '').strip()
     email = request.POST.get('email', '').strip()
     telegram = request.POST.get('tg', '').strip()
@@ -208,11 +213,13 @@ def event_delete(request, event_id):
     return redirect('event_list')
 
 
-@staff_member_required(login_url='team_login')
-@require_GET
-def participants(request):
-    """Participant management dashboard for the PizzaPitch team."""
-    events = Event.objects.order_by('-date', '-time')
+def _participant_applications(request, events):
+    """Shared event/type/status filtering for the applications dashboard and its exports.
+
+    Returns the selected event plus both the type-filtered-only queryset
+    (used for the status tiles, which must stay stable regardless of which
+    status is selected) and the fully filtered queryset (event + type + status).
+    """
     active = current_event()
 
     event_param = request.GET.get('event', '')
@@ -228,9 +235,6 @@ def participants(request):
 
     effective_event_param = event_param or (str(active.id) if active else '')
 
-    # Base queryset: event + type filters only, used both for the status
-    # tiles (which must stay stable regardless of which status is selected)
-    # and as the starting point for the actually-displayed list.
     base_applications = Application.objects.all()
     if selected_event is not None:
         base_applications = base_applications.filter(event=selected_event)
@@ -241,15 +245,66 @@ def participants(request):
     if type_param in (Application.STARTUP, Application.GUEST):
         base_applications = base_applications.filter(applicant_type=type_param)
 
-    status_counts = {choice: 0 for choice, _ in Application.STATUS_CHOICES}
-    for row in base_applications.values('status').annotate(n=Count('id')):
-        status_counts[row['status']] = row['n']
-    total_count = sum(status_counts.values())
-
     applications = base_applications.select_related('event')
     if status_param in (Application.STATUS_PENDING, Application.STATUS_APPROVED, Application.STATUS_REJECTED):
         applications = applications.filter(status=status_param)
     applications = applications.order_by('-created_at')
+
+    return selected_event, effective_event_param, type_param, status_param, base_applications, applications
+
+
+_APPLICATION_EXPORT_HEADERS = [
+    'Name', 'Email', 'Phone', 'Telegram', 'Type', 'Status', 'Event', 'Submitted',
+    'Project', 'Link', 'Pitch', 'Company', 'Why',
+]
+
+
+def _application_export_row(app):
+    return [
+        app.name, app.email, app.phone, app.telegram,
+        app.get_applicant_type_display(), app.get_status_display(),
+        app.event.title, app.created_at.strftime('%Y-%m-%d %H:%M'),
+        app.project, app.link, app.pitch, app.company, app.why,
+    ]
+
+
+def _xlsx_response(filename, headers, rows):
+    """Builds an .xlsx download from a header row and a list of row lists."""
+    from openpyxl import Workbook
+    from openpyxl.utils import get_column_letter
+
+    wb = Workbook()
+    ws = wb.active
+    ws.append(headers)
+    for i, header in enumerate(headers, start=1):
+        column_values = [str(header)] + [str(row[i - 1]) for row in rows]
+        width = max(len(v) for v in column_values)
+        ws.column_dimensions[get_column_letter(i)].width = min(width + 2, 50)
+    for row in rows:
+        ws.append(row)
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    wb.save(response)
+    return response
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def participants(request):
+    """Participant management dashboard for the PizzaPitch team."""
+    events = Event.objects.order_by('-date', '-time')
+    (
+        selected_event, effective_event_param, type_param, status_param,
+        base_applications, applications,
+    ) = _participant_applications(request, events)
+
+    status_counts = {choice: 0 for choice, _ in Application.STATUS_CHOICES}
+    for row in base_applications.values('status').annotate(n=Count('id')):
+        status_counts[row['status']] = row['n']
+    total_count = sum(status_counts.values())
 
     guest_count = None
     if selected_event is not None:
@@ -289,6 +344,33 @@ def participants(request):
         'active_tab': 'applications',
     }
     return render(request, 'participants.html', context)
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def participants_export_csv(request):
+    """CSV export of the currently filtered applications list."""
+    events = Event.objects.order_by('-date', '-time')
+    *_unused, applications = _participant_applications(request, events)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="applications.csv"'
+    writer = csv.writer(response)
+    writer.writerow(_APPLICATION_EXPORT_HEADERS)
+    for app in applications:
+        writer.writerow(_application_export_row(app))
+    return response
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def participants_export_excel(request):
+    """Excel export of the currently filtered applications list."""
+    events = Event.objects.order_by('-date', '-time')
+    *_unused, applications = _participant_applications(request, events)
+
+    rows = [_application_export_row(app) for app in applications]
+    return _xlsx_response('applications.xlsx', _APPLICATION_EXPORT_HEADERS, rows)
 
 
 @staff_member_required(login_url='team_login')
@@ -400,6 +482,16 @@ def contacts(request):
     return render(request, 'contacts.html', context)
 
 
+_CONTACT_EXPORT_HEADERS = ['Name', 'Email', 'Phone', 'Telegram', 'Type', 'Status', 'Event', 'Source']
+
+
+def _contact_export_row(row):
+    return [
+        row['name'], row['email'], row['phone'], row['telegram'],
+        row['type_display'], row['status_display'], row['event_title'], row['source'],
+    ]
+
+
 @staff_member_required(login_url='team_login')
 @require_GET
 def contacts_export(request):
@@ -409,10 +501,15 @@ def contacts_export(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="contacts.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Name', 'Email', 'Phone', 'Telegram', 'Type', 'Status', 'Event', 'Source'])
+    writer.writerow(_CONTACT_EXPORT_HEADERS)
     for row in rows:
-        writer.writerow([
-            row['name'], row['email'], row['phone'], row['telegram'],
-            row['type_display'], row['status_display'], row['event_title'], row['source'],
-        ])
+        writer.writerow(_contact_export_row(row))
     return response
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def contacts_export_excel(request):
+    """Excel export of the currently filtered contact list."""
+    *_unused, rows = _contact_rows(request)
+    return _xlsx_response('contacts.xlsx', _CONTACT_EXPORT_HEADERS, [_contact_export_row(row) for row in rows])

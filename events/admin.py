@@ -26,6 +26,7 @@ class EventAdmin(TranslationAdmin, ModelAdmin):
         'hero_photo',
         'guest_price', 'startup_price', 'currency',
         'capacity', 'is_active',
+        'startup_registration_open', 'guest_registration_open',
     )
     inlines = [ApplicationInline]
 

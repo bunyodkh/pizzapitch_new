@@ -134,6 +134,23 @@
       {% if form.is_active.errors %}<p class="ferr">{{ form.is_active.errors.0 }}</p>{% endif %}
     </div>
 
+    <div class="ffield2{% if form.startup_registration_open.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.startup_registration_open.id_for_label }}">
+        {{ form.startup_registration_open }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.startup_registration_open.label }}</span>
+      </label>
+      {% if form.startup_registration_open.errors %}<p class="ferr">{{ form.startup_registration_open.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.guest_registration_open.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.guest_registration_open.id_for_label }}">
+        {{ form.guest_registration_open }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.guest_registration_open.label }}</span>
+      </label>
+      {% if form.guest_registration_open.errors %}<p class="ferr">{{ form.guest_registration_open.errors.0 }}</p>{% endif %}
+    </div>
+
     <div class="eform-actions">
       <button type="submit" class="cta">{% trans 'Save' %}</button>
       <a class="abtn" href="{% url 'event_list' %}">{% trans 'Cancel' %}</a>

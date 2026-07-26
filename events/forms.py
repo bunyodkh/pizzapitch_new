@@ -32,6 +32,7 @@ class EventForm(forms.ModelForm):
             'hero_photo',
             'startup_price', 'currency',
             'capacity', 'is_active',
+            'startup_registration_open', 'guest_registration_open',
         ]
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}, format='%Y-%m-%d'),

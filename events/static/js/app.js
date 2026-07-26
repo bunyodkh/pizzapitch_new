@@ -174,7 +174,8 @@
   }
 
   /* ---------- events ---------- */
-  document.getElementById('openBtn').addEventListener('click', openApply);
+  var openBtn = document.getElementById('openBtn');
+  if (openBtn) openBtn.addEventListener('click', openApply);
   document.getElementById('closeBtn').addEventListener('click', closeApply);
   document.getElementById('backdrop').addEventListener('click', closeApply);
   document.getElementById('doneClose').addEventListener('click', closeApply);

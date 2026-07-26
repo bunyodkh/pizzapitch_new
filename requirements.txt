@@ -4,8 +4,10 @@ charset-normalizer==3.4.9
 Django==6.0.7
 django-modeltranslation==0.20.3
 django-unfold==0.101.0
+et-xmlfile==2.0.0
 gunicorn==23.0.0
 idna==3.18
+openpyxl==3.1.5
 pillow==12.3.0
 python-dotenv==1.2.2
 requests==2.32.3
