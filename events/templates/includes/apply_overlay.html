@@ -30,6 +30,8 @@
           <span><p class="ct">{% trans "I'm a guest" %}</p><p class="cd">{% trans 'Watch the pitches, meet people, show support.' %}</p></span>
           <span class="pill-price free">{% trans 'Free' %}</span>
         </button>
+        {% elif event.startup_registration_open %}
+        <p class="sub">{% trans 'Guest registration will open soon — check back shortly.' %}</p>
         {% endif %}
         {% if not event.startup_registration_open and not event.guest_registration_open %}
         <p class="sub">{% trans 'Registration is currently closed for this event.' %}</p>

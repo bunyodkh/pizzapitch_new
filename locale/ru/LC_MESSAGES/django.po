@@ -99,6 +99,15 @@ msgstr "дек"
 msgid "Current event"
 msgstr "Текущее мероприятие"
 
+msgid "Startup registration open"
+msgstr "Регистрация стартапов открыта"
+
+msgid "Guest registration open"
+msgstr "Регистрация гостей открыта"
+
+msgid "Guest registration will open soon — check back shortly."
+msgstr "Регистрация гостей скоро откроется — загляните чуть позже."
+
 msgid "Startup"
 msgstr "Стартап"
 
