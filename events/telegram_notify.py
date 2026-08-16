@@ -34,7 +34,7 @@ CLIENT_FIELDS = [
 ]
 STARTUP_FIELDS = [
     ('💡', 'Проект', 'project'),
-    ('🔗', 'Питч-дек / сайт', 'link'),
+    ('🔗', 'Питч-дек', 'link'),
 ]
 GUEST_FIELDS = [
     ('🏢', 'Компания', 'company'),
@@ -196,7 +196,7 @@ def notify_new_application_telegram(application, *, bot_token=None, group_chat_i
     instance) — fields are read via key or attribute access, whichever
     applies. Common fields: event, created_at/created, applicant_type
     ('startup' or 'guest'), name, phone, email, telegram. Fields shown only
-    for the matching applicant_type: project, link (pitch deck / website),
+    for the matching applicant_type: project, link (pitch deck),
     pitch — for startups; company, why — for guests. Any field that's
     missing or empty is simply left out of the message rather than raising.
 

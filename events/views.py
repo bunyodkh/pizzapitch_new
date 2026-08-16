@@ -408,7 +408,7 @@ def _participant_applications(request, events):
 
 _APPLICATION_EXPORT_HEADERS = [
     'Name', 'Email', 'Phone', 'Telegram', 'Type', 'Status', 'Event', 'Submitted',
-    'Project', 'Link', 'Pitch', 'Company', 'Why',
+    'Project', 'Pitch deck', 'Pitch', 'Company', 'Why',
 ]
 
 

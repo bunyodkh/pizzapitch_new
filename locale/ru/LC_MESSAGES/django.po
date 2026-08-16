@@ -434,8 +434,8 @@ msgstr "Укажите название"
 msgid "Enter your phone"
 msgstr "Укажите телефон"
 
-msgid "Website or pitch deck link"
-msgstr "Ссылка на сайт или питч-дек"
+msgid "Pitch deck link"
+msgstr "Ссылка на питч-дек"
 
 msgid "optional"
 msgstr "по желанию"
@@ -609,10 +609,10 @@ msgid "What does a startup need?"
 msgstr "Что нужно от стартапа?"
 
 msgid ""
-"A short application and, if you have one, a link to your website or deck. "
+"A short application and, if you have one, a link to your pitch deck. "
 "Selected teams get the pitch format details."
 msgstr ""
-"Короткая заявка и, если есть, ссылка на сайт или дек. Отобранным пришлём "
+"Короткая заявка и, если есть, ссылка на питч-дек. Отобранным пришлём "
 "детали формата питча."
 
 #, python-format
@@ -638,8 +638,8 @@ msgstr "подано %(date)s"
 msgid "Project"
 msgstr "Проект"
 
-msgid "Link"
-msgstr "Ссылка"
+msgid "Pitch deck"
+msgstr "Питч-дек"
 
 msgid ""
 "The link must be public — if it does not open, ask the applicant for public "
