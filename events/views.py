@@ -1,22 +1,30 @@
 import csv
+import json
 import threading
 from datetime import datetime, timedelta
 
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import ValidationError
+from django.core.serializers.json import DjangoJSONEncoder
 from django.core.validators import validate_email
 from django.db.models import Count
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.dateformat import format as format_date
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
-from .forms import EventForm, TeamAuthenticationForm
-from .models import Application, Event, Subscriber
-from .telegram_notify import notify_new_application_telegram, notify_new_subscriber_telegram
+from .forms import EventForm, ExpertForm, PartnerForm, TeamAuthenticationForm
+from .models import Application, Event, Expert, Partner, PartnerInquiry, Subscriber
+from .telegram_notify import (
+    notify_new_application_telegram,
+    notify_new_partner_inquiry_telegram,
+    notify_new_subscriber_telegram,
+)
 
 # Pseudo applicant-type value for the contacts page's "type" filter — picks
 # out waitlist Subscribers, which aren't Applications and have no real type.
@@ -25,6 +33,46 @@ CONTACT_TYPE_SUBSCRIBER = 'subscriber'
 
 def current_event():
     return Event.objects.filter(is_active=True).order_by('date', 'time').first()
+
+
+def event_jsonld(event):
+    """Schema.org Event structured data for the landing page — lets search
+    engines show the event as a rich result (Google Events, "things to do").
+    """
+    location = {'@type': 'Place', 'name': event.place}
+    if event.city:
+        location['address'] = {'@type': 'PostalAddress', 'addressLocality': event.city, 'addressCountry': 'UZ'}
+    if event.location_url:
+        location['hasMap'] = event.location_url
+
+    data = {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        'name': event.title,
+        'startDate': datetime.combine(event.date, event.time).isoformat(),
+        'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+        'eventStatus': 'https://schema.org/EventScheduled',
+        'description': event.description or event.tagline or event.title,
+        'location': location,
+        'organizer': {'@type': 'Organization', 'name': 'PizzaPitch', 'url': settings.SITE_URL},
+        'offers': {
+            '@type': 'Offer',
+            'price': str(event.guest_price),
+            'priceCurrency': event.currency,
+            'availability': (
+                'https://schema.org/InStock' if event.guest_registration_open else 'https://schema.org/SoldOut'
+            ),
+            'url': settings.SITE_URL,
+        },
+    }
+    if event.hero_photo:
+        data['image'] = [settings.SITE_URL + event.hero_photo.url]
+
+    # Escape </script>-breaking sequences the same way Django's json_script does —
+    # description/title are staff-entered, not user input, but this is free insurance.
+    raw = json.dumps(data, cls=DjangoJSONEncoder)
+    raw = raw.replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
+    return mark_safe(raw)
 
 
 @require_GET
@@ -75,7 +123,12 @@ def index(request):
         'fillFieldsPrefix': _('Please fill in: '),
         'genericError': _('Could not submit the application. Check your connection and try again.'),
     }
-    return render(request, 'index.html', {'event': event, 'schedule': schedule, 'i18n_strings': i18n_strings})
+    experts = Expert.objects.filter(is_visible=True).order_by('order', 'id')
+    partners = Partner.objects.filter(is_visible=True).order_by('order', 'id')
+    return render(request, 'index.html', {
+        'event': event, 'schedule': schedule, 'experts': experts, 'partners': partners, 'i18n_strings': i18n_strings,
+        'event_jsonld': event_jsonld(event),
+    })
 
 
 @require_POST
@@ -152,6 +205,22 @@ def subscribe(request):
     return JsonResponse({'status': 'subscribed'}, status=201 if created else 200)
 
 
+@require_POST
+def partner_inquiry(request):
+    email = request.POST.get('email', '').strip()
+    message = request.POST.get('message', '').strip()
+    if not email or not message:
+        return JsonResponse({'error': _('Email and message are required.')}, status=400)
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({'error': _('Invalid email.')}, status=400)
+
+    inquiry = PartnerInquiry.objects.create(email=email, message=message)
+    threading.Thread(target=notify_new_partner_inquiry_telegram, args=(inquiry,), daemon=True).start()
+    return JsonResponse({'status': 'received'}, status=201)
+
+
 class TeamLoginView(LoginView):
     template_name = 'team_login.html'
     authentication_form = TeamAuthenticationForm
@@ -211,6 +280,90 @@ def event_delete(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     event.delete()
     return redirect('event_list')
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def expert_list(request):
+    experts = Expert.objects.order_by('order', 'id')
+    return render(request, 'expert_list.html', {'experts': experts, 'active_tab': 'experts'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def expert_create(request):
+    if request.method == 'POST':
+        form = ExpertForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('expert_list')
+    else:
+        form = ExpertForm()
+    return render(request, 'expert_form.html', {'form': form, 'expert': None, 'active_tab': 'experts'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def expert_edit(request, expert_id):
+    expert = get_object_or_404(Expert, pk=expert_id)
+    if request.method == 'POST':
+        form = ExpertForm(request.POST, request.FILES, instance=expert)
+        if form.is_valid():
+            form.save()
+            return redirect('expert_list')
+    else:
+        form = ExpertForm(instance=expert)
+    return render(request, 'expert_form.html', {'form': form, 'expert': expert, 'active_tab': 'experts'})
+
+
+@staff_member_required(login_url='team_login')
+@require_POST
+def expert_delete(request, expert_id):
+    expert = get_object_or_404(Expert, pk=expert_id)
+    expert.delete()
+    return redirect('expert_list')
+
+
+@staff_member_required(login_url='team_login')
+@require_GET
+def partner_list(request):
+    partners = Partner.objects.order_by('order', 'id')
+    return render(request, 'partner_list.html', {'partners': partners, 'active_tab': 'partners'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def partner_create(request):
+    if request.method == 'POST':
+        form = PartnerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('partner_list')
+    else:
+        form = PartnerForm()
+    return render(request, 'partner_form.html', {'form': form, 'partner': None, 'active_tab': 'partners'})
+
+
+@staff_member_required(login_url='team_login')
+@require_http_methods(['GET', 'POST'])
+def partner_edit(request, partner_id):
+    partner = get_object_or_404(Partner, pk=partner_id)
+    if request.method == 'POST':
+        form = PartnerForm(request.POST, request.FILES, instance=partner)
+        if form.is_valid():
+            form.save()
+            return redirect('partner_list')
+    else:
+        form = PartnerForm(instance=partner)
+    return render(request, 'partner_form.html', {'form': form, 'partner': partner, 'active_tab': 'partners'})
+
+
+@staff_member_required(login_url='team_login')
+@require_POST
+def partner_delete(request, partner_id):
+    partner = get_object_or_404(Partner, pk=partner_id)
+    partner.delete()
+    return redirect('partner_list')
 
 
 def _participant_applications(request, events):

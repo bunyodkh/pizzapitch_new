@@ -13,6 +13,16 @@
       <span class="hub-t">{% trans 'Manage events' %}</span>
       <span class="hub-d">{% trans 'Create, edit and delete events.' %}</span>
     </a>
+    <a class="hub-card" href="{% url 'expert_list' %}">
+      <span class="hub-ic" aria-hidden="true">🎤</span>
+      <span class="hub-t">{% trans 'Experts' %}</span>
+      <span class="hub-d">{% trans 'Add and edit mentors shown on the landing page.' %}</span>
+    </a>
+    <a class="hub-card" href="{% url 'partner_list' %}">
+      <span class="hub-ic" aria-hidden="true">🤝</span>
+      <span class="hub-t">{% trans 'Partners' %}</span>
+      <span class="hub-d">{% trans 'Add and edit partner logos shown on the landing page.' %}</span>
+    </a>
     <a class="hub-card" href="{% url 'participants' %}">
       <span class="hub-ic" aria-hidden="true">👥</span>
       <span class="hub-t">{% trans 'Applications' %}</span>

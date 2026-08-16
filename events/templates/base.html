@@ -4,11 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}PizzaPitch{% endblock %}</title>
+
+{% blocktrans asvar default_description %}PizzaPitch is a recurring pitch night in Tashkent — founders present live over pizza, guests ask questions and meet the people building and investing.{% endblocktrans %}
+
+{% block meta %}
+<meta name="description" content="{% firstof event.description default_description %}">
+<meta name="robots" content="{% if '/team/' in request.path %}noindex, nofollow{% else %}index, follow{% endif %}">
+<link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
+<meta name="theme-color" content="#E8402A">
+
+<meta property="og:site_name" content="PizzaPitch">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% if event %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
+<meta property="og:description" content="{% firstof event.description default_description %}">
+<meta property="og:url" content="{{ SITE_URL }}{{ request.path }}">
+<meta property="og:image" content="{% if event.hero_photo %}{{ SITE_URL }}{{ event.hero_photo.url }}{% else %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endif %}">
+<meta property="og:locale" content="{% if LANGUAGE_CODE == 'ru' %}ru_RU{% else %}en_US{% endif %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if event %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
+<meta name="twitter:description" content="{% firstof event.description default_description %}">
+<meta name="twitter:image" content="{% if event.hero_photo %}{{ SITE_URL }}{{ event.hero_photo.url }}{% else %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endif %}">
+{% endblock %}
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <link rel="icon" href="{% static 'favicon.ico' %}">
+<link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
 {% block extra_head %}{% endblock %}
 </head>
 

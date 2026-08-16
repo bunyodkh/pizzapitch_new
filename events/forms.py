@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from .models import Event
+from .models import Event, Expert, Partner
 
 
 class TeamAuthenticationForm(AuthenticationForm):
@@ -64,3 +64,45 @@ class EventForm(forms.ModelForm):
         # require the default-language title/place so an event can't save without them.
         self.fields['title_en'].required = True
         self.fields['place_en'].required = True
+
+
+class ExpertForm(forms.ModelForm):
+    class Meta:
+        model = Expert
+        fields = ['name_en', 'name_ru', 'position_en', 'position_ru', 'photo', 'order', 'is_visible']
+        widgets = {
+            'photo': forms.FileInput,
+        }
+        labels = {
+            'name_en': _('Name'),
+            'name_ru': _('Name'),
+            'position_en': _('Position'),
+            'position_ru': _('Position'),
+            'photo': _('Photo'),
+            'order': _('Order'),
+            'is_visible': _('Show on site'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Modeltranslation makes every language column nullable at the DB level;
+        # require the default-language name/position so an expert can't save without them.
+        self.fields['name_en'].required = True
+        self.fields['position_en'].required = True
+
+
+class PartnerForm(forms.ModelForm):
+    class Meta:
+        model = Partner
+        fields = ['name', 'logo', 'website', 'order', 'is_visible']
+        widgets = {
+            'logo': forms.FileInput,
+            'website': forms.URLInput(attrs={'placeholder': 'https://...'}),
+        }
+        labels = {
+            'name': _('Name'),
+            'logo': _('Logo'),
+            'website': _('Website'),
+            'order': _('Order'),
+            'is_visible': _('Show on site'),
+        }

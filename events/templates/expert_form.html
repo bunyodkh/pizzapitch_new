@@ -1,0 +1,99 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% if expert %}{% trans 'Edit expert' %}{% else %}{% trans 'New expert' %}{% endif %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <h1 class="tt">{% if expert %}{% trans 'Edit expert' %}{% else %}{% trans 'New expert' %}{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="eform">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="ffield2{% if form.name_en.errors %} has-error{% endif %}">
+      <label for="{{ form.name_en.id_for_label }}">{{ form.name_en.label }} — EN</label>
+      {{ form.name_en }}
+      {% if form.name_en.errors %}<p class="ferr">{{ form.name_en.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.name_ru.errors %} has-error{% endif %}">
+      <label for="{{ form.name_ru.id_for_label }}">{{ form.name_ru.label }} — RU</label>
+      {{ form.name_ru }}
+      {% if form.name_ru.errors %}<p class="ferr">{{ form.name_ru.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.position_en.errors %} has-error{% endif %}">
+      <label for="{{ form.position_en.id_for_label }}">{{ form.position_en.label }} — EN</label>
+      {{ form.position_en }}
+      {% if form.position_en.errors %}<p class="ferr">{{ form.position_en.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="ffield2{% if form.position_ru.errors %} has-error{% endif %}">
+      <label for="{{ form.position_ru.id_for_label }}">{{ form.position_ru.label }} — RU</label>
+      {{ form.position_ru }}
+      {% if form.position_ru.errors %}<p class="ferr">{{ form.position_ru.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.photo.errors %} has-error{% endif %}">
+      <label>{{ form.photo.label }}</label>
+      <div class="fphoto">
+        <div class="fphoto-preview" id="fphoto-preview" {% if not expert or not expert.photo %}hidden{% endif %}>
+          {% if expert and expert.photo %}
+          <img src="{{ expert.photo.url }}" alt="" id="fphoto-img">
+          {% else %}
+          <img src="" alt="" id="fphoto-img">
+          {% endif %}
+        </div>
+        <label class="fphoto-upload" for="{{ form.photo.id_for_label }}" id="fphoto-upload-label">
+          <span id="fphoto-upload-text">{% trans 'Upload photo' %}</span>
+        </label>
+        {{ form.photo }}
+      </div>
+      {% if form.photo.errors %}<p class="ferr">{{ form.photo.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.order.errors %} has-error{% endif %}">
+      <label for="{{ form.order.id_for_label }}">{{ form.order.label }}</label>
+      {{ form.order }}
+      <p class="fhelp">{% trans 'Lower numbers show first.' %}</p>
+      {% if form.order.errors %}<p class="ferr">{{ form.order.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.is_visible.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.is_visible.id_for_label }}">
+        {{ form.is_visible }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.is_visible.label }}</span>
+      </label>
+      {% if form.is_visible.errors %}<p class="ferr">{{ form.is_visible.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="eform-actions">
+      <button type="submit" class="cta">{% trans 'Save' %}</button>
+      <a class="abtn" href="{% url 'expert_list' %}">{% trans 'Cancel' %}</a>
+    </div>
+  </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  var fileInput = document.getElementById('{{ form.photo.id_for_label }}');
+  var preview = document.getElementById('fphoto-preview');
+  var previewImg = document.getElementById('fphoto-img');
+  var uploadText = document.getElementById('fphoto-upload-text');
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      uploadText.textContent = file.name;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        preview.hidden = false;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+})();
+</script>
+{% endblock %}

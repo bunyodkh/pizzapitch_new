@@ -3,6 +3,10 @@
 
 {% block title %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% endblock %}
 
+{% block extra_head %}
+<script type="application/ld+json">{{ event_jsonld }}</script>
+{% endblock %}
+
 {% block content %}
   <header class="hero">
     {% if event.hero_photo %}
@@ -59,10 +63,57 @@
     <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your website or deck. Selected teams get the pitch format details.' %}</p></details>
     <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests — free. For startups participation is paid ({{ price }} {{ currency }}) — this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}</p></details>
   </section>
+
+  {% if experts %}
+  <section class="block experts">
+    <h2>{% trans 'Experts' %}</h2>
+    <div class="experts-rail" id="expertsRail">
+      {% for person in experts %}
+      <figure class="expert-card">
+        <div class="expert-photo">
+          {% if person.photo %}<img src="{{ person.photo.url }}" alt="{{ person.name }}" loading="lazy" draggable="false">{% endif %}
+        </div>
+        <figcaption class="expert-cap">
+          <p class="expert-name">{{ person.name }}</p>
+          <p class="expert-role">{{ person.position }}</p>
+        </figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    <p class="scroll-hint">{% trans 'swipe for more →' %}</p>
+  </section>
+  {% endif %}
+
+  {% if partners %}
+  <section class="block partners">
+    <h2>{% trans 'Partners' %}</h2>
+    <p class="sub">{% trans 'What makes tonight possible.' %}</p>
+    <div class="ribbon" id="partnersRibbon">
+      <div class="rtrack" id="partnersTrack">
+        {% for partner in partners %}
+        <span class="ritem">
+          {% if partner.website %}<a href="{{ partner.website }}" target="_blank" rel="noopener noreferrer">{% endif %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" draggable="false" loading="lazy">
+          {% if partner.website %}</a>{% endif %}
+        </span>
+        {% endfor %}
+        {% for partner in partners %}
+        <span class="ritem">
+          {% if partner.website %}<a href="{{ partner.website }}" target="_blank" rel="noopener noreferrer">{% endif %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" draggable="false" loading="lazy">
+          {% if partner.website %}</a>{% endif %}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="cta-line"><a href="#" id="partnerCtaLink">{% trans 'become a partner →' %}</a></p>
+  </section>
+  {% endif %}
 {% endblock %}
 
 {% block overlays %}
   {% include "includes/apply_overlay.html" %}
+  {% include "includes/partner_overlay.html" %}
 {% endblock %}
 
 {% block extra_js %}

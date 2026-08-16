@@ -1,0 +1,90 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% if partner %}{% trans 'Edit partner' %}{% else %}{% trans 'New partner' %}{% endif %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <h1 class="tt">{% if partner %}{% trans 'Edit partner' %}{% else %}{% trans 'New partner' %}{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="eform">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="ffield2{% if form.name.errors %} has-error{% endif %}">
+      <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+      {{ form.name }}
+      {% if form.name.errors %}<p class="ferr">{{ form.name.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.website.errors %} has-error{% endif %}">
+      <label for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>
+      {{ form.website }}
+      {% if form.website.errors %}<p class="ferr">{{ form.website.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.logo.errors %} has-error{% endif %}">
+      <label>{{ form.logo.label }}</label>
+      <div class="fphoto">
+        <div class="fphoto-preview" id="fphoto-preview" {% if not partner or not partner.logo %}hidden{% endif %}>
+          {% if partner and partner.logo %}
+          <img src="{{ partner.logo.url }}" alt="" id="fphoto-img">
+          {% else %}
+          <img src="" alt="" id="fphoto-img">
+          {% endif %}
+        </div>
+        <label class="fphoto-upload" for="{{ form.logo.id_for_label }}" id="fphoto-upload-label">
+          <span id="fphoto-upload-text">{% trans 'Upload photo' %}</span>
+        </label>
+        {{ form.logo }}
+      </div>
+      <p class="fhelp">{% trans 'Transparent PNG, roughly 600×200px, with no background or border — it will be scaled down to about 36px tall on the site.' %}</p>
+      {% if form.logo.errors %}<p class="ferr">{{ form.logo.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.order.errors %} has-error{% endif %}">
+      <label for="{{ form.order.id_for_label }}">{{ form.order.label }}</label>
+      {{ form.order }}
+      <p class="fhelp">{% trans 'Lower numbers show first.' %}</p>
+      {% if form.order.errors %}<p class="ferr">{{ form.order.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="ffield2{% if form.is_visible.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.is_visible.id_for_label }}">
+        {{ form.is_visible }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.is_visible.label }}</span>
+      </label>
+      {% if form.is_visible.errors %}<p class="ferr">{{ form.is_visible.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="eform-actions">
+      <button type="submit" class="cta">{% trans 'Save' %}</button>
+      <a class="abtn" href="{% url 'partner_list' %}">{% trans 'Cancel' %}</a>
+    </div>
+  </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  var fileInput = document.getElementById('{{ form.logo.id_for_label }}');
+  var preview = document.getElementById('fphoto-preview');
+  var previewImg = document.getElementById('fphoto-img');
+  var uploadText = document.getElementById('fphoto-upload-text');
+
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      uploadText.textContent = file.name;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        preview.hidden = false;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+})();
+</script>
+{% endblock %}

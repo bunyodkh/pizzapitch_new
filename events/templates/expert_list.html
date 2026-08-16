@@ -1,0 +1,42 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Experts' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <div class="thead-row">
+    <div>
+      <h1 class="tt">{% trans 'Experts' %}</h1>
+      <p class="tsub">{% trans 'Add and edit mentors shown on the landing page.' %}</p>
+    </div>
+    <a class="cta-small" href="{% url 'expert_create' %}">+ {% trans 'New expert' %}</a>
+  </div>
+
+  {% if experts %}
+  <div class="elist">
+    {% for person in experts %}
+    <article class="ecard">
+      <div class="ecard-main">
+        <div class="eavatar">{% if person.photo %}<img src="{{ person.photo.url }}" alt="">{% endif %}</div>
+        <div>
+          <p class="ename">
+            {{ person.name }}
+            {% if not person.is_visible %}<span class="badge status-rejected">{% trans 'hidden' %}</span>{% endif %}
+          </p>
+          <p class="emeta">{{ person.position }}</p>
+        </div>
+      </div>
+      <div class="eactions">
+        <a class="abtn" href="{% url 'expert_edit' person.id %}">{% trans 'Edit' %}</a>
+        <form method="post" action="{% url 'expert_delete' person.id %}" onsubmit="return confirm('{% trans 'Delete this expert? This cannot be undone.' %}');">
+          {% csrf_token %}
+          <button type="submit" class="abtn reject">{% trans 'Delete' %}</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">{% trans 'No experts yet.' %}</div>
+  {% endif %}
+{% endblock %}

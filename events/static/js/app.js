@@ -212,3 +212,272 @@
     });
   }
 })();
+
+/* Experts rail — click-and-drag on desktop (mouse), native touch swipe on mobile.
+ * Pointer events are gated to pointerType 'mouse' so touch/pen keep the browser's
+ * own smooth, momentum-driven scrolling instead of being fought by JS.
+ */
+(function () {
+  'use strict';
+
+  var rail = document.getElementById('expertsRail');
+  if (!rail) return;
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var dragging = false, moved = false;
+  var startX = 0, startScroll = 0;
+  var lastX = 0, lastT = 0, velocity = 0;
+  var glideId = null;
+
+  function stopGlide() {
+    if (glideId) { cancelAnimationFrame(glideId); glideId = null; }
+  }
+
+  function glide() {
+    velocity *= 0.95;
+    if (Math.abs(velocity) < 0.3) {
+      glideId = null;
+      rail.classList.remove('dragging'); // re-enable scroll-snap now that JS is done moving it
+      return;
+    }
+    rail.scrollLeft -= velocity;
+    glideId = requestAnimationFrame(glide);
+  }
+
+  rail.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') return; // let touch/pen use native scrolling
+    dragging = true;
+    moved = false;
+    startX = e.clientX;
+    startScroll = rail.scrollLeft;
+    lastX = e.clientX;
+    lastT = performance.now();
+    velocity = 0;
+    stopGlide();
+    rail.setPointerCapture(e.pointerId);
+    rail.classList.add('dragging');
+  });
+
+  rail.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) moved = true;
+    rail.scrollLeft = startScroll - dx;
+
+    var now = performance.now();
+    var dt = now - lastT;
+    if (dt > 0) velocity = (e.clientX - lastX) / dt * 16; // px per ~frame
+    lastX = e.clientX;
+    lastT = now;
+  });
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    if (!reduceMotion && Math.abs(velocity) > 0.5) {
+      glideId = requestAnimationFrame(glide); // keeps .dragging (snap disabled) until it settles
+    } else {
+      rail.classList.remove('dragging');
+    }
+  }
+
+  rail.addEventListener('pointerup', endDrag);
+  rail.addEventListener('pointercancel', endDrag);
+  rail.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') endDrag(); });
+
+  // Swallow the click that follows an actual drag so it doesn't act like a tap.
+  rail.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+  // Trackpad/mouse-wheel: turn vertical wheel intent into horizontal scroll.
+  rail.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      rail.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }
+  }, { passive: false });
+})();
+
+/* Partners ribbon — static logo strip, draggable with mouse or touch via
+ * Pointer Events. The track renders the logo set twice back-to-back so
+ * wrapping the offset at the halfway point is seamless in both directions.
+ */
+(function () {
+  'use strict';
+
+  var ribbon = document.getElementById('partnersRibbon');
+  var track = document.getElementById('partnersTrack');
+  if (!ribbon || !track) return;
+
+  var half = 0; // width of one logo set (track holds two)
+  function measure() { half = track.scrollWidth / 2; }
+  measure();
+  window.addEventListener('resize', measure);
+
+  var offset = 0; // current translateX
+
+  // wrap offset into [-half, 0] so dragging past an end loops seamlessly
+  function norm(x) {
+    if (half <= 0) return x;
+    x = x % half;
+    if (x > 0) x -= half;
+    return x;
+  }
+
+  // ---- drag (mouse + touch via Pointer Events) ----
+  var dragging = false, startX = 0, startOffset = 0, moved = 0;
+
+  ribbon.addEventListener('pointerdown', function (e) {
+    dragging = true;
+    moved = 0;
+    startX = e.clientX;
+    startOffset = offset;
+    ribbon.classList.add('dragging');
+    ribbon.setPointerCapture(e.pointerId);
+  });
+
+  ribbon.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    var dx = e.clientX - startX;
+    moved += Math.abs(dx);
+    offset = norm(startOffset + dx);
+    track.style.transform = 'translateX(' + offset + 'px)';
+  });
+
+  function up() {
+    if (!dragging) return;
+    dragging = false;
+    ribbon.classList.remove('dragging');
+  }
+  ribbon.addEventListener('pointerup', up);
+  ribbon.addEventListener('pointercancel', up);
+
+  // swallow accidental click after a real drag (so logo links don't fire)
+  ribbon.addEventListener('click', function (e) { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+})();
+
+/* Partner inquiry popup — "become a partner" lead form (email + message). */
+(function () {
+  'use strict';
+
+  var overlay = document.getElementById('partnerOverlay');
+  var form = document.getElementById('partnerInquiryForm');
+  if (!overlay || !form) return;
+
+  var ctaLink = document.getElementById('partnerCtaLink');
+  var closeBtn = document.getElementById('partnerCloseBtn');
+  var backdrop = document.getElementById('partnerBackdrop');
+  var doneClose = document.getElementById('partnerDoneClose');
+  var alertBox = document.getElementById('partnerFormAlert');
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var defaultAlertText = alertBox.textContent;
+
+  var panels = {};
+  overlay.querySelectorAll('[data-partner-panel]').forEach(function (p) {
+    panels[p.dataset.partnerPanel] = p;
+  });
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function show(name) {
+    Object.keys(panels).forEach(function (k) { panels[k].classList.remove('show'); });
+    panels[name].classList.add('show');
+  }
+
+  function open() {
+    show('form');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    form.reset();
+    hideAlert();
+    form.querySelectorAll('.field.err').forEach(function (f) { f.classList.remove('err'); });
+  }
+
+  function showAlert(text) {
+    alertBox.textContent = text || defaultAlertText;
+    alertBox.classList.add('show');
+  }
+  function hideAlert() { alertBox.classList.remove('show'); }
+
+  function validateField(field) {
+    var el = field.querySelector('input, textarea');
+    var value = (el.value || '').trim();
+    var ok = field.hasAttribute('data-email') ? EMAIL_RE.test(value) : value.length > 0;
+    field.classList.toggle('err', !ok);
+    return ok;
+  }
+
+  function getCookie(name) {
+    var m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? decodeURIComponent(m.pop()) : '';
+  }
+  function csrfToken() {
+    var input = form.querySelector('[name="csrfmiddlewaretoken"]');
+    return (input && input.value) || getCookie('csrftoken');
+  }
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    submitBtn.classList.toggle('loading', on);
+  }
+
+  async function submitForm() {
+    var endpoint = form.dataset.endpoint;
+    setLoading(true);
+    try {
+      if (endpoint && endpoint !== '#') {
+        var data = new FormData(form);
+        var res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'X-CSRFToken': csrfToken() },
+          body: data
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+      }
+      show('done');
+    } catch (err) {
+      showAlert(form.dataset.genericError);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (ctaLink) ctaLink.addEventListener('click', function (e) { e.preventDefault(); open(); });
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  doneClose.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+
+  form.querySelectorAll('[data-req]').forEach(function (f) {
+    var el = f.querySelector('input, textarea');
+    el.addEventListener('blur', function () {
+      if (el.value.trim() || f.classList.contains('err')) validateField(f);
+    });
+    el.addEventListener('input', function () {
+      if (f.classList.contains('err')) validateField(f);
+      hideAlert();
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var fields = Array.prototype.slice.call(form.querySelectorAll('[data-req]'));
+    var firstErr = null;
+    fields.forEach(function (f) {
+      if (!validateField(f) && !firstErr) firstErr = f;
+    });
+    if (firstErr) {
+      showAlert();
+      firstErr.querySelector('input, textarea').focus({ preventScroll: true });
+      return;
+    }
+    hideAlert();
+    submitForm();
+  });
+})();

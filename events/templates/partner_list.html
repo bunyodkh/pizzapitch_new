@@ -1,0 +1,42 @@
+{% extends "base_team.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Partners' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <div class="thead-row">
+    <div>
+      <h1 class="tt">{% trans 'Partners' %}</h1>
+      <p class="tsub">{% trans 'Add and edit partner logos shown on the landing page.' %}</p>
+    </div>
+    <a class="cta-small" href="{% url 'partner_create' %}">+ {% trans 'New partner' %}</a>
+  </div>
+
+  {% if partners %}
+  <div class="elist">
+    {% for partner in partners %}
+    <article class="ecard">
+      <div class="ecard-main">
+        <div class="eavatar eavatar-logo">{% if partner.logo %}<img src="{{ partner.logo.url }}" alt="">{% endif %}</div>
+        <div>
+          <p class="ename">
+            {{ partner.name }}
+            {% if not partner.is_visible %}<span class="badge status-rejected">{% trans 'hidden' %}</span>{% endif %}
+          </p>
+          {% if partner.website %}<p class="emeta">{{ partner.website }}</p>{% endif %}
+        </div>
+      </div>
+      <div class="eactions">
+        <a class="abtn" href="{% url 'partner_edit' partner.id %}">{% trans 'Edit' %}</a>
+        <form method="post" action="{% url 'partner_delete' partner.id %}" onsubmit="return confirm('{% trans 'Delete this partner? This cannot be undone.' %}');">
+          {% csrf_token %}
+          <button type="submit" class="abtn reject">{% trans 'Delete' %}</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">{% trans 'No partners yet.' %}</div>
+  {% endif %}
+{% endblock %}

@@ -48,6 +48,11 @@ ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,1
 # local HTTP dev.
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if o.strip()]
 
+# Canonical public origin (scheme + host, no trailing slash) — used for SEO
+# tags (canonical/og:url, JSON-LD) so they always point at the one preferred
+# domain regardless of which allowed host/IP a request actually came in on.
+SITE_URL = os.environ.get('SITE_URL', 'https://pizzapitch.uz')
+
 
 # Application definition
 
@@ -88,6 +93,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'events.context_processors.site',
             ],
         },
     },
@@ -210,12 +216,19 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Content-hashed filenames (e.g. styles.abcd1234.css) so browsers can cache static
 # files indefinitely without ever serving a stale copy after a deploy — the hash
 # changes whenever the file's contents change, forcing a fresh fetch.
+# ManifestStaticFilesStorage requires collectstatic to have been run (it reads
+# staticfiles/staticfiles.json), so local dev falls back to plain FileSystemStorage
+# and serves straight from the app's static/ dirs via runserver instead.
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
     },
     'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
+        'BACKEND': (
+            'django.contrib.staticfiles.storage.StaticFilesStorage'
+            if DEBUG else
+            'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+        ),
     },
 }
 

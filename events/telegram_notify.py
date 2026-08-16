@@ -241,3 +241,31 @@ def notify_new_subscriber_telegram(subscriber, *, bot_token=None, group_chat_id=
         lines.append(f'🕒 <b>Дата:</b> {html.escape(formatted)}')
 
     return _send_group_message('\n'.join(lines), bot_token=bot_token, group_chat_id=group_chat_id)
+
+
+def notify_new_partner_inquiry_telegram(inquiry, *, bot_token=None, group_chat_id=None):
+    """
+    Send a Telegram notification about a new "become a partner" lead to the
+    GROUP chat. `inquiry` can be a dict or any object (e.g. a PartnerInquiry
+    model instance) with `email`, `message` and, optionally, `created_at`.
+
+    Same config/behavior as `notify_new_application_telegram` — see there
+    for `bot_token` / `group_chat_id`. Never raises. Returns True on success.
+    """
+    email = _escaped(inquiry, 'email')
+    if not email:
+        logger.warning('Telegram partner inquiry notification skipped: missing email.')
+        return False
+
+    lines = ['🤝 <b>Новая заявка от партнёра!</b>', f'📧 <b>Email:</b> {email}']
+    created_at = _get(inquiry, 'created_at')
+    if created_at is not None:
+        formatted = created_at.strftime('%d.%m.%Y %H:%M') if hasattr(created_at, 'strftime') else str(created_at)
+        lines.append(f'🕒 <b>Дата:</b> {html.escape(formatted)}')
+
+    message = _escaped(inquiry, 'message')
+    if message:
+        lines.append(DIVIDER)
+        lines.append(f'💬 <b>Сообщение:</b>\n{message}')
+
+    return _send_group_message('\n'.join(lines), bot_token=bot_token, group_chat_id=group_chat_id)

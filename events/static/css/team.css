@@ -128,6 +128,11 @@ p.tsub{color:var(--muted);font-size:14px;margin:0 0 24px}
 .cta-small:hover{background:var(--tomato-dark)}
 .elist{display:flex;flex-direction:column;gap:10px}
 .ecard{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow)}
+.ecard-main{display:flex;align-items:center;gap:12px}
+.eavatar{width:44px;height:44px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:var(--paper);border:1px solid var(--line)}
+.eavatar img{width:100%;height:100%;object-fit:cover;display:block}
+.eavatar-logo{border-radius:10px;padding:5px}
+.eavatar-logo img{object-fit:contain}
 .ename{font-family:"Unbounded",sans-serif;font-weight:700;font-size:16px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
 .emeta{font-size:12.5px;color:var(--muted);margin:0}
 .eactions{display:flex;gap:8px;flex-wrap:wrap}

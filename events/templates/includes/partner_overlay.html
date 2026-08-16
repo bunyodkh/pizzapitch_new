@@ -1,0 +1,37 @@
+{% load i18n %}
+<div class="overlay" id="partnerOverlay" role="dialog" aria-modal="true" aria-label="{% trans 'Become a partner' %}">
+  <div class="backdrop" id="partnerBackdrop"></div>
+  <div class="sheet">
+    <div class="sheet-head">
+      <span class="steps" aria-hidden="true"></span>
+      <button class="iconbtn" id="partnerCloseBtn" aria-label="{% trans 'Close' %}">✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <!-- STEP 1 — form -->
+      <div class="panel show" data-partner-panel="form">
+        <h3>{% trans 'Become a partner' %}</h3>
+        <p class="sub">{% trans 'Tell us a bit about your company — we will get back to you by email.' %}</p>
+        <form id="partnerInquiryForm" data-endpoint="{% url 'partner_inquiry' %}"
+              data-generic-error="{% trans 'Could not send. Check your connection and try again.' %}" novalidate>
+          {% csrf_token %}
+          <div class="field" data-req data-email><label>Email</label><input name="email" type="email" autocomplete="email" placeholder="you@company.com"><p class="msg">{% trans 'A valid email is required' %}</p></div>
+          <div class="field" data-req><label>{% trans 'Message' %}</label><textarea name="message" placeholder="{% trans 'A bit about your company and how you would like to partner' %}"></textarea><p class="msg">{% trans 'Please fill this in' %}</p></div>
+
+          <div class="form-alert" id="partnerFormAlert">{% trans 'Check the fields marked in red.' %}</div>
+          <button type="submit" class="cta" style="margin-top:8px">{% trans 'Send' %}</button>
+        </form>
+      </div>
+
+      <!-- STEP 2 — done -->
+      <div class="panel" data-partner-panel="done">
+        <div class="done">
+          <div class="check">✓</div>
+          <h3>{% trans 'Thanks!' %}</h3>
+          <p class="sub">{% trans "We'll get back to you by email." %}</p>
+          <button class="cta" id="partnerDoneClose" style="margin-top:22px">{% trans 'Done' %}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

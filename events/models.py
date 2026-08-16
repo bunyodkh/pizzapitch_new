@@ -54,6 +54,59 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
 
+class Expert(models.Model):
+    """A mentor/judge featured on the landing page's "Experts" section.
+
+    Not tied to a specific Event — it's a standing roster shown on every event page.
+    """
+
+    name = models.CharField(max_length=150)
+    position = models.CharField(max_length=150, help_text='Role and/or company, e.g. "Partner, Acme Ventures".')
+    photo = models.ImageField(upload_to='events/experts/')
+    order = models.PositiveIntegerField(default=0, help_text='Lower numbers show first.')
+    is_visible = models.BooleanField(default=True, verbose_name=_('Show on site'))
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.name
+
+
+class Partner(models.Model):
+    """A sponsor/partner logo shown in the landing page's scrolling ribbon.
+
+    Not tied to a specific Event — it's a standing roster shown on every event page.
+    """
+
+    name = models.CharField(max_length=150)
+    logo = models.ImageField(upload_to='events/partners/')
+    website = models.URLField(blank=True, help_text='Optional — the logo links here when set.')
+    order = models.PositiveIntegerField(default=0, help_text='Lower numbers show first.')
+    is_visible = models.BooleanField(default=True, verbose_name=_('Show on site'))
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.name
+
+
+class PartnerInquiry(models.Model):
+    """A "become a partner" lead submitted from the landing page popup."""
+
+    email = models.EmailField()
+    message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = 'Partner inquiries'
+
+    def __str__(self):
+        return self.email
+
+
 class Application(models.Model):
     STARTUP = 'startup'
     GUEST = 'guest'

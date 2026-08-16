@@ -2,7 +2,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 from unfold.admin import ModelAdmin, TabularInline
 
-from .models import Application, Event, Subscriber
+from .models import Application, Event, Expert, Partner, PartnerInquiry, Subscriber
 
 
 class ApplicationInline(TabularInline):
@@ -33,6 +33,27 @@ class EventAdmin(TranslationAdmin, ModelAdmin):
     @admin.display(description='Applications')
     def application_count(self, obj):
         return obj.applications.count()
+
+
+@admin.register(Expert)
+class ExpertAdmin(TranslationAdmin, ModelAdmin):
+    list_display = ('name', 'position', 'order', 'is_visible')
+    list_editable = ('is_visible',)
+    search_fields = ('name', 'position')
+
+
+@admin.register(Partner)
+class PartnerAdmin(ModelAdmin):
+    list_display = ('name', 'order', 'is_visible')
+    list_editable = ('is_visible',)
+    search_fields = ('name',)
+
+
+@admin.register(PartnerInquiry)
+class PartnerInquiryAdmin(ModelAdmin):
+    list_display = ('email', 'created_at')
+    search_fields = ('email', 'message')
+    readonly_fields = ('created_at',)
 
 
 @admin.register(Application)
