@@ -884,8 +884,8 @@ msgstr "Подтвердите, чтобы продолжить"
 msgid "Registration is currently closed for this event."
 msgstr "Регистрация на это мероприятие сейчас закрыта."
 
-msgid "24 Nov 2026"
-msgstr "24 ноября 2026"
+msgid "19 Nov 2026"
+msgstr "19 ноября 2026"
 
 msgid "How does the selection work?"
 msgstr "Как проходит отбор?"
