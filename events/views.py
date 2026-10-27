@@ -131,7 +131,7 @@ def index(request):
             _('Prepare your pitch: 5 minutes + 5 minutes of Q&A.'),
         ]
         i18n_strings['doneStepsGuest'][2] = _('Confirmed, add it to your calendar. See you on {date}.').format(
-            date=_('24–26 Nov 2026'),
+            date=_('24 Nov 2026'),
         )
 
     experts = Expert.objects.filter(is_visible=True).order_by('order', 'id')
