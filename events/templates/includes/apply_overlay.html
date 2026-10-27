@@ -31,7 +31,7 @@
           <span class="pill-price free">{% trans 'Free' %}</span>
         </button>
         {% elif event.startup_registration_open %}
-        <p class="sub">{% trans 'Guest registration will open soon — check back shortly.' %}</p>
+        <p class="sub">{% trans 'Guest registration will open soon, check back shortly.' %}</p>
         {% endif %}
         {% if not event.startup_registration_open and not event.guest_registration_open %}
         <p class="sub">{% trans 'Registration is currently closed for this event.' %}</p>
@@ -52,18 +52,18 @@
           <div class="only-startup">
             <div class="field" data-req><label>{% trans 'Project name' %}</label><input name="project" placeholder="{% trans 'Your startup' %}"><p class="msg">{% trans 'Enter a name' %}</p></div>
             <div class="field" data-req><label>{% trans 'Phone' %}</label><input name="phone" type="tel" autocomplete="tel" placeholder="+998 90 123 45 67"><p class="msg">{% trans 'Enter your phone' %}</p></div>
-            <div class="field"><label>{% trans 'Pitch deck link (PDF or PPT)' %}</label><input name="link" type="url" placeholder="https://..."><p class="field-hint">{% blocktrans %}The link to the PDF or PPT file must be <strong>public</strong> — it should open for anyone without requesting access. We can't open private links (e.g. Google Docs set to "restricted").{% endblocktrans %}</p></div>
-            <div class="field" data-req><label>{% trans 'What you do — in one sentence' %}</label><textarea name="pitch" placeholder="{% trans 'We help ... do ...' %}"></textarea><p class="msg">{% trans 'A couple words about the product' %}</p></div>
+            <div class="field"><label>{% trans 'Pitch deck link (PDF or PPT)' %}</label><input name="link" type="url" placeholder="https://..."><p class="field-hint">{% blocktrans %}The link to the PDF or PPT file must be <strong>public</strong>: it should open for anyone without requesting access. We can't open private links (e.g. Google Docs set to "restricted").{% endblocktrans %}</p></div>
+            <div class="field" data-req><label>{% trans 'What you do, in one sentence' %}</label><textarea name="pitch" placeholder="{% trans 'We help ... do ...' %}"></textarea><p class="msg">{% trans 'A couple words about the product' %}</p></div>
             <div class="fee">
-              <span class="fee-amt">{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Participation — {{ price }} {{ currency }}{% endblocktrans %}</span>
-              <span class="fee-d">{% trans "The application is free. If approved, we'll send a payment link — your spot in the pitch session is locked in after payment." %}</span>
+              <span class="fee-amt">{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Participation: {{ price }} {{ currency }}{% endblocktrans %}</span>
+              <span class="fee-d">{% trans "The application is free. If approved, we'll send a payment link, and your spot in the pitch session is locked in after payment." %}</span>
             </div>
           </div>
 
           <!-- guest only -->
           <div class="only-guest">
             <div class="field" data-req><label>{% trans 'Company / what you do' %}</label><input name="company" placeholder="{% trans 'Role and company' %}"><p class="msg">{% trans 'Please fill this in' %}</p></div>
-            <div class="field" data-req><label>{% trans 'Why do you want to come?' %}</label><textarea name="why" placeholder="{% trans 'What interests you about the evening' %}"></textarea><p class="msg">{% trans 'A couple words — this helps us' %}</p></div>
+            <div class="field" data-req><label>{% trans 'Why do you want to come?' %}</label><textarea name="why" placeholder="{% trans 'What interests you about the evening' %}"></textarea><p class="msg">{% trans 'A couple words, this helps us' %}</p></div>
           </div>
 
           <!-- shared: Telegram required for everyone -->

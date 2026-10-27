@@ -151,6 +151,12 @@
       {% if form.guest_registration_open.errors %}<p class="ferr">{{ form.guest_registration_open.errors.0 }}</p>{% endif %}
     </div>
 
+    <div class="ffield2{% if form.landing_page.errors %} has-error{% endif %}">
+      <label for="{{ form.landing_page.id_for_label }}">{{ form.landing_page.label }}</label>
+      {{ form.landing_page }}
+      {% if form.landing_page.errors %}<p class="ferr">{{ form.landing_page.errors.0 }}</p>{% endif %}
+    </div>
+
     <div class="eform-actions">
       <button type="submit" class="cta">{% trans 'Save' %}</button>
       <a class="abtn" href="{% url 'event_list' %}">{% trans 'Cancel' %}</a>

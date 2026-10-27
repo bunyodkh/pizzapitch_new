@@ -11,7 +11,7 @@
       <!-- STEP 1 — form -->
       <div class="panel show" data-partner-panel="form">
         <h3>{% trans 'Become a partner' %}</h3>
-        <p class="sub">{% trans 'Tell us a bit about your company — we will get back to you by email.' %}</p>
+        <p class="sub">{% trans 'Tell us a bit about your company and we will get back to you by email.' %}</p>
         <form id="partnerInquiryForm" data-endpoint="{% url 'partner_inquiry' %}"
               data-generic-error="{% trans 'Could not send. Check your connection and try again.' %}" novalidate>
           {% csrf_token %}

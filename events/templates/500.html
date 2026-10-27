@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans 'Server error' %} — PizzaPitch{% endblock %}
+{% block title %}{% trans 'Server error' %} - PizzaPitch{% endblock %}
 
 {% block content %}
   <header class="hero">
     <p class="eyebrow">{% trans 'Error 500' %}</p>
     <h1>{% trans 'Something went wrong' %}</h1>
-    <p class="lede">{% trans "A server error occurred. We're already aware — try refreshing in a couple of minutes." %}</p>
+    <p class="lede">{% trans "A server error occurred. We're already aware. Try refreshing in a couple of minutes." %}</p>
     <a class="cta" href="/" style="text-decoration:none">{% trans 'Back to home' %}</a>
   </header>
 {% endblock %}

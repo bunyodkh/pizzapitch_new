@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{% trans 'PizzaPitch — pitch nights in Tashkent' %}{% endblock %}
+{% block title %}{% trans 'PizzaPitch - pitch nights in Tashkent' %}{% endblock %}
 
 {% block content %}
   <header class="hero">
@@ -16,7 +16,7 @@
 
     <div class="notify">
       <h3>{% trans 'Get notified about the next night' %}</h3>
-      <p class="s">{% trans "Leave your email — we'll write when registration opens. No spam, just dates." %}</p>
+      <p class="s">{% trans "Leave your email and we'll write when registration opens. No spam, just dates." %}</p>
       <form id="notifyForm" data-endpoint="{% url 'subscribe' %}" novalidate>
         {% csrf_token %}
         <div class="notify-row">
@@ -46,9 +46,9 @@
 
   <section class="block faq">
     <h2>{% trans 'FAQ' %}</h2>
-    <details><summary>{% trans "When's the next event?" %}</summary><p>{% trans "We announce dates in advance. Leave your email above — we'll write as soon as registration opens." %}</p></details>
+    <details><summary>{% trans "When's the next event?" %}</summary><p>{% trans "We announce dates in advance. Leave your email above and we'll write as soon as registration opens." %}</p></details>
     <details><summary>{% trans 'How do I get in with my startup?' %}</summary><p>{% trans 'When registration is open, you apply through the site. We review manually and reply by email within 24–48 hours.' %}</p></details>
-    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% trans 'Free for guests. For startups, participation is paid — this covers your spot in the pitch session. The application is free; payment is requested only after approval.' %}</p></details>
+    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% trans 'Free for guests. For startups, participation is paid: this covers your spot in the pitch session. The application is free; payment is requested only after approval.' %}</p></details>
   </section>
 {% endblock %}
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 
-{% block title %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% endblock %}
+{% block title %}{{ event.title }}{% if event.tagline %} - {{ event.tagline }}{% endif %}{% endblock %}
 
 {% block extra_head %}
 <script type="application/ld+json">{{ event_jsonld }}</script>
@@ -35,7 +35,7 @@
       <div class="stub-tear"></div>
       <div class="stub-foot">
         <span>{% if event.capacity %}{% blocktrans with n=event.capacity %}{{ n }} spots{% endblocktrans %}{% else %}{% trans 'Spots limited' %}{% endif %} · {% trans 'by approval' %}</span>
-        <span>{% trans 'guests — free' %}</span>
+        <span>{% trans 'free for guests' %}</span>
       </div>
     </div>
 
@@ -52,16 +52,16 @@
     <div class="flow">
       <div class="flow-item"><span class="flow-time">{{ schedule.doors }}</span><div><p class="flow-t">{% trans 'Doors & drinks' %}</p><p class="flow-d">{% trans 'Arrive, grab a drink, meet people without rushing.' %}</p></div></div>
       <div class="flow-item"><span class="flow-time">{{ schedule.pitches }}</span><div><p class="flow-t">{% trans 'Pitches' %}</p><p class="flow-d">{% trans '10 startups · 3 minutes for pitch + 7 minutes for Q&A.' %}</p></div></div>
-      <div class="flow-item"><span class="flow-time">{{ schedule.networking }}</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors — mingling over pizza till the end.' %}</p></div></div>
+      <div class="flow-item"><span class="flow-time">{{ schedule.networking }}</span><div><p class="flow-t">{% trans 'Networking & pizza' %}</p><p class="flow-d">{% trans 'Founders, guests, mentors: mingling over pizza till the end.' %}</p></div></div>
     </div>
   </section>
 
   <section class="block faq">
     <h2>{% trans 'FAQ' %}</h2>
     <details><summary>{% trans 'Why an application instead of plain registration?' %}</summary><p>{% trans 'Spots are limited, and we balance founders and guests. Every application is reviewed manually and confirmed by email.' %}</p></details>
-    <details><summary>{% trans "I'm not a startup — can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest" — this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
+    <details><summary>{% trans "I'm not a startup, can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest": this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
     <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your pitch deck. Selected teams get the pitch format details.' %}</p></details>
-    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests — free. For startups participation is paid ({{ price }} {{ currency }}) — this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}</p></details>
+    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests: free. For startups participation is paid ({{ price }} {{ currency }}), this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}</p></details>
   </section>
 
   {% if experts %}

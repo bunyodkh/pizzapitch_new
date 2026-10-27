@@ -1,0 +1,63 @@
+/* PizzaPitch Women theme (Techstars Startup Week).
+ * Loaded on top of styles.css by index_women.html only. Re-points the shared
+ * color tokens to the event's pink palette so the stub, CTA, apply overlay and
+ * forms all pick it up, then adds the hero banner.
+ */
+:root{
+    --paper:#FBF3F7;
+    --ink:#2A1420;
+    --tomato:#C2457F;
+    --tomato-dark:#A13467;
+    --ember:#F4B3D1;
+    --muted:#94788A;
+    --line:#F0DCE6;
+    --pink-wash:#FBE9F1;
+    --pink-wash-line:#F3CFE0;
+    --shadow:0 1px 2px rgba(42,20,32,.05), 0 12px 40px -18px rgba(150,40,95,.4);
+  }
+
+  /* ---------- hero banner ---------- */
+  .w-hero{
+    margin:6px 0 26px;padding:18px 18px 30px;border-radius:22px;overflow:hidden;
+    aspect-ratio:16/10;display:flex;flex-direction:column;align-items:center;
+    box-shadow:var(--shadow);
+    background:#C9608F url("../pizzapitch_women_files/background.jpg") center/cover no-repeat;
+  }
+
+  /* Mixed-source partner lockup, kept to one line at all widths. Each logo
+   * is sized to its own optical weight rather than a shared height: UNDP's
+   * mark is a stacked emblem+wordmark (tall and narrow) so it needs more
+   * height to read at the same weight as the others; Techstars/U-Enter/
+   * Bellissimo run visually heavier than Yandex at the same height, so
+   * they're sized down a touch; PizzaPitch and UNDP are set to explicit
+   * pixel heights. */
+  .w-logos{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:clamp(5px,1.6vw,14px);margin-bottom:clamp(14px,4vw,22px)}
+  .w-logos img{height:clamp(11px,3.4vw,19px);width:auto;display:block;flex:none}
+  .w-logos img.w-logo-pizzapitch{height:22px}
+  .w-logos img.w-logo-techstars{height:clamp(9px,2.7vw,15px)}
+  .w-logos img.w-logo-uenter{height:clamp(9px,2.9vw,16px)}
+  .w-logos img.w-logo-bellissimo{height:clamp(9px,2.9vw,16px)}
+  .w-logos img.w-logo-undp{height:40px}
+
+  /* Everything below the logo row shares the hero's remaining height and
+   * centers the title + tagline within it, so the title sits in the middle
+   * of the banner regardless of how tall the logo row is. */
+  .w-titlewrap{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+  .w-tagline{
+    margin:clamp(10px,2.8vw,16px) 0 0;color:#fff;font-family:"Space Mono",monospace;
+    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.92;
+  }
+
+  .w-title{margin:0;width:82%;line-height:0}
+  .w-title img{width:100%;height:auto;display:block}
+
+  .lede{color:#5c4553}
+
+  /* ---------- re-tint hard-coded warm colors from styles.css ---------- */
+  .hero-photo,.expert-card,.gallery figure{background:var(--pink-wash)}
+  .iconbtn:hover{background:var(--pink-wash)}
+  .choice .emoji,.form-alert{background:var(--pink-wash)}
+  .form-alert{border-color:var(--pink-wash-line)}
+  .whatnext p{color:#5c4553}
+  .backdrop{background:rgba(60,15,40,.42)}

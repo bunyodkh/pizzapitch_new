@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ event.title }}{% if event.tagline %} - {{ event.tagline }}{% endif %}{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">{{ event_jsonld }}</script><link rel="stylesheet" href="{% static 'css/women.css' %}">
+{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    <div class="w-hero">
+      <div class="w-logos">
+        <img src="{% static 'pizzapitch_women_files/PizzaPitch.png' %}" alt="PizzaPitch" class="w-logo-pizzapitch">
+        <img src="{% static 'pizzapitch_women_files/YandexUzbekistan.png' %}" alt="Yandex Uzbekistan">
+        <img src="{% static 'pizzapitch_women_files/Techstars_white.png' %}" alt="Techstars" class="w-logo-techstars">
+        <img src="{% static 'pizzapitch_women_files/U-Enter.png' %}" alt="U-Enter" class="w-logo-uenter">
+        <img src="{% static 'pizzapitch_women_files/BellissimoPizza.png' %}" alt="Bellissimo Pizza" class="w-logo-bellissimo">
+        <img src="{% static 'pizzapitch_women_files/UNDP.png' %}" alt="UNDP" class="w-logo-undp">
+      </div>
+      <div class="w-titlewrap">
+        <h1 class="w-title"><img src="{% static 'pizzapitch_women_files/hero_text_logo.png' %}" alt="techstars startup week"></h1>
+        <p class="w-tagline">{% trans 'for women-led startups' %}</p>
+      </div>
+    </div>
+
+    <p class="lede">{% trans 'A pitch track for women-led startups on the main stage of Startup Week Tashkent: 30 teams pitch in the semifinal, 10 reach the final at Humo Arena. Pitches, mentorship and prizes.' %}</p>
+
+    <div class="stub" aria-label="{% trans 'Event details' %}">
+      <div class="stub-row">
+        <div class="stub-cell">
+          <p class="stub-k">{% trans 'When' %}</p>
+          <p class="stub-v">{% trans '24–26 Nov 2026' %}</p>
+        </div>
+        <div class="stub-cell">
+          <p class="stub-k">{% trans 'Where' %}</p>
+          <p class="stub-v">{% if event.location_url %}<a href="{{ event.location_url }}" target="_blank" rel="noopener noreferrer">{{ event.place }}</a>{% else %}{{ event.place }}{% endif %}{% if event.city %}, {{ event.city }}{% endif %}</p>
+        </div>
+      </div>
+      <div class="stub-tear"></div>
+      <div class="stub-foot">
+        <span>{% trans '30 teams in the semifinal' %}</span>
+        <span>{% trans '10 in the final' %}</span>
+      </div>
+    </div>
+
+    {% if event.startup_registration_open or event.guest_registration_open %}
+    <button class="cta" id="openBtn">{% trans 'Apply' %} <span aria-hidden="true">→</span></button>
+    {% else %}
+    <p class="cta-note">{% trans 'Registration is currently closed for this event.' %}</p>
+    {% endif %}
+  </header>
+
+  <section class="block faq">
+    <h2>{% trans 'FAQ' %}</h2>
+    <details><summary>{% trans 'Who can apply?' %}</summary><p>{% trans 'Women-led startups can apply to pitch. Guests are welcome to come, watch the pitches and support the founders. Every application is reviewed manually.' %}</p></details>
+    <details><summary>{% trans 'How does the selection work?' %}</summary><p>{% trans 'From all applications we pick 30 teams for the semifinal. The jury then selects 10 finalists, who get a pitch workshop and pitch on the main stage of Startup Week at Humo Arena.' %}</p></details>
+    <details><summary>{% trans 'What are the prizes?' %}</summary><p>{% trans '3 winners get 15M UZS each. The other 7 finalists get gifts from Yandex.' %}</p></details>
+    <details><summary>{% trans 'Why an application instead of plain registration?' %}</summary><p>{% trans 'Spots are limited, and we balance founders and guests. Every application is reviewed manually and confirmed by email.' %}</p></details>
+    <details><summary>{% trans "I'm not a startup, can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest": this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
+    <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your pitch deck. Selected teams get the pitch format details.' %}</p></details>
+  </section>
+
+  {% if experts %}
+  <section class="block experts">
+    <h2>{% trans 'Experts' %}</h2>
+    <div class="experts-rail" id="expertsRail">
+      {% for person in experts %}
+      <figure class="expert-card">
+        <div class="expert-photo">
+          {% if person.photo %}<img src="{{ person.photo.url }}" alt="{{ person.name }}" loading="lazy" draggable="false">{% endif %}
+        </div>
+        <figcaption class="expert-cap">
+          <p class="expert-name">{{ person.name }}</p>
+          <p class="expert-role">{{ person.position }}</p>
+        </figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    <p class="scroll-hint">{% trans 'swipe for more →' %}</p>
+  </section>
+  {% endif %}
+
+  {% if partners %}
+  <section class="block partners">
+    <h2>{% trans 'Partners' %}</h2>
+    <p class="sub">{% trans 'What makes tonight possible.' %}</p>
+    <div class="ribbon" id="partnersRibbon">
+      <div class="rtrack" id="partnersTrack">
+        {% for partner in partners %}
+        <span class="ritem">
+          {% if partner.website %}<a href="{{ partner.website }}" target="_blank" rel="noopener noreferrer">{% endif %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" draggable="false" loading="lazy">
+          {% if partner.website %}</a>{% endif %}
+        </span>
+        {% endfor %}
+        {% for partner in partners %}
+        <span class="ritem">
+          {% if partner.website %}<a href="{{ partner.website }}" target="_blank" rel="noopener noreferrer">{% endif %}
+          <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" draggable="false" loading="lazy">
+          {% if partner.website %}</a>{% endif %}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    <p class="cta-line"><a href="#" id="partnerCtaLink">{% trans 'become a partner →' %}</a></p>
+  </section>
+  {% endif %}
+{% endblock %}
+
+{% block overlays %}
+  {% include "includes/apply_overlay_women.html" %}
+  {% include "includes/partner_overlay.html" %}
+{% endblock %}
+
+{% block extra_js %}
+{{ i18n_strings|json_script:"i18n-strings" }}
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

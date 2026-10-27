@@ -98,7 +98,8 @@
   function validateField(field) {
     var el = field.querySelector('input, select, textarea');
     var value = (el.value || '').trim();
-    var ok = field.hasAttribute('data-email') ? EMAIL_RE.test(value) : value.length > 0;
+    var ok = el.type === 'checkbox' ? el.checked
+      : field.hasAttribute('data-email') ? EMAIL_RE.test(value) : value.length > 0;
     field.classList.toggle('err', !ok);
     return ok;
   }
@@ -160,7 +161,8 @@
       if (!validateField(f)) {
         if (!firstErr) firstErr = f;
         var lb = f.querySelector('label');
-        if (lb) missing.push(lb.textContent.replace('*', '').trim());
+        if (f.dataset.label) missing.push(f.dataset.label);
+        else if (lb) missing.push(lb.textContent.replace('*', '').trim());
       }
     });
     if (firstErr) {
@@ -193,9 +195,9 @@
   form.querySelectorAll('[data-req]').forEach(function (f) {
     var el = f.querySelector('input, select, textarea');
     el.addEventListener('blur', function () {
-      if (el.value.trim() || f.classList.contains('err')) validateField(f);
+      if ((el.type !== 'checkbox' && el.value.trim()) || f.classList.contains('err')) validateField(f);
     });
-    el.addEventListener('input', function () {
+    el.addEventListener(el.type === 'checkbox' ? 'change' : 'input', function () {
       if (f.classList.contains('err')) validateField(f);
       hideAlert();
     });

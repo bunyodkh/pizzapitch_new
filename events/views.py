@@ -105,27 +105,39 @@ def index(request):
     i18n_strings = {
         'formTitleStartup': _('Startup application'),
         'formTitleGuest': _('Guest application'),
-        'formSubStartup': _('A short note about your project — selected teams get the pitch format.'),
-        'formSubGuest': _('A couple fields — we will follow up with confirmation.'),
+        'formSubStartup': _('A short note about your project. Selected teams get the pitch format.'),
+        'formSubGuest': _('A couple fields, we will follow up with confirmation.'),
         'doneSubTemplate': _('Thanks! Confirmation will be sent to {email}.'),
         'doneStepsStartup': [
-            _('We review applications manually — usually 24–48 hours.'),
-            _('Approved — we email a payment link for participation ({price} {currency}).').format(
+            _('We review applications manually, usually 24–48 hours.'),
+            _('Approved: we email a payment link for participation ({price} {currency}).').format(
                 price=price, currency=event.currency,
             ),
-            _('Paid — your pitch slot is locked in. Prepare your 3-minute pitch.'),
+            _('Paid: your pitch slot is locked in. Prepare your 3-minute pitch.'),
         ],
         'doneStepsGuest': [
-            _('We review applications manually — usually 24–48 hours.'),
+            _('We review applications manually, usually 24–48 hours.'),
             _('We email you a confirmation with all the evening details.'),
-            _('Confirmed — add it to your calendar. See you on {date}.').format(date=event_date),
+            _('Confirmed, add it to your calendar. See you on {date}.').format(date=event_date),
         ],
         'fillFieldsPrefix': _('Please fill in: '),
         'genericError': _('Could not submit the application. Check your connection and try again.'),
     }
+    if event.landing_page == Event.LANDING_WOMEN:
+        # PizzaPitch Women is free for everyone, no payment step after approval.
+        i18n_strings['doneStepsStartup'] = [
+            _('We review applications manually, usually 24–48 hours.'),
+            _('Selected: your team is in the semifinal. We email you all the details.'),
+            _('Prepare your pitch: 5 minutes + 5 minutes of Q&A.'),
+        ]
+        i18n_strings['doneStepsGuest'][2] = _('Confirmed, add it to your calendar. See you on {date}.').format(
+            date=_('24–26 Nov 2026'),
+        )
+
     experts = Expert.objects.filter(is_visible=True).order_by('order', 'id')
     partners = Partner.objects.filter(is_visible=True).order_by('order', 'id')
-    return render(request, 'index.html', {
+    template = 'index_women.html' if event.landing_page == Event.LANDING_WOMEN else 'index.html'
+    return render(request, template, {
         'event': event, 'schedule': schedule, 'experts': experts, 'partners': partners, 'i18n_strings': i18n_strings,
         'event_jsonld': event_jsonld(event),
     })
@@ -168,7 +180,7 @@ def apply(request):
             event=event, applicant_type=Application.GUEST,
         ).exclude(status=Application.STATUS_REJECTED).count()
         if guest_count >= Application.GUEST_CAP:
-            return JsonResponse({'error': _('Guest spots are full — no seats left.')}, status=409)
+            return JsonResponse({'error': _('Guest spots are full, no seats left.')}, status=409)
 
     application = Application.objects.create(
         event=event,

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}PizzaPitch{% endblock %}</title>
 
-{% blocktrans asvar default_description %}PizzaPitch is a recurring pitch night in Tashkent — founders present live over pizza, guests ask questions and meet the people building and investing.{% endblocktrans %}
+{% blocktrans asvar default_description %}PizzaPitch is a recurring pitch night in Tashkent: founders present live over pizza, guests ask questions and meet the people building and investing.{% endblocktrans %}
 
 {% block meta %}
 <meta name="description" content="{% firstof event.description default_description %}">
@@ -15,14 +15,14 @@
 
 <meta property="og:site_name" content="PizzaPitch">
 <meta property="og:type" content="website">
-<meta property="og:title" content="{% if event %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
+<meta property="og:title" content="{% if event %}{{ event.title }}{% if event.tagline %} - {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
 <meta property="og:description" content="{% firstof event.description default_description %}">
 <meta property="og:url" content="{{ SITE_URL }}{{ request.path }}">
 <meta property="og:image" content="{% if event.hero_photo %}{{ SITE_URL }}{{ event.hero_photo.url }}{% else %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endif %}">
 <meta property="og:locale" content="{% if LANGUAGE_CODE == 'ru' %}ru_RU{% else %}en_US{% endif %}">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{% if event %}{{ event.title }}{% if event.tagline %} — {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
+<meta name="twitter:title" content="{% if event %}{{ event.title }}{% if event.tagline %} - {{ event.tagline }}{% endif %}{% else %}PizzaPitch{% endif %}">
 <meta name="twitter:description" content="{% firstof event.description default_description %}">
 <meta name="twitter:image" content="{% if event.hero_photo %}{{ SITE_URL }}{{ event.hero_photo.url }}{% else %}{{ SITE_URL }}{% static 'images/logo.png' %}{% endif %}">
 {% endblock %}
@@ -57,7 +57,7 @@
 <body>
 <div class="wrap">
   <div class="top">
-    <a class="logo" href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="PizzaPitch" class="logo-img"></a>
+    {% block logo %}<a class="logo" href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" alt="PizzaPitch" class="logo-img"></a>{% endblock %}
     <div class="top-right">
       {% block top_right %}{% endblock %}
       {% include "includes/lang_switch.html" %}

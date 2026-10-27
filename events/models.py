@@ -4,6 +4,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Event(models.Model):
+    LANDING_STANDARD = 'standard'
+    LANDING_WOMEN = 'women'
+    LANDING_CHOICES = [
+        (LANDING_STANDARD, _('Standard')),
+        (LANDING_WOMEN, _('PizzaPitch Women (Techstars Startup Week)')),
+    ]
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=220, unique=True, blank=True)
     tagline = models.CharField(max_length=200, blank=True)
@@ -38,6 +45,11 @@ class Event(models.Model):
     guest_registration_open = models.BooleanField(
         default=True, verbose_name=_('Guest registration open'),
         help_text=_('When off, guests cannot apply and the option is hidden from visitors.'),
+    )
+    landing_page = models.CharField(
+        max_length=20, choices=LANDING_CHOICES, default=LANDING_STANDARD,
+        verbose_name=_('Registration page'),
+        help_text=_('Which registration page visitors see while this is the current event.'),
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
