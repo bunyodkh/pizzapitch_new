@@ -24,18 +24,23 @@
     background:#C9608F url("../pizzapitch_women_files/background.jpg") center/cover no-repeat;
   }
 
-  /* Mixed-source partner lockup, kept to one line at all widths. Each logo
-   * is sized to its own optical weight rather than a shared height: UNDP's
-   * mark is a stacked emblem+wordmark (tall and narrow) so it needs more
-   * height to read at the same weight as the others; U-Enter/Bellissimo run
-   * visually heavier than Yandex/Techstars Uzbekistan at the same height, so
-   * they're sized down a touch; UNDP is set to an explicit pixel height. */
-  .w-logos{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:clamp(6px,1.8vw,15px);margin-bottom:clamp(14px,4vw,22px)}
-  .w-logos img{height:clamp(12px,3.8vw,21px);width:auto;display:block;flex:none}
-  .w-logos img.w-logo-uenter{height:clamp(10px,3.2vw,18px)}
-  .w-logos img.w-logo-bellissimo{height:clamp(10px,3.2vw,18px)}
-  .w-logos img.w-logo-hackonnect{height:clamp(10px,3.2vw,18px)}
-  .w-logos img.w-logo-undp{height:44px}
+  /* Mixed-source partner lockup, kept to one line at all widths — now 7
+   * logos, so sizing is tuned against the hero's actual available width
+   * (both the narrowest supported phone and the 560px-capped desktop
+   * card) rather than just bumped up, or it would overflow on one end or
+   * the other. Each logo is sized to its own optical weight rather than a
+   * shared height: UNDP's mark is a stacked emblem+wordmark (tall and
+   * narrow) so it needs more height to read at the same weight as the
+   * others; U-Enter/Bellissimo/Hackonnect/UzVC run visually heavier than
+   * Yandex/Techstars Uzbekistan at the same height, so they're sized down
+   * a touch; UNDP is set to an explicit pixel height. */
+  .w-logos{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:clamp(4px,1.3vw,11px);margin-bottom:clamp(14px,4vw,22px)}
+  .w-logos img{height:clamp(10px,3vw,18px);width:auto;display:block;flex:none}
+  .w-logos img.w-logo-uenter{height:clamp(8px,2.5vw,15px)}
+  .w-logos img.w-logo-bellissimo{height:clamp(8px,2.5vw,15px)}
+  .w-logos img.w-logo-hackonnect{height:clamp(8px,2.5vw,15px)}
+  .w-logos img.w-logo-uzvc{height:clamp(8px,2.5vw,15px)}
+  .w-logos img.w-logo-undp{height:40px}
 
   /* Everything below the logo row shares the hero's remaining height and
    * centers the title + tagline within it, so the title sits in the middle
