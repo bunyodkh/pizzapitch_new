@@ -27,14 +27,11 @@
   /* Mixed-source partner lockup, kept to one line at all widths. Each logo
    * is sized to its own optical weight rather than a shared height: UNDP's
    * mark is a stacked emblem+wordmark (tall and narrow) so it needs more
-   * height to read at the same weight as the others; Techstars/U-Enter/
-   * Bellissimo run visually heavier than Yandex at the same height, so
-   * they're sized down a touch; PizzaPitch and UNDP are set to explicit
-   * pixel heights. */
+   * height to read at the same weight as the others; U-Enter/Bellissimo run
+   * visually heavier than Yandex/Techstars Uzbekistan at the same height, so
+   * they're sized down a touch; UNDP is set to an explicit pixel height. */
   .w-logos{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:clamp(5px,1.6vw,14px);margin-bottom:clamp(14px,4vw,22px)}
   .w-logos img{height:clamp(11px,3.4vw,19px);width:auto;display:block;flex:none}
-  .w-logos img.w-logo-pizzapitch{height:22px}
-  .w-logos img.w-logo-techstars{height:clamp(9px,2.7vw,15px)}
   .w-logos img.w-logo-uenter{height:clamp(9px,2.9vw,16px)}
   .w-logos img.w-logo-bellissimo{height:clamp(9px,2.9vw,16px)}
   .w-logos img.w-logo-undp{height:40px}
