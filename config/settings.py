@@ -143,6 +143,7 @@ LANGUAGE_CODE = 'en'
 LANGUAGES = [
     ('en', 'English'),
     ('ru', 'Русский'),
+    ('uz', 'O\'zbekcha'),
 ]
 
 LOCALE_PATHS = [BASE_DIR / 'locale']
@@ -155,8 +156,8 @@ USE_TZ = True
 
 # django-modeltranslation
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_LANGUAGES = ('en', 'ru')
-MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'ru')
+MODELTRANSLATION_LANGUAGES = ('en', 'ru', 'uz')
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'ru', 'uz')
 
 # django-unfold
 UNFOLD = {

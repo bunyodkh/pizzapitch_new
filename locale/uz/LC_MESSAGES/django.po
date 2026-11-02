@@ -1,0 +1,1367 @@
+# Uzbek translation catalog for PizzaPitch.
+msgid ""
+msgstr ""
+"Project-Id-Version: PizzaPitch\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-01 19:47+0500\n"
+"PO-Revision-Date: 2026-11-01 19:47+0500\n"
+"Last-Translator: PizzaPitch\n"
+"Language-Team: Uzbek\n"
+"Language: uz\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\events\forms.py:14
+msgid "This account does not have access to the team dashboard."
+msgstr "Bu hisobda jamoa boşqaruv paneliga kiriş huquqi yöq."
+
+#: .\events\forms.py:47 .\events\forms.py:48
+msgid "Title"
+msgstr "Nomi"
+
+#: .\events\forms.py:49 .\events\forms.py:50
+msgid "Tagline"
+msgstr "Şior"
+
+#: .\events\forms.py:51 .\events\forms.py:52
+msgid "Description"
+msgstr "Tavsif"
+
+#: .\events\forms.py:53 .\events\forms.py:54
+msgid "Place"
+msgstr "Joy"
+
+#: .\events\forms.py:55 .\events\forms.py:56
+msgid "City"
+msgstr "Şahar"
+
+#: .\events\forms.py:57
+msgid "Map link"
+msgstr "Xarita havolasi"
+
+#: .\events\forms.py:78 .\events\forms.py:79 .\events\forms.py:104
+#: .\events\templates\contacts.html:61
+#: .\events\templates\includes\apply_overlay.html:48
+#: .\events\templates\includes\apply_overlay_women.html:46
+msgid "Name"
+msgstr "Ism"
+
+#: .\events\forms.py:80 .\events\forms.py:81
+msgid "Position"
+msgstr "Lavozim"
+
+#: .\events\forms.py:82
+msgid "Photo"
+msgstr "Rasm"
+
+#: .\events\forms.py:83 .\events\forms.py:107
+msgid "Order"
+msgstr "Tartib"
+
+#: .\events\forms.py:84 .\events\forms.py:108 .\events\models.py:86
+#: .\events\models.py:105
+msgid "Show on site"
+msgstr "Saytda körsatiş"
+
+#: .\events\forms.py:105
+msgid "Logo"
+msgstr "Logotip"
+
+#: .\events\forms.py:106
+msgid "Website"
+msgstr "Veb-sayt"
+
+#: .\events\i18n_overrides.py:19
+msgid "Mon"
+msgstr "Duş"
+
+#: .\events\i18n_overrides.py:19
+msgid "Tue"
+msgstr "Seş"
+
+#: .\events\i18n_overrides.py:19
+msgid "Wed"
+msgstr "Çor"
+
+#: .\events\i18n_overrides.py:19
+msgid "Thu"
+msgstr "Pay"
+
+#: .\events\i18n_overrides.py:19
+msgid "Fri"
+msgstr "Jum"
+
+#: .\events\i18n_overrides.py:19
+msgid "Sat"
+msgstr "Şan"
+
+#: .\events\i18n_overrides.py:19
+msgid "Sun"
+msgstr "Yak"
+
+#: .\events\i18n_overrides.py:21
+msgid "jan"
+msgstr "yan"
+
+#: .\events\i18n_overrides.py:21
+msgid "feb"
+msgstr "fev"
+
+#: .\events\i18n_overrides.py:21
+msgid "mar"
+msgstr "mar"
+
+#: .\events\i18n_overrides.py:21
+msgid "apr"
+msgstr "apr"
+
+#: .\events\i18n_overrides.py:21
+msgid "may"
+msgstr "may"
+
+#: .\events\i18n_overrides.py:21
+msgid "jun"
+msgstr "iyun"
+
+#: .\events\i18n_overrides.py:22
+msgid "jul"
+msgstr "iyul"
+
+#: .\events\i18n_overrides.py:22
+msgid "aug"
+msgstr "avg"
+
+#: .\events\i18n_overrides.py:22
+msgid "sep"
+msgstr "sen"
+
+#: .\events\i18n_overrides.py:22
+msgid "oct"
+msgstr "okt"
+
+#: .\events\i18n_overrides.py:22
+msgid "nov"
+msgstr "noy"
+
+#: .\events\i18n_overrides.py:22
+msgid "dec"
+msgstr "dek"
+
+#: .\events\models.py:10
+msgid "Standard"
+msgstr "Standart"
+
+#: .\events\models.py:11
+msgid "PizzaPitch Women (Techstars Startup Week)"
+msgstr "PizzaPitch Women (Techstars Startup Week)"
+
+#: .\events\models.py:39
+msgid "Current event"
+msgstr "Joriy tadbir"
+
+#: .\events\models.py:42
+msgid "Startup registration open"
+msgstr "Startaplar uçun röyxatdan ötiş oçiq"
+
+#: .\events\models.py:43
+msgid ""
+"When off, startups cannot apply and the option is hidden from visitors."
+msgstr ""
+"Öçirilganda startaplar ariza topşira olmaydi va bu bölim mehmonlardan "
+"yaşiriladi."
+
+#: .\events\models.py:46
+msgid "Guest registration open"
+msgstr "Mehmonlar uçun röyxatdan ötiş oçiq"
+
+#: .\events\models.py:47
+msgid "When off, guests cannot apply and the option is hidden from visitors."
+msgstr ""
+"Öçirilganda mehmonlar ariza topşira olmaydi va bu bölim mehmonlardan "
+"yaşiriladi."
+
+#: .\events\models.py:51
+msgid "Registration page"
+msgstr "Röyxatdan ötiş sahifasi"
+
+#: .\events\models.py:52
+msgid "Which registration page visitors see while this is the current event."
+msgstr ""
+"Bu tadbir joriy bölgan davrda mehmonlar köradigan röyxatdan ötiş sahifasi."
+
+#: .\events\models.py:133
+msgid "Startup"
+msgstr "Startap"
+
+#: .\events\models.py:134
+msgid "Guest"
+msgstr "Mehmon"
+
+#: .\events\models.py:141 .\events\templates\contacts.html:44
+#: .\events\templates\includes\status_actions.html:19 .\events\views.py:489
+msgid "Pending"
+msgstr "Kutilmoqda"
+
+#: .\events\models.py:142 .\events\templates\contacts.html:45
+#: .\events\views.py:491
+msgid "Approved"
+msgstr "Tasdiqlangan"
+
+#: .\events\models.py:143 .\events\templates\contacts.html:46
+#: .\events\views.py:493
+msgid "Rejected"
+msgstr "Rad etilgan"
+
+#: .\events\templates\404.html:4 .\events\templates\404.html:9
+msgid "Page not found"
+msgstr "Sahifa topilmadi"
+
+#: .\events\templates\404.html:8
+msgid "Error 404"
+msgstr "404-xato"
+
+#: .\events\templates\404.html:10
+msgid "This page doesn't exist. The link may be outdated or mistyped."
+msgstr ""
+"Bu sahifa mavjud emas. Havola eskirgan yoki xato kiritilgan bölişi mumkin."
+
+#: .\events\templates\404.html:11 .\events\templates\500.html:11
+msgid "Back to home"
+msgstr "Boş sahifaga qaytiş"
+
+#: .\events\templates\500.html:4
+msgid "Server error"
+msgstr "Server xatosi"
+
+#: .\events\templates\500.html:8
+msgid "Error 500"
+msgstr "500-xato"
+
+#: .\events\templates\500.html:9
+msgid "Something went wrong"
+msgstr "Nimadir xato ketdi"
+
+#: .\events\templates\500.html:10
+msgid ""
+"A server error occurred. We're already aware. Try refreshing in a couple of "
+"minutes."
+msgstr ""
+"Server xatosi yuz berdi. Biz bundan allaqaçon xabardormiz. Bir neça "
+"daqiqadan söng sahifani qayta yuklab köring."
+
+#: .\events\templates\base.html:8
+msgid ""
+"PizzaPitch is a recurring pitch night in Tashkent: founders present live "
+"over pizza, guests ask questions and meet the people building and investing."
+msgstr ""
+"PizzaPitch — Toşkentda muntazam ötkaziladigan pitch keçasi: asosçilar pitsa "
+"ustida jonli taqdimot qiladi, mehmonlar savol beradi va loyihalarni "
+"yaratayotgan va investitsiya qilayotgan odamlar bilan tanişadi."
+
+#: .\events\templates\base.html:70 .\events\templates\team_login.html:4
+#: .\events\templates\team_login.html:9
+msgid "Team login"
+msgstr "Jamoa kirişi"
+
+#: .\events\templates\base.html:71
+msgid "built for founders"
+msgstr "asosçilar uçun yaratilgan"
+
+#: .\events\templates\base.html:76
+msgid "We use cookies for basic analytics."
+msgstr "Biz asosiy analitika uçun cookie-fayllardan foydalanamiz."
+
+#: .\events\templates\base.html:77
+msgid "Got it"
+msgstr "Tuşunarli"
+
+#: .\events\templates\base_team.html:6 .\events\templates\base_team.html:17
+#: .\events\templates\team_home.html:4
+msgid "Team"
+msgstr "Jamoa"
+
+#: .\events\templates\base_team.html:22
+msgid "Log out"
+msgstr "Çiqiş"
+
+#: .\events\templates\base_team.html:30
+msgid "Team home"
+msgstr "Jamoa boş sahifasi"
+
+#: .\events\templates\base_team.html:31 .\events\templates\event_list.html:4
+#: .\events\templates\event_list.html:9
+msgid "Events"
+msgstr "Tadbirlar"
+
+#: .\events\templates\base_team.html:32 .\events\templates\expert_list.html:4
+#: .\events\templates\expert_list.html:9 .\events\templates\team_home.html:18
+msgid "Experts"
+msgstr "Ekspertlar"
+
+#: .\events\templates\base_team.html:33 .\events\templates\index.html:69
+#: .\events\templates\index_women.html:68
+#: .\events\templates\partner_list.html:4
+#: .\events\templates\partner_list.html:9 .\events\templates\team_home.html:23
+msgid "Partners"
+msgstr "Hamkorlar"
+
+#: .\events\templates\base_team.html:34 .\events\templates\participants.html:4
+#: .\events\templates\participants.html:9 .\events\templates\team_home.html:28
+msgid "Applications"
+msgstr "Arizalar"
+
+#: .\events\templates\base_team.html:35 .\events\templates\contacts.html:4
+#: .\events\templates\contacts.html:9 .\events\templates\contacts.html:53
+#: .\events\templates\team_home.html:33
+msgid "Contacts"
+msgstr "Kontaktlar"
+
+#: .\events\templates\between.html:4
+msgid "PizzaPitch - pitch nights in Tashkent"
+msgstr "PizzaPitch — Toşkentdagi pitch keçalari"
+
+#: .\events\templates\between.html:8
+msgid "Pitch nights<br><em>over pizza.</em>"
+msgstr "Pitch keçalari<br><em>pitsa ustida.</em>"
+
+#: .\events\templates\between.html:9
+msgid ""
+"PizzaPitch is a recurring evening in Tashkent where founders show their "
+"product to a live audience, and guests meet the people building and "
+"investing."
+msgstr ""
+"PizzaPitch — Toşkentda muntazam ötkaziladigan keça, bunda asosçilar öz "
+"mahsulotini jonli tomoşabinlarga namoyiş etadi, mehmonlar esa loyihalarni "
+"yaratuvçilar va investorlar bilan tanişadi."
+
+#: .\events\templates\between.html:12
+msgid "pitches per night"
+msgstr "keçasiga pitchlar"
+
+#: .\events\templates\between.html:13
+msgid "minutes on stage"
+msgstr "sahnadagi daqiqalar"
+
+#: .\events\templates\between.html:14
+msgid "Lots"
+msgstr "Köplab"
+
+#: .\events\templates\between.html:14
+msgid "slices of pizza"
+msgstr "pitsa bölaklari"
+
+#: .\events\templates\between.html:18
+msgid "Get notified about the next night"
+msgstr "Keyingi keça haqida xabar oling"
+
+#: .\events\templates\between.html:19
+msgid ""
+"Leave your email and we'll write when registration opens. No spam, just "
+"dates."
+msgstr ""
+"Email manzilingizni qoldiring, röyxatdan ötiş oçilganda sizga yozamiz. Spam "
+"yöq, faqat sanalar."
+
+#: .\events\templates\between.html:24
+msgid "Notify me"
+msgstr "Menga xabar bering"
+
+#: .\events\templates\between.html:32
+msgid "How it works"
+msgstr "Qanday işlaydi"
+
+#: .\events\templates\between.html:35
+msgid "Ten startups"
+msgstr "Ön startap"
+
+#: .\events\templates\between.html:35
+msgid ""
+"Selected from applications. Three minutes to pitch, seven for audience "
+"questions."
+msgstr ""
+"Arizalar orasidan tanlanadi. Pitch uçun uç daqiqa, tomoşabinlar savollari "
+"uçun yetti daqiqa."
+
+#: .\events\templates\between.html:39
+msgid "Guests & networking"
+msgstr "Mehmonlar va networking"
+
+#: .\events\templates\between.html:39
+msgid ""
+"Investors, founders, mentors, and anyone curious. We hang out over pizza."
+msgstr ""
+"Investorlar, asosçilar, mentorlar va qiziquvçi har kim. Pitsa ustida muloqot"
+" qilamiz."
+
+#: .\events\templates\between.html:43
+msgid "Participation by approval"
+msgstr "Tasdiqlaş orqali qatnaşiş"
+
+#: .\events\templates\between.html:43
+msgid ""
+"Every application is reviewed manually. Free for guests, paid for startups."
+msgstr ""
+"Har bir ariza qölda körib çiqiladi. Mehmonlar uçun bepul, startaplar uçun "
+"pullik."
+
+#: .\events\templates\between.html:48 .\events\templates\index.html:60
+#: .\events\templates\index_women.html:56
+msgid "FAQ"
+msgstr "Savol-javob"
+
+#: .\events\templates\between.html:49
+msgid "When's the next event?"
+msgstr "Keyingi tadbir qaçon?"
+
+#: .\events\templates\between.html:49
+msgid ""
+"We announce dates in advance. Leave your email above and we'll write as soon"
+" as registration opens."
+msgstr ""
+"Sanalarni oldindan e'lon qilamiz. Yuqorida email manzilingizni qoldiring, "
+"röyxatdan ötiş oçilgani hamon sizga yozamiz."
+
+#: .\events\templates\between.html:50
+msgid "How do I get in with my startup?"
+msgstr "Startapim bilan qanday qatnaşaman?"
+
+#: .\events\templates\between.html:50
+msgid ""
+"When registration is open, you apply through the site. We review manually "
+"and reply by email within 24–48 hours."
+msgstr ""
+"Röyxatdan ötiş oçiq bölganda, sayt orqali ariza topşirasiz. Biz qölda körib "
+"çiqamiz va 24–48 soat içida email orqali javob beramiz."
+
+#: .\events\templates\between.html:51 .\events\templates\index.html:64
+msgid "How much does it cost?"
+msgstr "Narxi qança?"
+
+#: .\events\templates\between.html:51
+msgid ""
+"Free for guests. For startups, participation is paid: this covers your spot "
+"in the pitch session. The application is free; payment is requested only "
+"after approval."
+msgstr ""
+"Mehmonlar uçun bepul. Startaplar uçun qatnaşiş pullik: bu pitch "
+"sessiyasidagi örningizni qamrab oladi. Ariza topşiriş bepul; tölov faqat "
+"tasdiqlangandan keyin söraladi."
+
+#: .\events\templates\contacts.html:10
+msgid ""
+"Applicants and waitlist subscribers — kept for future outreach (e.g. new-"
+"event announcements)."
+msgstr ""
+"Arizaçilar va kutiş röyxati obunaçilari — kelajakdagi murojaatlar uçun "
+"saqlanadi (masalan, yangi tadbir e'lonlari)."
+
+#: .\events\templates\contacts.html:13 .\events\templates\participants.html:13
+msgid "Export Excel"
+msgstr "Excelga eksport"
+
+#: .\events\templates\contacts.html:14 .\events\templates\participants.html:14
+msgid "Export CSV"
+msgstr "CSVga eksport"
+
+#: .\events\templates\contacts.html:20 .\events\templates\participants.html:20
+msgid "Event"
+msgstr "Tadbir"
+
+#: .\events\templates\contacts.html:22 .\events\templates\participants.html:22
+msgid "No events"
+msgstr "Tadbirlar yöq"
+
+#: .\events\templates\contacts.html:23 .\events\templates\participants.html:23
+msgid "All events"
+msgstr "Barça tadbirlar"
+
+#: .\events\templates\contacts.html:26 .\events\templates\participants.html:26
+msgid "past"
+msgstr "ötgan"
+
+#: .\events\templates\contacts.html:32 .\events\templates\participants.html:32
+msgid "Type"
+msgstr "Turi"
+
+#: .\events\templates\contacts.html:34 .\events\templates\contacts.html:43
+#: .\events\templates\participants.html:34 .\events\views.py:488
+msgid "All"
+msgstr "Barçasi"
+
+#: .\events\templates\contacts.html:35 .\events\templates\participants.html:35
+msgid "Startups"
+msgstr "Startaplar"
+
+#: .\events\templates\contacts.html:36 .\events\templates\participants.html:36
+msgid "Guests"
+msgstr "Mehmonlar"
+
+#: .\events\templates\contacts.html:37
+msgid "Subscribers"
+msgstr "Obunaçilar"
+
+#: .\events\templates\contacts.html:41
+msgid "Status"
+msgstr "Holati"
+
+#: .\events\templates\contacts.html:49 .\events\templates\participants.html:40
+msgid "Show"
+msgstr "Körsatiş"
+
+#: .\events\templates\contacts.html:62 .\events\templates\participants.html:73
+msgid "Email"
+msgstr "Email"
+
+#: .\events\templates\contacts.html:63
+#: .\events\templates\includes\apply_overlay.html:54
+#: .\events\templates\includes\apply_overlay_women.html:52
+#: .\events\templates\participants.html:74
+msgid "Phone"
+msgstr "Telefon"
+
+#: .\events\templates\contacts.html:80
+msgid "No contacts match the selected filters."
+msgstr "Tanlangan filtrlarga mos kontaktlar topilmadi."
+
+#: .\events\templates\event_form.html:4 .\events\templates\event_form.html:7
+msgid "Edit event"
+msgstr "Tadbirni tahrirlaş"
+
+#: .\events\templates\event_form.html:4 .\events\templates\event_form.html:7
+#: .\events\templates\event_list.html:12
+msgid "New event"
+msgstr "Yangi tadbir"
+
+#: .\events\templates\event_form.html:101
+msgid "Remove photo"
+msgstr "Rasmni öçiriş"
+
+#: .\events\templates\event_form.html:104
+#: .\events\templates\expert_form.html:46
+#: .\events\templates\partner_form.html:36
+msgid "Upload photo"
+msgstr "Rasm yuklaş"
+
+#: .\events\templates\event_form.html:161
+#: .\events\templates\expert_form.html:70
+#: .\events\templates\partner_form.html:61
+msgid "Save"
+msgstr "Saqlaş"
+
+#: .\events\templates\event_form.html:162
+#: .\events\templates\expert_form.html:71
+#: .\events\templates\partner_form.html:62
+msgid "Cancel"
+msgstr "Bekor qiliş"
+
+#: .\events\templates\event_list.html:10
+msgid "Create and manage PizzaPitch events."
+msgstr "PizzaPitch tadbirlarini yaratiş va boşqariş."
+
+#: .\events\templates\event_list.html:22
+msgid "inactive"
+msgstr "nofaol"
+
+#: .\events\templates\event_list.html:25
+#, python-format
+msgid "%(counter)s application"
+msgid_plural "%(counter)s applications"
+msgstr[0] "%(counter)s ariza"
+
+#: .\events\templates\event_list.html:28
+#: .\events\templates\expert_list.html:30
+#: .\events\templates\partner_list.html:30
+msgid "Edit"
+msgstr "Tahrirlaş"
+
+#: .\events\templates\event_list.html:29
+msgid "Delete this event? This cannot be undone."
+msgstr "Bu tadbirni öçirasizmi? Bu amalni ortga qaytarib bölmaydi."
+
+#: .\events\templates\event_list.html:31
+#: .\events\templates\expert_list.html:33
+#: .\events\templates\partner_list.html:33
+msgid "Delete"
+msgstr "Öçiriş"
+
+#: .\events\templates\event_list.html:38
+msgid "No events yet."
+msgstr "Hali tadbirlar yöq."
+
+#: .\events\templates\expert_form.html:4 .\events\templates\expert_form.html:7
+msgid "Edit expert"
+msgstr "Ekspertni tahrirlaş"
+
+#: .\events\templates\expert_form.html:4 .\events\templates\expert_form.html:7
+#: .\events\templates\expert_list.html:12
+msgid "New expert"
+msgstr "Yangi ekspert"
+
+#: .\events\templates\expert_form.html:56
+#: .\events\templates\partner_form.html:47
+msgid "Lower numbers show first."
+msgstr "Kiçik raqamlar birinçi körsatiladi."
+
+#: .\events\templates\expert_list.html:10 .\events\templates\team_home.html:19
+msgid "Add and edit mentors shown on the landing page."
+msgstr "Boş sahifada körsatiladigan mentorlarni qöşiş va tahrirlaş."
+
+#: .\events\templates\expert_list.html:24
+#: .\events\templates\partner_list.html:24
+msgid "hidden"
+msgstr "yaşirin"
+
+#: .\events\templates\expert_list.html:31
+msgid "Delete this expert? This cannot be undone."
+msgstr "Bu ekspertni öçirasizmi? Bu amalni ortga qaytarib bölmaydi."
+
+#: .\events\templates\expert_list.html:40
+msgid "No experts yet."
+msgstr "Hali ekspertlar yöq."
+
+#: .\events\templates\includes\apply_overlay.html:2
+#: .\events\templates\includes\apply_overlay_women.html:2
+#: .\events\templates\index.html:43 .\events\templates\index_women.html:49
+msgid "Apply"
+msgstr "Ariza topşiriş"
+
+#: .\events\templates\includes\apply_overlay.html:6
+#: .\events\templates\includes\apply_overlay_women.html:6
+msgid "Back"
+msgstr "Orqaga"
+
+#: .\events\templates\includes\apply_overlay.html:12
+#: .\events\templates\includes\apply_overlay_women.html:12
+#: .\events\templates\includes\partner_overlay.html:7
+msgid "Close"
+msgstr "Yopiş"
+
+#: .\events\templates\includes\apply_overlay.html:18
+#: .\events\templates\includes\apply_overlay_women.html:18
+msgid "Who are you at this event?"
+msgstr "Siz bu tadbirda kimsiz?"
+
+#: .\events\templates\includes\apply_overlay.html:19
+msgid "That way we only show the fields you need."
+msgstr "Şunday qilib biz sizga faqat kerakli maydonlarni körsatamiz."
+
+#: .\events\templates\includes\apply_overlay.html:23
+#: .\events\templates\includes\apply_overlay_women.html:23
+msgid "I'm a startup"
+msgstr "Men startapman"
+
+#: .\events\templates\includes\apply_overlay.html:23
+msgid "Take the stage and pitch your product."
+msgstr "Sahnaga çiqib mahsulotingizni taqdim etasiz."
+
+#: .\events\templates\includes\apply_overlay.html:24
+msgid "Paid"
+msgstr "Pullik"
+
+#: .\events\templates\includes\apply_overlay.html:30
+#: .\events\templates\includes\apply_overlay_women.html:29
+msgid "I'm a guest"
+msgstr "Men mehmonman"
+
+#: .\events\templates\includes\apply_overlay.html:30
+#: .\events\templates\includes\apply_overlay_women.html:29
+msgid "Watch the pitches, meet people, show support."
+msgstr "Pitchlarni tomoşa qiling, odamlar bilan tanişing, qöllab-quvvatlang."
+
+#: .\events\templates\includes\apply_overlay.html:31
+msgid "Free"
+msgstr "Bepul"
+
+#: .\events\templates\includes\apply_overlay.html:34
+#: .\events\templates\includes\apply_overlay_women.html:32
+msgid "Guest registration will open soon, check back shortly."
+msgstr ""
+"Mehmonlar uçun röyxatdan ötiş tez orada oçiladi, bir ozdan söng qayta "
+"tekşiring."
+
+#: .\events\templates\includes\apply_overlay.html:37
+#: .\events\templates\includes\apply_overlay_women.html:35
+#: .\events\templates\index.html:46 .\events\templates\index_women.html:51
+msgid "Registration is currently closed for this event."
+msgstr "Bu tadbir uçun röyxatdan ötiş hozirça yopiq."
+
+#: .\events\templates\includes\apply_overlay.html:43
+#: .\events\templates\includes\apply_overlay_women.html:41
+msgid "Application"
+msgstr "Ariza"
+
+#: .\events\templates\includes\apply_overlay.html:48
+#: .\events\templates\includes\apply_overlay_women.html:46
+msgid "What should we call you"
+msgstr "Sizga qanday murojaat qilaylik"
+
+#: .\events\templates\includes\apply_overlay.html:48
+#: .\events\templates\includes\apply_overlay_women.html:46
+msgid "Enter your name"
+msgstr "Ismingizni kiriting"
+
+#: .\events\templates\includes\apply_overlay.html:49
+#: .\events\templates\includes\apply_overlay_women.html:47
+#: .\events\templates\includes\partner_overlay.html:18
+msgid "A valid email is required"
+msgstr "Töğri email manzil kerak"
+
+#: .\events\templates\includes\apply_overlay.html:53
+#: .\events\templates\includes\apply_overlay_women.html:51
+msgid "Project name"
+msgstr "Loyiha nomi"
+
+#: .\events\templates\includes\apply_overlay.html:53
+#: .\events\templates\includes\apply_overlay_women.html:51
+msgid "Your startup"
+msgstr "Startapingiz"
+
+#: .\events\templates\includes\apply_overlay.html:53
+#: .\events\templates\includes\apply_overlay_women.html:51
+msgid "Enter a name"
+msgstr "Nomini kiriting"
+
+#: .\events\templates\includes\apply_overlay.html:54
+#: .\events\templates\includes\apply_overlay_women.html:52
+msgid "Enter your phone"
+msgstr "Telefon raqamingizni kiriting"
+
+#: .\events\templates\includes\apply_overlay.html:55
+#: .\events\templates\includes\apply_overlay_women.html:53
+msgid "Pitch deck link (PDF or PPT)"
+msgstr "Pitch deck havolasi (PDF yoki PPT)"
+
+#: .\events\templates\includes\apply_overlay.html:55
+#: .\events\templates\includes\apply_overlay_women.html:53
+msgid ""
+"The link to the PDF or PPT file must be <strong>public</strong>: it should "
+"open for anyone without requesting access. We can't open private links (e.g."
+" Google Docs set to \"restricted\")."
+msgstr ""
+"PDF yoki PPT fayl havolasi <strong>oçiq</strong> bölişi kerak: u har kim "
+"uçun ruxsatsiz oçilişi lozim. Biz yopiq havolalarni (masalan, \"çeklangan\" "
+"qilib qöyilgan Google Docs) oça olmaymiz."
+
+#: .\events\templates\includes\apply_overlay.html:56
+#: .\events\templates\includes\apply_overlay_women.html:54
+msgid "What you do, in one sentence"
+msgstr "Nima bilan şuğullanasiz, bir gapda"
+
+#: .\events\templates\includes\apply_overlay.html:56
+#: .\events\templates\includes\apply_overlay_women.html:54
+msgid "We help ... do ..."
+msgstr "Biz ... yordam beramiz ..."
+
+#: .\events\templates\includes\apply_overlay.html:56
+#: .\events\templates\includes\apply_overlay_women.html:54
+msgid "A couple words about the product"
+msgstr "Mahsulot haqida bir neça söz"
+
+#: .\events\templates\includes\apply_overlay.html:58
+#, python-format
+msgid "Participation: %(price)s %(currency)s"
+msgstr "Qatnaşiş: %(price)s %(currency)s"
+
+#: .\events\templates\includes\apply_overlay.html:59
+msgid ""
+"The application is free. If approved, we'll send a payment link, and your "
+"spot in the pitch session is locked in after payment."
+msgstr ""
+"Ariza topşiriş bepul. Tasdiqlangandan söng tölov havolasini yuboramiz, "
+"tölovdan keyin pitch sessiyasidagi örningiz mustahkamlanadi."
+
+#: .\events\templates\includes\apply_overlay.html:65
+#: .\events\templates\includes\apply_overlay_women.html:59
+msgid "Company / what you do"
+msgstr "Kompaniya / nima bilan şuğullanasiz"
+
+#: .\events\templates\includes\apply_overlay.html:65
+#: .\events\templates\includes\apply_overlay_women.html:59
+msgid "Role and company"
+msgstr "Lavozim va kompaniya"
+
+#: .\events\templates\includes\apply_overlay.html:65
+#: .\events\templates\includes\apply_overlay_women.html:59
+#: .\events\templates\includes\partner_overlay.html:19
+msgid "Please fill this in"
+msgstr "Buni töldiring"
+
+#: .\events\templates\includes\apply_overlay.html:66
+#: .\events\templates\includes\apply_overlay_women.html:60
+msgid "Why do you want to come?"
+msgstr "Nega kelişni istaysiz?"
+
+#: .\events\templates\includes\apply_overlay.html:66
+#: .\events\templates\includes\apply_overlay_women.html:60
+msgid "What interests you about the evening"
+msgstr "Keçqurungi tadbirda sizni nima qiziqtiradi"
+
+#: .\events\templates\includes\apply_overlay.html:66
+#: .\events\templates\includes\apply_overlay_women.html:60
+msgid "A couple words, this helps us"
+msgstr "Bir neça söz, bu bizga yordam beradi"
+
+#: .\events\templates\includes\apply_overlay.html:70
+#: .\events\templates\includes\apply_overlay_women.html:64
+msgid "Enter your Telegram"
+msgstr "Telegramingizni kiriting"
+
+#: .\events\templates\includes\apply_overlay.html:72
+#: .\events\templates\includes\apply_overlay_women.html:66
+#: .\events\templates\includes\partner_overlay.html:21
+msgid "Check the fields marked in red."
+msgstr "Qizil rangda belgilangan maydonlarni tekşiring."
+
+#: .\events\templates\includes\apply_overlay.html:73
+#: .\events\templates\includes\apply_overlay_women.html:67
+msgid "Submit application"
+msgstr "Arizani yuboriş"
+
+#: .\events\templates\includes\apply_overlay.html:74
+msgid "We'll reply by email in 24–48 hours."
+msgstr "24–48 soat içida email orqali javob beramiz."
+
+#: .\events\templates\includes\apply_overlay.html:82
+#: .\events\templates\includes\apply_overlay_women.html:75
+msgid "Application received"
+msgstr "Ariza qabul qilindi"
+
+#: .\events\templates\includes\apply_overlay.html:83
+#: .\events\templates\includes\apply_overlay_women.html:76
+msgid "Thanks! We'll take a look."
+msgstr "Rahmat! Körib çiqamiz."
+
+#: .\events\templates\includes\apply_overlay.html:85
+#: .\events\templates\includes\apply_overlay_women.html:78
+#: .\events\templates\includes\partner_overlay.html:32
+msgid "Done"
+msgstr "Tayyor"
+
+#: .\events\templates\includes\apply_overlay_women.html:19
+msgid ""
+"The pitch track is for women-led startups. Pick your role, we'll show only "
+"the fields you need."
+msgstr ""
+"Pitch yönalişi ayollar boşçiligidagi startaplar uçun. Rolingizni tanlang, "
+"biz sizga faqat kerakli maydonlarni körsatamiz."
+
+#: .\events\templates\includes\apply_overlay_women.html:23
+msgid "Women-led startup: take the stage and pitch your product."
+msgstr ""
+"Ayol boşçiligidagi startap: sahnaga çiqib mahsulotingizni taqdim etasiz."
+
+#: .\events\templates\includes\partner_overlay.html:2
+#: .\events\templates\includes\partner_overlay.html:13
+msgid "Become a partner"
+msgstr "Hamkor böling"
+
+#: .\events\templates\includes\partner_overlay.html:14
+msgid "Tell us a bit about your company and we will get back to you by email."
+msgstr ""
+"Kompaniyangiz haqida bir oz ma'lumot bering, biz sizga email orqali javob "
+"beramiz."
+
+#: .\events\templates\includes\partner_overlay.html:16
+msgid "Could not send. Check your connection and try again."
+msgstr "Yuborib bölmadi. Internet aloqangizni tekşirib qayta urinib köring."
+
+#: .\events\templates\includes\partner_overlay.html:19
+msgid "Message"
+msgstr "Xabar"
+
+#: .\events\templates\includes\partner_overlay.html:19
+msgid "A bit about your company and how you would like to partner"
+msgstr "Kompaniyangiz va hamkorlik qiliş usuli haqida bir oz ma'lumot"
+
+#: .\events\templates\includes\partner_overlay.html:22
+msgid "Send"
+msgstr "Yuboriş"
+
+#: .\events\templates\includes\partner_overlay.html:30
+msgid "Thanks!"
+msgstr "Rahmat!"
+
+#: .\events\templates\includes\partner_overlay.html:31
+msgid "We'll get back to you by email."
+msgstr "Sizga email orqali javob beramiz."
+
+#: .\events\templates\includes\status_actions.html:7
+msgid "Approve"
+msgstr "Tasdiqlaş"
+
+#: .\events\templates\includes\status_actions.html:13
+msgid "Reject"
+msgstr "Rad etiş"
+
+#: .\events\templates\index.html:15
+msgid "Pitch night atmosphere"
+msgstr "Pitch keçasi muhiti"
+
+#: .\events\templates\index.html:16
+msgid "Space for your photo"
+msgstr "Rasmingiz uçun joy"
+
+#: .\events\templates\index.html:16
+msgid "add a photo in the admin"
+msgstr "admin panelida rasm qöşing"
+
+#: .\events\templates\index.html:17
+msgid "demo night"
+msgstr "demo keça"
+
+#: .\events\templates\index.html:20
+msgid "Pitches · pizza · connections"
+msgstr "Pitchlar · pitsa · aloqalar"
+
+#: .\events\templates\index.html:21
+msgid ""
+"Ten startups.<br>Three minutes to pitch.<br><em>Pizza for everyone.</em>"
+msgstr "Ön startap.<br>Pitch uçun uç daqiqa.<br><em>Hammaga pitsa.</em>"
+
+#: .\events\templates\index.html:22
+msgid ""
+"A live pitch night over pizza: founders show their product, guests ask "
+"questions, and meet the people building and investing."
+msgstr ""
+"Pitsa ustida jonli pitch keçasi: asosçilar mahsulotini körsatadi, mehmonlar "
+"savol beradi va loyihalarni yaratuvçilar va investorlar bilan tanişadi."
+
+#: .\events\templates\index.html:24 .\events\templates\index_women.html:30
+msgid "Event details"
+msgstr "Tadbir tafsilotlari"
+
+#: .\events\templates\index.html:27 .\events\templates\index_women.html:33
+msgid "When"
+msgstr "Qaçon"
+
+#: .\events\templates\index.html:31 .\events\templates\index_women.html:37
+msgid "Where"
+msgstr "Qayerda"
+
+#: .\events\templates\index.html:37
+#, python-format
+msgid "%(n)s spots"
+msgstr "%(n)s örin"
+
+#: .\events\templates\index.html:37
+msgid "Spots limited"
+msgstr "Örinlar çeklangan"
+
+#: .\events\templates\index.html:37
+msgid "by approval"
+msgstr "tasdiqlaş orqali"
+
+#: .\events\templates\index.html:38
+msgid "free for guests"
+msgstr "mehmonlar uçun bepul"
+
+#: .\events\templates\index.html:44
+msgid "2 minutes · confirmation by email in 24–48h"
+msgstr "2 daqiqa · 24–48 soat içida email orqali tasdiqlaş"
+
+#: .\events\templates\index.html:51
+msgid "How the evening runs"
+msgstr "Keçqurungi tadbir qanday ötadi"
+
+#: .\events\templates\index.html:53
+msgid "Doors & drinks"
+msgstr "Eşiklar va içimliklar"
+
+#: .\events\templates\index.html:53
+msgid "Arrive, grab a drink, meet people without rushing."
+msgstr "Keling, içimlik oling, şoşilmasdan odamlar bilan tanişing."
+
+#: .\events\templates\index.html:54
+msgid "Pitches"
+msgstr "Pitchlar"
+
+#: .\events\templates\index.html:54
+msgid "10 startups · 3 minutes for pitch + 7 minutes for Q&A."
+msgstr "10 startap · pitch uçun 3 daqiqa + savol-javob uçun 7 daqiqa."
+
+#: .\events\templates\index.html:55
+msgid "Networking & pizza"
+msgstr "Networking va pitsa"
+
+#: .\events\templates\index.html:55
+msgid "Founders, guests, mentors: mingling over pizza till the end."
+msgstr "Asosçilar, mehmonlar, mentorlar: oxirigaça pitsa ustida muloqot."
+
+#: .\events\templates\index.html:61 .\events\templates\index_women.html:60
+msgid "Why an application instead of plain registration?"
+msgstr "Nega oddiy röyxatdan ötiş örniga ariza kerak?"
+
+#: .\events\templates\index.html:61 .\events\templates\index_women.html:60
+msgid ""
+"Spots are limited, and we balance founders and guests. Every application is "
+"reviewed manually and confirmed by email."
+msgstr ""
+"Joylar soni çeklangan bölib, biz asosçilar va mehmonlar örtasidagi "
+"mutanosiblikni taʼminlaymiz. Har bir ariza alohida (qölda) körib çiqiladi va"
+" tasdiqnoma elektron poçta orqali yuboriladi."
+
+#: .\events\templates\index.html:62 .\events\templates\index_women.html:61
+msgid "I'm not a startup, can I just come?"
+msgstr "Men startap emasman, şunçaki kelsam böladimi?"
+
+#: .\events\templates\index.html:62 .\events\templates\index_women.html:61
+msgid ""
+"Yes. Choose \"I'm a guest\": this evening is also for people who want to "
+"watch, connect, and support."
+msgstr ""
+"Ha. \"Men mehmonman\" bölimini tanlang. Bu tadbir jarayonni tomoşa qiliş, "
+"yangi tanişuvlar örnatiş hamda iştirokçilarni qöllab-quvvatlaşni "
+"imkoniyatini beradi."
+
+#: .\events\templates\index.html:63 .\events\templates\index_women.html:62
+msgid "What does a startup need?"
+msgstr "Startapga nima kerak?"
+
+#: .\events\templates\index.html:63 .\events\templates\index_women.html:62
+msgid ""
+"A short application and, if you have one, a link to your pitch deck. "
+"Selected teams get the pitch format details."
+msgstr ""
+"Qisqa ariza hamda taqdimot faylingizga (pitch deck) havola. Saralab olingan "
+"jamoalarga taqdimot formati haqidagi batafsil maʼlumotlar yuboriladi."
+
+#: .\events\templates\index.html:64
+#, python-format
+msgid ""
+"Guests: free. For startups participation is paid (%(price)s %(currency)s), "
+"this covers your spot in the pitch session. The application itself is free; "
+"payment is requested only after approval."
+msgstr ""
+"Mehmonlar uçun: bepul. Startaplar uçun qatnaşiş pullik (%(price)s "
+"%(currency)s), bu pitch sessiyasidagi örningizni qamrab oladi. Arizaning özi"
+" bepul; tölov faqat tasdiqlangandan keyin söraladi."
+
+#: .\events\templates\index.html:70 .\events\templates\index_women.html:69
+msgid "What makes tonight possible."
+msgstr "Bugungi keçani kim mumkin qilmoqda."
+
+#: .\events\templates\index.html:89 .\events\templates\index_women.html:88
+msgid "become a partner →"
+msgstr "hamkor böling →"
+
+#: .\events\templates\index_women.html:24
+msgid "for women-led startups"
+msgstr "ayollar boşçiligidagi startaplar uçun"
+
+#: .\events\templates\index_women.html:28
+msgid ""
+"A pitch track for women-led startups on the main stage of Startup Week "
+"Tashkent: 30 teams pitch in the semifinal, 10 reach the final at Humo Arena."
+" Pitches, mentorship and prizes."
+msgstr ""
+"Startup Week Tashkentning asosiy sahnasida ayollar boşçiligidagi startaplar "
+"uçun piç-trek (taqdimotlar bosqiçi): yarim finalda 30 ta jamoa öz loyihasini"
+" taqdim etadi, ulardan 10 tasi Humo Arenadagi finalga yöl oladi. "
+"Taqdimotlar, mentorlik va sovrinlar."
+
+#: .\events\templates\index_women.html:34 .\events\views.py:134
+msgid "19 Nov 2026"
+msgstr "2026-yil 19-noyabr"
+
+#: .\events\templates\index_women.html:43
+msgid "30 teams in the semifinal"
+msgstr "Yarim finalda 30 jamoa"
+
+#: .\events\templates\index_women.html:44
+msgid "10 in the final"
+msgstr "Finalda 10 jamoa"
+
+#: .\events\templates\index_women.html:57
+msgid "Who can apply?"
+msgstr "Kim ariza topşira oladi?"
+
+#: .\events\templates\index_women.html:57
+msgid ""
+"Women-led startups can apply to pitch. Guests are welcome to come, watch the"
+" pitches and support the founders. Every application is reviewed manually."
+msgstr ""
+"Ayollar boşçiligidagi startaplar taqdimot (pitch) qiliş uçun ariza "
+"topşirişlari mumkin. Mehmonlar kelişlari, taqdimotlarni tomoşa qilişlari va "
+"asosçilarni qöllab-quvvatlaşlari mumkin. Har bir ariza taşkilotçilar "
+"tomonidan alohida (qölda) körib çiqiladi."
+
+#: .\events\templates\index_women.html:58
+msgid "How does the selection work?"
+msgstr "Tanlov qanday ötkaziladi?"
+
+#: .\events\templates\index_women.html:58
+msgid ""
+"From all applications we pick 30 teams for the semifinal. The jury then "
+"selects 10 finalists, who get a pitch workshop and pitch on the main stage "
+"of Startup Week at Humo Arena."
+msgstr ""
+"Barça arizalar orasidan yarim final uçun 30 ta jamoani tanlab olamiz. Söngra"
+" hakamlar hayʼati 10 ta finalistni saralaydi, ular taqdimot böyiça amaliy "
+"maşğulotda qatnaşadilar hamda Humo Arenada ötadigan Startup Week’ning asosiy"
+" sahnasida öz loyihalarini taqdim etadilar."
+
+#: .\events\templates\index_women.html:59
+msgid "What are the prizes?"
+msgstr "Sovrinlar bormi?"
+
+#: .\events\templates\index_women.html:59
+msgid ""
+"3 winners get 15M UZS each. The other 7 finalists get gifts from Yandex."
+msgstr ""
+"3 nafar ğolibning har biri 15 million sömdan pul mukofotiga ega böladi. "
+"Qolgan 7 nafar finalist esa Yandex’dan esdalik sovğalarini qölga kiritadi."
+
+#: .\events\templates\participants.html:10
+msgid "Applications for the current and past events — review and approve."
+msgstr "Joriy va ötgan tadbirlar uçun arizalar — körib çiqiş va tasdiqlaş."
+
+#: .\events\templates\participants.html:52
+msgid "Guest seats taken"
+msgstr "Band qilingan mehmon örinlari"
+
+#: .\events\templates\participants.html:64
+#, python-format
+msgid "submitted %(date)s"
+msgstr "%(date)s da topşirilgan"
+
+#: .\events\templates\participants.html:77
+msgid "Project"
+msgstr "Loyiha"
+
+#: .\events\templates\participants.html:80
+msgid "Pitch deck"
+msgstr "Pitch deck"
+
+#: .\events\templates\participants.html:82
+msgid ""
+"The link must be public — if it does not open, ask the applicant for public "
+"access."
+msgstr ""
+"Havola oçiq bölişi kerak — agar oçilmasa, arizaçidan oçiq ruxsat sörang."
+
+#: .\events\templates\participants.html:87
+msgid "Company"
+msgstr "Kompaniya"
+
+#: .\events\templates\participants.html:92
+msgid "Pitch:"
+msgstr "Pitch:"
+
+#: .\events\templates\participants.html:94
+msgid "Why they want to come:"
+msgstr "Nega kelişni istaydi:"
+
+#: .\events\templates\participants.html:102
+msgid "No applications match the selected filters."
+msgstr "Tanlangan filtrlarga mos arizalar topilmadi."
+
+#: .\events\templates\partner_form.html:4
+#: .\events\templates\partner_form.html:7
+msgid "Edit partner"
+msgstr "Hamkorni tahrirlaş"
+
+#: .\events\templates\partner_form.html:4
+#: .\events\templates\partner_form.html:7
+#: .\events\templates\partner_list.html:12
+msgid "New partner"
+msgstr "Yangi hamkor"
+
+#: .\events\templates\partner_form.html:40
+msgid ""
+"Transparent PNG, roughly 600×200px, with no background or border — it will "
+"be scaled down to about 36px tall on the site."
+msgstr ""
+"Şaffof PNG, taxminan 600×200px, fon yoki çegarasiz — saytda taxminan 36px "
+"balandlikkaça kiçraytiriladi."
+
+#: .\events\templates\partner_list.html:10
+#: .\events\templates\team_home.html:24
+msgid "Add and edit partner logos shown on the landing page."
+msgstr "Boş sahifada körsatiladigan hamkor logotiplarini qöşiş va tahrirlaş."
+
+#: .\events\templates\partner_list.html:31
+msgid "Delete this partner? This cannot be undone."
+msgstr "Bu hamkorni öçirasizmi? Bu amalni ortga qaytarib bölmaydi."
+
+#: .\events\templates\partner_list.html:40
+msgid "No partners yet."
+msgstr "Hali hamkorlar yöq."
+
+#: .\events\templates\team_home.html:7
+msgid "Team dashboard"
+msgstr "Jamoa boşqaruv paneli"
+
+#: .\events\templates\team_home.html:8
+msgid "Choose what you want to manage."
+msgstr "Nimani boşqarişni istaysiz, tanlang."
+
+#: .\events\templates\team_home.html:13
+msgid "Manage events"
+msgstr "Tadbirlarni boşqariş"
+
+#: .\events\templates\team_home.html:14
+msgid "Create, edit and delete events."
+msgstr "Tadbirlarni yaratiş, tahrirlaş va öçiriş."
+
+#: .\events\templates\team_home.html:29
+msgid "Review and approve applications."
+msgstr "Arizalarni körib çiqiş va tasdiqlaş."
+
+#: .\events\templates\team_home.html:34
+msgid "Manage applicant details for future outreach."
+msgstr "Kelajakdagi murojaatlar uçun arizaçilar ma'lumotlarini boşqariş."
+
+#: .\events\templates\team_login.html:8
+msgid "PizzaPitch team"
+msgstr "PizzaPitch jamoasi"
+
+#: .\events\templates\team_login.html:10
+msgid "Sign in to review and manage event applications."
+msgstr "Tadbir arizalarini körib çiqiş va boşqariş uçun kiring."
+
+#: .\events\templates\team_login.html:19
+msgid "Username"
+msgstr "Foydalanuvçi nomi"
+
+#: .\events\templates\team_login.html:23
+msgid "Password"
+msgstr "Parol"
+
+#: .\events\templates\team_login.html:27
+msgid "Sign in"
+msgstr "Kiriş"
+
+#: .\events\views.py:83
+msgid "Enter a valid email"
+msgstr "Töğri email manzil kiriting"
+
+#: .\events\views.py:84
+msgid "Done! We'll email you as soon as registration opens."
+msgstr "Tayyor! Röyxatdan ötiş oçilgani hamon sizga email yuboramiz."
+
+#: .\events\views.py:85
+msgid "Could not submit. Please try again."
+msgstr "Yuborib bölmadi. Qayta urinib köring."
+
+#: .\events\views.py:106
+msgid "Startup application"
+msgstr "Startap arizasi"
+
+#: .\events\views.py:107
+msgid "Guest application"
+msgstr "Mehmon arizasi"
+
+#: .\events\views.py:108
+msgid "A short note about your project. Selected teams get the pitch format."
+msgstr ""
+"Loyihangiz haqida qisqa izoh. Tanlangan jamoalarga pitch formati yuboriladi."
+
+#: .\events\views.py:109
+msgid "A couple fields, we will follow up with confirmation."
+msgstr "Bir neçta maydon, tasdiqlaş bilan sizga xabar beramiz."
+
+#: .\events\views.py:110
+#, python-brace-format
+msgid "Thanks! Confirmation will be sent to {email}."
+msgstr "Rahmat! Tasdiqlaş {email} ga yuboriladi."
+
+#: .\events\views.py:112 .\events\views.py:119 .\events\views.py:129
+msgid "We review applications manually, usually 24–48 hours."
+msgstr "Arizalarni qölda körib çiqamiz, odatda 24–48 soat içida."
+
+#: .\events\views.py:113
+#, python-brace-format
+msgid ""
+"Approved: we email a payment link for participation ({price} {currency})."
+msgstr ""
+"Tasdiqlandi: qatnaşiş uçun tölov havolasini ({price} {currency}) email "
+"orqali yuboramiz."
+
+#: .\events\views.py:116
+msgid "Paid: your pitch slot is locked in. Prepare your 3-minute pitch."
+msgstr ""
+"Tölandi: pitch örningiz mustahkamlandi. 3 daqiqalik pitchingizni tayyorlang."
+
+#: .\events\views.py:120
+msgid "We email you a confirmation with all the evening details."
+msgstr ""
+"Keçqurungi tadbirning barça tafsilotlari bilan tasdiqlaşni email orqali "
+"yuboramiz."
+
+#: .\events\views.py:121 .\events\views.py:133
+#, python-brace-format
+msgid "Confirmed, add it to your calendar. See you on {date}."
+msgstr "Tasdiqlandi, kalendaringizga qöşib qöying. {date} da körişgunça."
+
+#: .\events\views.py:123
+msgid "Please fill in: "
+msgstr "Iltimos, töldiring: "
+
+#: .\events\views.py:124
+msgid "Could not submit the application. Check your connection and try again."
+msgstr ""
+"Arizani yuborib bölmadi. Internet aloqangizni tekşirib qayta urinib köring."
+
+#: .\events\views.py:130
+msgid "Selected: your team is in the semifinal. We email you all the details."
+msgstr ""
+"Tanlandi: jamoangiz yarim finalda. Barça tafsilotlarni email orqali "
+"yuboramiz."
+
+#: .\events\views.py:131
+msgid "Prepare your pitch: 5 minutes + 5 minutes of Q&A."
+msgstr "Pitchingizni tayyorlang: 5 daqiqa + savol-javob uçun 5 daqiqa."
+
+#: .\events\views.py:150
+msgid "There is no open event to apply to."
+msgstr "Ariza topşiriş uçun oçiq tadbir yöq."
+
+#: .\events\views.py:154
+msgid "Invalid application type."
+msgstr "Ariza turi notöğri."
+
+#: .\events\views.py:157
+msgid "Startup registration is currently closed."
+msgstr "Startaplar uçun röyxatdan ötiş hozirça yopiq."
+
+#: .\events\views.py:159
+msgid "Guest registration is currently closed."
+msgstr "Mehmonlar uçun röyxatdan ötiş hozirça yopiq."
+
+#: .\events\views.py:165
+msgid "Name, email and Telegram are required."
+msgstr "Ism, email va Telegram talab qilinadi."
+
+#: .\events\views.py:172
+msgid "Project, phone and pitch are required."
+msgstr "Loyiha, telefon va pitch talab qilinadi."
+
+#: .\events\views.py:177
+msgid "Company and reason are required."
+msgstr "Kompaniya va sabab talab qilinadi."
+
+#: .\events\views.py:183
+msgid "Guest spots are full, no seats left."
+msgstr "Mehmon örinlari tölgan, böş joy qolmagan."
+
+#: .\events\views.py:208
+msgid "Email is required."
+msgstr "Email talab qilinadi."
+
+#: .\events\views.py:212 .\events\views.py:229
+msgid "Invalid email."
+msgstr "Email notöğri."
+
+#: .\events\views.py:225
+msgid "Email and message are required."
+msgstr "Email va xabar talab qilinadi."
+
+#: .\events\views.py:608
+msgid "Applicant"
+msgstr "Arizaçi"
+
+#: .\events\views.py:621
+msgid "Subscriber"
+msgstr "Obunaçi"
