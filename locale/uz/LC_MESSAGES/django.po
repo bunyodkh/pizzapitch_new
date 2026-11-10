@@ -274,6 +274,10 @@ msgstr ""
 "ustida jonli taqdimot qiladi, mehmonlar savol beradi va loyihalarni "
 "yaratayotgan va investitsiya qilayotgan odamlar bilan tanişadi."
 
+#: .\events\templates\base.html
+msgid "Also happening:"
+msgstr "Şuningdek bölib ötmoqda:"
+
 #: .\events\templates\base.html:70 .\events\templates\team_login.html:4
 #: .\events\templates\team_login.html:9
 msgid "Team login"
