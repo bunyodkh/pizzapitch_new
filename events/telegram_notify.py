@@ -72,9 +72,17 @@ def _build_message(application):
 
     lines = [f'{type_emoji} <b>Новая заявка — {type_label}!</b>']
 
-    event = _escaped(application, 'event')
-    if event:
-        lines.append(f'🎟️ <b>Мероприятие:</b> {event}')
+    event_obj = _get(application, 'event')
+    if event_obj is not None:
+        if isinstance(event_obj, str):
+            # Already a plain label (e.g. a dict-style call) — use it as-is.
+            event_label = _escaped(application, 'event')
+        else:
+            # Tagline is the short, event-specific line staff actually recognize
+            # (e.g. "Ferghana") — title/date alone can look identical across events.
+            event_label = _escaped(event_obj, 'tagline') or _escaped(event_obj, 'title') or _escaped(application, 'event')
+        if event_label:
+            lines.append(f'🎟️ <b>Мероприятие:</b> {event_label}')
 
     created_at = _get(application, 'created_at') or _get(application, 'created')
     if created_at is not None:

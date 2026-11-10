@@ -42,6 +42,7 @@
         <p class="sub" id="formSub"></p>
         <form id="applyForm" data-endpoint="{% url 'apply' %}" novalidate>
           {% csrf_token %}
+          <input type="hidden" name="event_slug" value="{{ event.slug }}">
           <!-- shared -->
           <div class="field" data-req><label>{% trans 'Name' %}</label><input name="name" autocomplete="name" placeholder="{% trans 'What should we call you' %}"><p class="msg">{% trans 'Enter your name' %}</p></div>
           <div class="field" data-req data-email><label>Email</label><input name="email" type="email" autocomplete="email" placeholder="you@mail.com"><p class="msg">{% trans 'A valid email is required' %}</p></div>
@@ -62,6 +63,15 @@
 
           <!-- shared: Telegram required for everyone -->
           <div class="field" data-req><label>Telegram</label><input name="tg" placeholder="@username"><p class="msg">{% trans 'Enter your Telegram' %}</p></div>
+
+          <!-- shared: photo/video consent, required for everyone -->
+          <div class="field field-consent" data-req data-label="{% trans 'Photo/video consent' %}">
+            <label>
+              <input type="checkbox" name="photo_consent" value="yes">
+              <span>{% trans 'I agree to appear in event photos and videos that PizzaPitch may share on its website and social media.' %} <a href="{% url 'consent' %}" target="_blank" rel="noopener">{% trans 'See details' %}</a></span>
+            </label>
+            <p class="msg">{% trans 'Please agree to the photo/video consent to continue' %}</p>
+          </div>
 
           <div class="form-alert" id="formAlert">{% trans 'Check the fields marked in red.' %}</div>
           <button type="submit" class="cta" style="margin-top:8px">{% trans 'Submit application' %}</button>

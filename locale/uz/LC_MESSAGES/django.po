@@ -808,6 +808,30 @@ msgstr "Bir neça söz, bu bizga yordam beradi"
 msgid "Enter your Telegram"
 msgstr "Telegramingizni kiriting"
 
+#: .\events\templates\includes\apply_overlay.html:75
+#: .\events\templates\includes\apply_overlay_women.html:69
+msgid "Photo/video consent"
+msgstr "Foto/video roziligi"
+
+#: .\events\templates\includes\apply_overlay.html:77
+#: .\events\templates\includes\apply_overlay_women.html:71
+msgid "I agree to appear in event photos and videos that PizzaPitch may share on its website and social media."
+msgstr "PizzaPitch saytida va ijtimoiy tarmoqlarida e'lon qilishi mumkin bo'lgan tadbir foto va videolarida ko'rinishga roziman."
+
+#: .\events\templates\includes\apply_overlay.html:77
+#: .\events\templates\includes\apply_overlay_women.html:71
+msgid "See details"
+msgstr "Batafsil"
+
+#: .\events\templates\includes\apply_overlay.html:79
+#: .\events\templates\includes\apply_overlay_women.html:73
+msgid "Please agree to the photo/video consent to continue"
+msgstr "Davom etish uchun foto/video roziligini bering"
+
+#: .\events\views.py
+msgid "You must agree to the photo/video consent to continue."
+msgstr "Davom etish uchun foto/video roziligini berishingiz kerak."
+
 #: .\events\templates\includes\apply_overlay.html:72
 #: .\events\templates\includes\apply_overlay_women.html:66
 #: .\events\templates\includes\partner_overlay.html:21
@@ -1283,6 +1307,20 @@ msgstr ""
 msgid "Paid: your pitch slot is locked in. Prepare your 3-minute pitch."
 msgstr ""
 "Tölandi: pitch örningiz mustahkamlandi. 3 daqiqalik pitchingizni tayyorlang."
+
+#: .\events\views.py
+msgid "Approved: we email you all the evening details."
+msgstr "Tasdiqlandi: kechaning barça tafsilotlarini email orqali yuboramiz."
+
+#: .\events\templates\index.html
+msgid "Free for everyone, guests and startups alike."
+msgstr "Hamma uçun bepul: mehmonlar uçun ham, startaplar uçun ham."
+
+#: .\events\views.py
+msgid "Confirmed, your pitch slot is locked in. Prepare your 3-minute pitch."
+msgstr ""
+"Tasdiqlandi, pitch örningiz mustahkamlandi. 3 daqiqalik pitchingizni "
+"tayyorlang."
 
 #: .\events\views.py:120
 msgid "We email you a confirmation with all the evening details."

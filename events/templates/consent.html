@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans 'Photo and Video Consent Terms' %} — PizzaPitch{% endblock %}
+
+{% block content %}
+  <header class="hero">
+    <h1>{% trans 'Photo and Video Consent Terms' %}</h1>
+  </header>
+
+  <section class="block legal">
+    <p>{% blocktrans %}PizzaPitch events are organized by a team of private individuals. Contact: Telegram @pizzapitchuz_team.{% endblocktrans %}</p>
+
+    <p>{% blocktrans %}By ticking the consent box when registering for a PizzaPitch event (pizzapich.uz), I, the person named in the registration form, agree that the event organizers may:{% endblocktrans %}</p>
+    <ul>
+      <li>{% trans 'take photos and record video of me during the event;' %}</li>
+      <li>{% trans 'process the following personal data: my image (photos and video), my voice, and my name and company name if they appear in the materials;' %}</li>
+      <li>{% trans 'use these materials to promote PizzaPitch on the website pizzapich.uz, on social media (including Telegram, Instagram, LinkedIn and YouTube), in presentations, and in publications about PizzaPitch events.' %}</li>
+    </ul>
+
+    <p>{% blocktrans %}The materials will not be used for purposes unrelated to PizzaPitch and will not be given to third parties for their own purposes. The only exception is coverage of the event by partners and media.{% endblocktrans %}</p>
+
+    <p>{% blocktrans %}This consent is valid for 1 year from the date of the event. I can withdraw it at any time by sending a message to Telegram @pizzapitchuz_team. After I withdraw it, the organizers will stop using my image in new publications and, where possible, will remove already published materials in which I am the main subject.{% endblocktrans %}</p>
+
+    <p>{% blocktrans %}I understand that I may appear incidentally in general shots of the event, such as photos of the audience or the venue.{% endblocktrans %}</p>
+
+    <p class="legal-meta">
+      {% trans 'Contact: Telegram @pizzapitchuz_team' %}<br>
+      {% trans 'Last updated: 10 November 2026' %}
+    </p>
+  </section>
+{% endblock %}

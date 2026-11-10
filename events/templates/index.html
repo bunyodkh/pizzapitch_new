@@ -61,7 +61,7 @@
     <details><summary>{% trans 'Why an application instead of plain registration?' %}</summary><p>{% trans 'Spots are limited, and we balance founders and guests. Every application is reviewed manually and confirmed by email.' %}</p></details>
     <details><summary>{% trans "I'm not a startup, can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest": this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
     <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your pitch deck. Selected teams get the pitch format details.' %}</p></details>
-    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests: free. For startups participation is paid ({{ price }} {{ currency }}), this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}</p></details>
+    <details><summary>{% trans 'How much does it cost?' %}</summary><p>{% if event.startup_price > 0 %}{% blocktrans with price=event.startup_price|floatformat:0 currency=event.currency %}Guests: free. For startups participation is paid ({{ price }} {{ currency }}), this covers your spot in the pitch session. The application itself is free; payment is requested only after approval.{% endblocktrans %}{% else %}{% trans 'Free for everyone, guests and startups alike.' %}{% endif %}</p></details>
   </section>
 
   {% if partners %}

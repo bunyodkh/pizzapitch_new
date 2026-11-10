@@ -24,7 +24,7 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = [
-            'title_en', 'title_ru',
+            'title_en', 'title_ru', 'slug',
             'tagline_en', 'tagline_ru',
             'description_en', 'description_ru',
             'date', 'time',
@@ -42,10 +42,15 @@ class EventForm(forms.ModelForm):
             'description_ru': forms.Textarea(attrs={'rows': 4}),
             'location_url': forms.URLInput(attrs={'placeholder': 'https://maps.google.com/...'}),
             'hero_photo': forms.FileInput,
+            'slug': forms.TextInput(attrs={'placeholder': 'ferghana'}),
+        }
+        help_texts = {
+            'slug': _('URL path for this event’s own page: pizzapitch.uz/<this>/. Leave blank to auto-generate from the title.'),
         }
         labels = {
             'title_en': _('Title'),
             'title_ru': _('Title'),
+            'slug': _('URL path'),
             'tagline_en': _('Tagline'),
             'tagline_ru': _('Tagline'),
             'description_en': _('Description'),

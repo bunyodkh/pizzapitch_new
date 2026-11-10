@@ -495,6 +495,21 @@ msgstr "Пара слов, это помогает нам"
 msgid "Enter your Telegram"
 msgstr "Укажите Telegram"
 
+msgid "Photo/video consent"
+msgstr "Согласие на фото/видео"
+
+msgid "I agree to appear in event photos and videos that PizzaPitch may share on its website and social media."
+msgstr "Я согласен(на) фигурировать на фото и видео с мероприятия, которые PizzaPitch может публиковать на сайте и в соцсетях."
+
+msgid "See details"
+msgstr "Подробнее"
+
+msgid "Please agree to the photo/video consent to continue"
+msgstr "Пожалуйста, согласитесь на использование фото/видео, чтобы продолжить"
+
+msgid "You must agree to the photo/video consent to continue."
+msgstr "Для продолжения необходимо согласие на использование фото/видео."
+
 msgid "Check the fields marked in red."
 msgstr "Проверьте поля, отмеченные красным."
 
@@ -738,6 +753,15 @@ msgstr ""
 
 msgid "Paid: your pitch slot is locked in. Prepare your 3-minute pitch."
 msgstr "Оплатили: место в питч-сессии закреплено. Готовите 3-минутный питч."
+
+msgid "Approved: we email you all the evening details."
+msgstr "Одобрили: присылаем на email все детали вечера."
+
+msgid "Free for everyone, guests and startups alike."
+msgstr "Бесплатно для всех: и для гостей, и для стартапов."
+
+msgid "Confirmed, your pitch slot is locked in. Prepare your 3-minute pitch."
+msgstr "Подтверждено, место в питч-сессии закреплено. Готовите 3-минутный питч."
 
 msgid "We email you a confirmation with all the evening details."
 msgstr "Пишем на email: подтверждение и все детали вечера."

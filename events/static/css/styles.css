@@ -187,6 +187,19 @@
   .row2{display:flex;gap:12px}
   .row2 .field{flex:1}
 
+  .field-consent[data-req] > label::after{content:none}
+  .field-consent label{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;font-weight:400;line-height:1.45;margin:0;cursor:pointer}
+  .field-consent input[type=checkbox]{flex:0 0 auto;width:18px;height:18px;margin-top:2px;accent-color:var(--tomato)}
+  .field-consent.err label{color:var(--tomato)}
+  .field-consent a{color:var(--muted);text-decoration:underline}
+  .field-consent a:hover{color:var(--ink)}
+
+  /* static legal pages */
+  .legal p,.legal li{font-size:15px;color:#4a443c;line-height:1.6;margin:0 0 14px}
+  .legal ul{margin:0 0 14px;padding-left:22px}
+  .legal li{margin-bottom:8px}
+  .legal .legal-meta{font-size:13px;color:var(--muted);margin-top:36px}
+
   /* success */
   .done{text-align:center;padding:14px 0}
   .check{width:70px;height:70px;border-radius:50%;background:#EAF5EE;color:var(--basil);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 22px}

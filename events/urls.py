@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('apply/', views.apply, name='apply'),
+    path('consent/', views.consent, name='consent'),
     path('subscribe/', views.subscribe, name='subscribe'),
     path('partners/inquiry/', views.partner_inquiry, name='partner_inquiry'),
     path('team/login/', views.TeamLoginView.as_view(), name='team_login'),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('team/contacts/', views.contacts, name='contacts'),
     path('team/contacts/export/', views.contacts_export, name='contacts_export'),
     path('team/contacts/export/excel/', views.contacts_export_excel, name='contacts_export_excel'),
+    path('<slug:event_slug>/', views.event_landing, name='event_landing'),
 ]

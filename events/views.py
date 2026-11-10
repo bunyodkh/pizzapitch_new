@@ -85,7 +85,20 @@ def index(request):
             'error': _('Could not submit. Please try again.'),
         }
         return render(request, 'between.html', {'notify_i18n': notify_i18n})
+    return render_event_landing(request, event)
 
+
+@require_GET
+def event_landing(request, event_slug):
+    """A specific event's own page, e.g. pizzapitch.uz/ferghana/ — lets several
+    events run their registration in parallel instead of only the single
+    soonest-dated one that '/' shows. Events that aren't active 404 rather
+    than falling back to '/', so a closed/old slug just dies cleanly."""
+    event = get_object_or_404(Event, slug=event_slug, is_active=True)
+    return render_event_landing(request, event)
+
+
+def render_event_landing(request, event):
     price = f'{event.startup_price:.0f}'
     event_date = format_date(event.date, 'D, d M')
 
@@ -133,6 +146,13 @@ def index(request):
         i18n_strings['doneStepsGuest'][2] = _('Confirmed, add it to your calendar. See you on {date}.').format(
             date=_('19 Nov 2026'),
         )
+    elif event.startup_price <= 0:
+        # Standard landing page, but this event's startup track is free — no payment step.
+        i18n_strings['doneStepsStartup'] = [
+            _('We review applications manually, usually 24–48 hours.'),
+            _('Approved: we email you all the evening details.'),
+            _('Confirmed, your pitch slot is locked in. Prepare your 3-minute pitch.'),
+        ]
 
     experts = Expert.objects.filter(is_visible=True).order_by('order', 'id')
     partners = Partner.objects.filter(is_visible=True).order_by('order', 'id')
@@ -145,7 +165,8 @@ def index(request):
 
 @require_POST
 def apply(request):
-    event = current_event()
+    event_slug = request.POST.get('event_slug', '').strip()
+    event = Event.objects.filter(slug=event_slug, is_active=True).first() if event_slug else current_event()
     if event is None:
         return JsonResponse({'error': _('There is no open event to apply to.')}, status=404)
 
@@ -163,6 +184,10 @@ def apply(request):
     telegram = request.POST.get('tg', '').strip()
     if not name or not email or not telegram:
         return JsonResponse({'error': _('Name, email and Telegram are required.')}, status=400)
+
+    photo_consent = request.POST.get('photo_consent', '') not in ('', '0', 'false', 'off')
+    if not photo_consent:
+        return JsonResponse({'error': _('You must agree to the photo/video consent to continue.')}, status=400)
 
     if applicant_type == Application.STARTUP:
         project = request.POST.get('project', '').strip()
@@ -194,11 +219,17 @@ def apply(request):
         pitch=request.POST.get('pitch', '').strip(),
         company=request.POST.get('company', '').strip(),
         why=request.POST.get('why', '').strip(),
+        photo_consent=photo_consent,
     )
     # Fire-and-forget: Telegram delivery has its own retry/backoff and can take
     # several seconds on network trouble, so it must not hold up this response.
     threading.Thread(target=notify_new_application_telegram, args=(application,), daemon=True).start()
     return JsonResponse({'id': application.id, 'status': application.status}, status=201)
+
+
+@require_GET
+def consent(request):
+    return render(request, 'consent.html', {})
 
 
 @require_POST

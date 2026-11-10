@@ -9,7 +9,7 @@ Assumes a fresh Ubuntu droplet (22.04/24.04) with root/sudo SSH access, and
 Replace `example.com` and the `pizzapitch` username below with your own
 throughout — they also appear in `deploy/pizzapitch.service` and
 `deploy/nginx.conf`, so edit those too if you change them.
-
+ 
 ## 1. Server setup (as root, once)
 
 ```bash

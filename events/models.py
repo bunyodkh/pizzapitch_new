@@ -36,7 +36,13 @@ class Event(models.Model):
     currency = models.CharField(max_length=10, default='UZS')
 
     capacity = models.PositiveIntegerField(null=True, blank=True)
-    is_active = models.BooleanField(default=True, verbose_name=_('Current event'))
+    is_active = models.BooleanField(
+        default=True, verbose_name=_('Active'),
+        help_text=_(
+            'Visible and open at its own page (/<slug>/). The soonest-dated active event also '
+            'shows at the site root (/). Several events can be active at the same time.',
+        ),
+    )
 
     startup_registration_open = models.BooleanField(
         default=True, verbose_name=_('Startup registration open'),
@@ -166,6 +172,10 @@ class Application(models.Model):
     why = models.TextField(blank=True)
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    photo_consent = models.BooleanField(
+        default=False, verbose_name=_('Photo/video consent'),
+        help_text=_('Applicant agreed to appear in event photos/video shared by PizzaPitch (required at registration).'),
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
