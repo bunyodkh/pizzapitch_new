@@ -141,6 +141,16 @@
       {% if form.is_active.errors %}<p class="ferr">{{ form.is_active.errors.0 }}</p>{% endif %}
     </div>
 
+    <div class="ffield2{% if form.show_on_homepage.errors %} has-error{% endif %}">
+      <label class="switch-label" for="{{ form.show_on_homepage.id_for_label }}">
+        {{ form.show_on_homepage }}
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        <span>{{ form.show_on_homepage.label }}</span>
+      </label>
+      <p class="fhelp">{{ form.fields.show_on_homepage.help_text }}</p>
+      {% if form.show_on_homepage.errors %}<p class="ferr">{{ form.show_on_homepage.errors.0 }}</p>{% endif %}
+    </div>
+
     <div class="ffield2{% if form.startup_registration_open.errors %} has-error{% endif %}">
       <label class="switch-label" for="{{ form.startup_registration_open.id_for_label }}">
         {{ form.startup_registration_open }}

@@ -99,6 +99,18 @@ msgstr "дек"
 msgid "Current event"
 msgstr "Текущее мероприятие"
 
+msgid "Show on homepage"
+msgstr "Показывать на главной"
+
+msgid ""
+"This event appears at the site root (/) instead of whichever active event "
+"has the soonest date. Only one event can be flagged at a time — checking "
+"this box here unchecks it everywhere else."
+msgstr ""
+"Это мероприятие будет показано на главной странице (/) вместо того "
+"активного мероприятия, у которого ближайшая дата. Флаг может быть включён "
+"только у одного мероприятия — включение здесь выключит его у остальных."
+
 msgid "Startup registration open"
 msgstr "Регистрация стартапов открыта"
 

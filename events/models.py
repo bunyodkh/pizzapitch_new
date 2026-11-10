@@ -39,8 +39,17 @@ class Event(models.Model):
     is_active = models.BooleanField(
         default=True, verbose_name=_('Active'),
         help_text=_(
-            'Visible and open at its own page (/<slug>/). The soonest-dated active event also '
-            'shows at the site root (/). Several events can be active at the same time.',
+            'Visible and open at its own page (/<slug>/). Several events can be active at the '
+            'same time. The site root (/) shows whichever event has "Show on homepage" checked, '
+            'or — if none do — the soonest-dated active event.',
+        ),
+    )
+    show_on_homepage = models.BooleanField(
+        default=False, verbose_name=_('Show on homepage'),
+        help_text=_(
+            'This event appears at the site root (/) instead of whichever active event has the '
+            'soonest date. Only one event can be flagged at a time — checking this box here '
+            'unchecks it everywhere else.',
         ),
     )
 
@@ -77,6 +86,8 @@ class Event(models.Model):
                 suffix += 1
             self.slug = slug
         super().save(*args, **kwargs)
+        if self.show_on_homepage:
+            Event.objects.exclude(pk=self.pk).update(show_on_homepage=False)
 
 
 class Expert(models.Model):

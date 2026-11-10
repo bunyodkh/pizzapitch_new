@@ -32,6 +32,9 @@ CONTACT_TYPE_SUBSCRIBER = 'subscriber'
 
 
 def current_event():
+    featured = Event.objects.filter(is_active=True, show_on_homepage=True).order_by('date', 'time').first()
+    if featured is not None:
+        return featured
     return Event.objects.filter(is_active=True).order_by('date', 'time').first()
 
 

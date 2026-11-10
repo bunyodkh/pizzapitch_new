@@ -31,7 +31,7 @@ class EventForm(forms.ModelForm):
             'place_en', 'place_ru', 'city_en', 'city_ru', 'location_url',
             'hero_photo',
             'startup_price', 'currency',
-            'capacity', 'is_active',
+            'capacity', 'is_active', 'show_on_homepage',
             'startup_registration_open', 'guest_registration_open',
             'landing_page',
         ]

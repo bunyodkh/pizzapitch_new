@@ -161,6 +161,20 @@ msgstr "PizzaPitch Women (Techstars Startup Week)"
 msgid "Current event"
 msgstr "Joriy tadbir"
 
+#: .\events\models.py
+msgid "Show on homepage"
+msgstr "Bosh sahifada körsatiş"
+
+#: .\events\models.py
+msgid ""
+"This event appears at the site root (/) instead of whichever active event "
+"has the soonest date. Only one event can be flagged at a time — checking "
+"this box here unchecks it everywhere else."
+msgstr ""
+"Bu tadbir bosh sahifada (/) eng yaqin sanali faol tadbir örniga körsatiladi. "
+"Faqat bitta tadbirda bu belgi yoqilgan bölişi mumkin — bu yerda yoqişingiz "
+"uni boşqa joylarda ötçiradi."
+
 #: .\events\models.py:42
 msgid "Startup registration open"
 msgstr "Startaplar uçun röyxatdan ötiş oçiq"
