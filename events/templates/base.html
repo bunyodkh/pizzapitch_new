@@ -64,13 +64,6 @@
     </div>
   </div>
 
-  {% if other_events %}
-  <div class="other-events">
-    <span class="oe-label">{% trans 'Also happening:' %}</span>
-    {% for other in other_events %}<a href="{% url 'event_landing' event_slug=other.slug %}">{{ other.tagline|default:other.title }}</a>{% if not forloop.last %}<span class="oe-sep">·</span>{% endif %}{% endfor %}
-  </div>
-  {% endif %}
-
   {% block content %}{% endblock %}
 
   <footer>{% block footer %}

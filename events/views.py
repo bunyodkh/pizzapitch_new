@@ -159,13 +159,10 @@ def render_event_landing(request, event):
 
     experts = Expert.objects.filter(is_visible=True).order_by('order', 'id')
     partners = Partner.objects.filter(is_visible=True).order_by('order', 'id')
-    # Other events running in parallel — surfaced as a banner so visitors on one
-    # event's page can still find the others instead of only reaching them via direct URL.
-    other_events = Event.objects.filter(is_active=True).exclude(pk=event.pk).order_by('date', 'time')
     template = 'index_women.html' if event.landing_page == Event.LANDING_WOMEN else 'index.html'
     return render(request, template, {
         'event': event, 'schedule': schedule, 'experts': experts, 'partners': partners, 'i18n_strings': i18n_strings,
-        'event_jsonld': event_jsonld(event), 'other_events': other_events,
+        'event_jsonld': event_jsonld(event),
     })
 
 
