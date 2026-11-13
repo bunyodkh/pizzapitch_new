@@ -36,6 +36,10 @@ class Event(models.Model):
     currency = models.CharField(max_length=10, default='UZS')
 
     capacity = models.PositiveIntegerField(null=True, blank=True)
+    guest_cap = models.PositiveIntegerField(
+        default=50, verbose_name=_('Guest cap'),
+        help_text=_('Max number of guest applications (non-rejected) accepted for this event.'),
+    )
     is_active = models.BooleanField(
         default=True, verbose_name=_('Active'),
         help_text=_(
@@ -159,9 +163,6 @@ class Application(models.Model):
         (STATUS_APPROVED, _('Approved')),
         (STATUS_REJECTED, _('Rejected')),
     ]
-
-    # Hard cap on guest applications per event (non-rejected).
-    GUEST_CAP = 50
 
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='applications')
     applicant_type = models.CharField(max_length=10, choices=TYPE_CHOICES)

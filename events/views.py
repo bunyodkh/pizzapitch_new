@@ -207,7 +207,7 @@ def apply(request):
         guest_count = Application.objects.filter(
             event=event, applicant_type=Application.GUEST,
         ).exclude(status=Application.STATUS_REJECTED).count()
-        if guest_count >= Application.GUEST_CAP:
+        if guest_count >= event.guest_cap:
             return JsonResponse({'error': _('Guest spots are full, no seats left.')}, status=409)
 
     application = Application.objects.create(
@@ -536,7 +536,7 @@ def participants(request):
         'status_param': status_param,
         'applications': applications,
         'guest_count': guest_count,
-        'guest_cap': Application.GUEST_CAP,
+        'guest_cap': selected_event.guest_cap if selected_event is not None else None,
         'querystring': request.GET.urlencode(),
         'total_count': total_count,
         'status_tiles': status_tiles,

@@ -131,6 +131,11 @@
       {{ form.capacity }}
       {% if form.capacity.errors %}<p class="ferr">{{ form.capacity.errors.0 }}</p>{% endif %}
     </div>
+    <div class="ffield2{% if form.guest_cap.errors %} has-error{% endif %}">
+      <label for="{{ form.guest_cap.id_for_label }}">{{ form.guest_cap.label }}</label>
+      {{ form.guest_cap }}
+      {% if form.guest_cap.errors %}<p class="ferr">{{ form.guest_cap.errors.0 }}</p>{% endif %}
+    </div>
 
     <div class="ffield2{% if form.is_active.errors %} has-error{% endif %}">
       <label class="switch-label" for="{{ form.is_active.id_for_label }}">
