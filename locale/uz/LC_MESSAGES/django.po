@@ -1417,3 +1417,11 @@ msgstr "Arizaçi"
 #: .\events\views.py:621
 msgid "Subscriber"
 msgstr "Obunaçi"
+
+#: .\events\templates\index_women.html:36
+msgid "Follow the news on Telegram"
+msgstr "Yangiliklarni Telegramda kuzatib boring"
+
+#: .\events\templates\index_women.html:37
+msgid "Finalists, dates and results: first on our channel"
+msgstr "Finalistlar, sanalar va natijalar: birinçi bölib kanalimizda"

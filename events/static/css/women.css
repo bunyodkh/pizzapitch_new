@@ -57,6 +57,17 @@
 
   .lede{color:#5c4553}
 
+  /* ---------- Telegram channel card ---------- */
+  .w-tg{margin:0 0 26px}
+  .w-tg-btn{
+    display:flex;align-items:center;justify-content:center;width:100%;
+    border:1.5px solid var(--tomato);border-radius:14px;padding:15px 24px;
+    font-weight:600;font-size:16px;color:var(--tomato);text-decoration:none;
+    transition:background .18s ease, color .18s ease;
+  }
+  .w-tg-btn:hover{background:var(--tomato);color:#fff}
+  .w-tg .cta-note{margin-top:8px}
+
   /* ---------- re-tint hard-coded warm colors from styles.css ---------- */
   .hero-photo,.expert-card,.gallery figure{background:var(--pink-wash)}
   .iconbtn:hover{background:var(--pink-wash)}

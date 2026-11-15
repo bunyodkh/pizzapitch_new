@@ -1239,3 +1239,11 @@ msgstr "Подготовьте питч: 5 минут + 5 минут Q&A."
 #~ msgstr[1] "%(counter)s заявки"
 #~ msgstr[2] "%(counter)s заявок"
 #~ msgstr[3] "%(counter)s заявок"
+
+#: .\events\templates\index_women.html:36
+msgid "Follow the news on Telegram"
+msgstr "Следите за новостями в Telegram"
+
+#: .\events\templates\index_women.html:37
+msgid "Finalists, dates and results: first on our channel"
+msgstr "Финалисты, даты и итоги: первыми на нашем канале"
