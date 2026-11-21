@@ -9,38 +9,25 @@
 
 {% block content %}
   <header class="hero">
-    <div class="w-hero">
-      <div class="w-logos">
-        <img src="{% static 'pizzapitch_women_files/YandexUzbekistan.png' %}" alt="Yandex Uzbekistan">
-        <img src="{% static 'pizzapitch_women_files/techstars_uzbekistan.png' %}" alt="Techstars Uzbekistan">
-        <img src="{% static 'pizzapitch_women_files/U-Enter.png' %}" alt="U-Enter" class="w-logo-uenter">
-        <img src="{% static 'pizzapitch_women_files/Hackonnect.png' %}" alt="Hackonnect" class="w-logo-hackonnect">
-        <img src="{% static 'pizzapitch_women_files/UzVC.png' %}" alt="UzVC" class="w-logo-uzvc">
-        <img src="{% static 'pizzapitch_women_files/BellissimoPizza.png' %}" alt="Bellissimo Pizza" class="w-logo-bellissimo">
-        <img src="{% static 'pizzapitch_women_files/UNDP.png' %}" alt="UNDP" class="w-logo-undp">
-      </div>
-      <div class="w-titlewrap">
-        <h1 class="w-title"><img src="{% static 'pizzapitch_women_files/hero_text_logo.png' %}" alt="techstars startup week"></h1>
-        <p class="w-tagline">{% trans 'for women-led startups' %}</p>
-      </div>
+    <div class="w-covers">
+      <img src="{% static 'pizzapitch_women_files/finalists_1.jpg' %}" alt="{% trans 'PizzaPitch Women: meet the finalists' %}">
+      <img src="{% static 'pizzapitch_women_files/finalists_2.jpg' %}" alt="{% trans 'PizzaPitch Women finalists list' %}">
     </div>
 
-    <p class="lede">{% trans 'A pitch track for women-led startups on the main stage of Startup Week Tashkent: 30 teams pitch in the semifinal, 10 reach the final at Humo Arena. Pitches, mentorship and prizes.' %}</p>
-
-    <div class="w-tg">
-      <a class="w-tg-btn" href="https://t.me/pizzapitchuz" target="_blank" rel="noopener noreferrer">{% trans 'Follow the news on Telegram' %}</a>
-      <p class="cta-note">{% trans 'Finalists, dates and results: first on our channel' %}</p>
+    <div class="w-news">
+      <p>{% trans 'On November 19, 30 participants pitched in the semifinal at U-Enter. The jury picked 10 projects: they will pitch on the Techstars Startup Week stage on November 25. Three winners will receive 15M UZS each, announced on November 26.' %}</p>
+      <p>{% trans 'Come to the final and support the participants!' %}</p>
     </div>
 
     <div class="stub" aria-label="{% trans 'Event details' %}">
       <div class="stub-row">
         <div class="stub-cell">
           <p class="stub-k">{% trans 'When' %}</p>
-          <p class="stub-v">{% trans '19 Nov 2026' %}</p>
+          <p class="stub-v">{% trans '25 Nov 2026' %}</p>
         </div>
         <div class="stub-cell">
           <p class="stub-k">{% trans 'Where' %}</p>
-          <p class="stub-v">{% if event.location_url %}<a href="{{ event.location_url }}" target="_blank" rel="noopener noreferrer">{{ event.place }}</a>{% else %}{{ event.place }}{% endif %}{% if event.city %}, {{ event.city }}{% endif %}</p>
+          <p class="stub-v">{% trans 'Humo Arena, Tashkent' %}</p>
         </div>
       </div>
       <div class="stub-tear"></div>
@@ -50,23 +37,15 @@
       </div>
     </div>
 
-    {% if event.startup_registration_open or event.guest_registration_open %}
-    <button class="cta" id="openBtn">{% trans 'Apply' %} <span aria-hidden="true">→</span></button>
-    {% else %}
-    <p class="cta-note">{% trans 'Registration is currently closed for this event.' %}</p>
-    {% endif %}
+    <div class="w-reg">
+      <a class="cta" href="https://go.hackonnect.uz/aOYR7?utm_source=pizza-pitch" target="_blank" rel="noopener noreferrer">{% trans 'Register for the final' %}</a>
+    </div>
+
+    <div class="w-tg">
+      <a class="w-tg-btn" href="https://t.me/pizzapitchuz" target="_blank" rel="noopener noreferrer">{% trans 'Follow the news on Telegram' %}</a>
+      <p class="cta-note">{% trans 'Finalists, dates and results: first on our channel' %}</p>
+    </div>
   </header>
-
-  <section class="block faq">
-    <h2>{% trans 'FAQ' %}</h2>
-    <details><summary>{% trans 'Who can apply?' %}</summary><p>{% trans 'Women-led startups can apply to pitch. Guests are welcome to come, watch the pitches and support the founders. Every application is reviewed manually.' %}</p></details>
-    <details><summary>{% trans 'How does the selection work?' %}</summary><p>{% trans 'From all applications we pick 30 teams for the semifinal. The jury then selects 10 finalists, who get a pitch workshop and pitch on the main stage of Startup Week at Humo Arena.' %}</p></details>
-    <details><summary>{% trans 'What are the prizes?' %}</summary><p>{% trans '3 winners get 15M UZS each. The other 7 finalists get gifts from Yandex.' %}</p></details>
-    <details><summary>{% trans 'Why an application instead of plain registration?' %}</summary><p>{% trans 'Spots are limited, and we balance founders and guests. Every application is reviewed manually and confirmed by email.' %}</p></details>
-    <details><summary>{% trans "I'm not a startup, can I just come?" %}</summary><p>{% blocktrans %}Yes. Choose "I'm a guest": this evening is also for people who want to watch, connect, and support.{% endblocktrans %}</p></details>
-    <details><summary>{% trans 'What does a startup need?' %}</summary><p>{% trans 'A short application and, if you have one, a link to your pitch deck. Selected teams get the pitch format details.' %}</p></details>
-  </section>
-
 
   {% if partners %}
   <section class="block partners">

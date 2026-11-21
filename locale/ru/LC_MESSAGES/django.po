@@ -1247,3 +1247,35 @@ msgstr "Следите за новостями в Telegram"
 #: .\events\templates\index_women.html:37
 msgid "Finalists, dates and results: first on our channel"
 msgstr "Финалисты, даты и итоги: первыми на нашем канале"
+
+#: .\events	emplates\index_women.html
+msgid "PizzaPitch Women finalists are announced!"
+msgstr "Финалистки PizzaPitch Women определены!"
+
+#: .\events	emplates\index_women.html
+msgid "On November 19, 30 participants pitched in the semifinal at U-Enter. The jury picked 10 projects: they will pitch on the Techstars Startup Week stage on November 25. Three winners will receive 15M UZS each, announced on November 26."
+msgstr "19 ноября в U-Enter в полуфинале выступили 30 участниц. Жюри выбрало 10 проектов - 25 ноября они выйдут на сцену Techstars Startup Week. Три победительницы получат по 15 млн сумов и мы объявим их 26 ноября."
+
+#: .\events	emplates\index_women.html
+msgid "Come to the final and support the participants!"
+msgstr "Приходите на финал поддержать участниц!"
+
+#: .\events	emplates\index_women.html
+msgid "Final: 25.11, 13:30-15:30, Humo Arena"
+msgstr "Финал: 25.11, 13:30-15:30, Humo Arena"
+
+#: .\events	emplates\index_women.html
+msgid "Register for the final"
+msgstr "Зарегистрироваться"
+
+msgid "PizzaPitch Women: meet the finalists"
+msgstr "PizzaPitch Women: познакомьтесь с финалистками"
+
+msgid "PizzaPitch Women finalists list"
+msgstr "Список финалисток PizzaPitch Women"
+
+msgid "25 Nov 2026"
+msgstr "25 ноября 2026"
+
+msgid "Humo Arena, Tashkent"
+msgstr "Humo Arena, Ташкент"

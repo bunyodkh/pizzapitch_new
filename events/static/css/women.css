@@ -75,3 +75,15 @@
   .form-alert{border-color:var(--pink-wash-line)}
   .whatnext p{color:#5c4553}
   .backdrop{background:rgba(60,15,40,.42)}
+
+  /* ---------- finalists announcement ---------- */
+  .w-news{margin:0 0 22px}
+  .w-news-title{font-size:20px;line-height:1.25;margin:0 0 10px}
+  .w-news p{margin:0 0 10px;line-height:1.5}
+  .w-news-when{font-weight:600}
+  .w-reg{margin:0 0 14px}
+  .w-reg .cta{text-decoration:none}
+
+  /* ---------- finalists cover images ---------- */
+  .w-covers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 22px}
+  .w-covers img{width:100%;height:auto;display:block;border-radius:14px;box-shadow:var(--shadow)}
